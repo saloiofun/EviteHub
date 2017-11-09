@@ -2,6 +2,9 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 const App = () =>
+  <div>
+    Hello World
+  </div>
   // <Router>
   //   <div>
   //     <Container>

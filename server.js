@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
 }
 
-app.use(routes)
+// app.use(routes)
 
 // Send every request to the React app
 // Define any API routes before this runs
