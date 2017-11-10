@@ -4,10 +4,12 @@ const controller = require("../../controllers/controller");
 // Matches with "/api/events"
 router.route("/")
   .get(controller.findEventAll)
-  .post(controller.creatEvent);
+  .post(controller.createEvent);
 
 
-  router.router("/:id")
-    .get(controller.findEventById)
-    .put(controller.updateEvent)
-    .delete(controller.deleteEvent);
+router.route("/:id")
+.get(controller.findEventById)
+.put(controller.updateEvent)
+.delete(controller.deleteEvent);
+
+module.exports = router;
