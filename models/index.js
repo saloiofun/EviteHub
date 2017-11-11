@@ -1,4 +1,4 @@
-// module.exports = {
-//     Saved: require("./saveArticle")
-//   };
+module.exports = {
+  Event: require("./event")
+  }
   

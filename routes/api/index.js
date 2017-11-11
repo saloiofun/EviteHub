@@ -1,7 +1,7 @@
-// const router = require('express').Router()
-// const saveRoutes = require('./saves')
+const router = require('express').Router()
+const eventRoutes = require('./events')
 
-// // Save routes
-// router.use('/saves', saveRoutes)
+// Event routes
+router.use('/events', eventRoutes)
 
-// module.exports = router
+module.exports = router
