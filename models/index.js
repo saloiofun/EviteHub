@@ -1,4 +1,3 @@
-// module.exports = {
-//     Saved: require("./saveArticle")
-//   };
-  
+ module.exports = {
+   Guest: require('./guest')
+ }
