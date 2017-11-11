@@ -11,9 +11,6 @@ module.exports = {
   createGuest: function (req, res) {
     db.Guest
     .create(req.body)
-    .then(entry => {
-      return db.Event.findOneAndUpdate({ _id: req.params.id }, { $push: { guests: entry._id } }, { new: true })
-    })
     .then(dbModel => res.json(dbModel))
     .catch(err => res.status(422).json(err))
   },
