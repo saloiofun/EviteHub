@@ -1,3 +1,4 @@
  module.exports = {
-   Guest: require('./guest')
+   Guest: require('./guest'),
+   Event: require('./event')
  }
