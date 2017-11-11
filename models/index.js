@@ -1,4 +1,5 @@
-// module.exports = {
-//     Saved: require("./saveArticle")
-//   };
+module.exports = {
+  // Saved: require("./saveArticle")
+  User: require("./user")
+};
   
