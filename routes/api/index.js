@@ -1,11 +1,11 @@
 const router = require('express').Router()
-// const saveRoutes = require('./saves')
 const userRoutes = require('./user')
-
-// Save routes
-// router.use('/saves', saveRoutes)
+const eventRoutes = require('./events')
 
 // User routes
 router.use('/user', userRoutes)
+
+// Event routes
+router.use('/events', eventRoutes)
 
 module.exports = router
