@@ -19,6 +19,17 @@ module.exports = {
   },
   updateGuest: function (req, res) {
     db.Guest
+    .findOneAndUpdate({ _id: req.params.id }, req.body)
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err))
+  },
+  removeGuest: function (req, res) {
+    db.Guest
+      .findById({ _id: req.params.id })
+      .then(dbModel => dbModel.remove())
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err))
+  },
   findEventById: function (req, res) {
     db.Event
       .findById({_id: req.params.id})
@@ -44,8 +55,8 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err))
   },
-  removeGuest: function (req, res) {
-    db.Guest
+  deleteEvent: function (req, res) {
+    db.Event
       .findById({ _id: req.params.id })
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
