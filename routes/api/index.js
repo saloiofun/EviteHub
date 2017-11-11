@@ -1,15 +1,7 @@
-const router = require('express').Router();
-const guestRoutes = require("./guests");
-const eventRoutes = require("./events");
-
-// const saveRoutes = require('./saves')
-
-
+const router = require('express').Router()
+const eventRoutes = require('./events')
 
 // Event routes
-router.use("/events", eventRoutes);
+router.use('/events', eventRoutes)
 
-// // Save routes
-// router.use('/saves', saveRoutes)
-
-module.exports = router;
+module.exports = router

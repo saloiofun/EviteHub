@@ -1,15 +1,14 @@
-const router = require("express").Router();
-const controller = require("../../controllers/controller");
+const router = require('express').Router()
+const controller = require('../../controllers/controller')
 
 // Matches with "/api/events"
-router.route("/")
+router.route('/')
   .get(controller.findEventAll)
-  .post(controller.createEvent);
+  .post(controller.createEvent)
 
-
-router.route("/:id")
+router.route('/:id')
 .get(controller.findEventById)
 .put(controller.updateEvent)
-.delete(controller.deleteEvent);
+.delete(controller.deleteEvent)
 
-module.exports = router;
+module.exports = router
