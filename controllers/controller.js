@@ -1,6 +1,5 @@
 const db = require('../models')
 
-
 // Defining methods for the Controller
 module.exports = {
   findGuestAttend: function (req, res) {
@@ -60,18 +59,18 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err))
   },
-  deliverEmail: function(req, res) {
-    const mailOptions={
-      to : req.body.to,
-      subject : "Event Invitation",
-      text : `${req.body.user} has invited you to ${req.body.event}!\n Click on link for more details: ${req.body.url}`
+  deliverEmail: function (req, res) {
+    const mailOptions = {
+      to: req.body.to,
+      subject: 'Event Invitation',
+      text: `${req.body.user} has invited you to ${req.body.event}!\n Click on link for more details: ${req.body.url}`
     }
-    smtpTransport.sendMail(mailOptions, function(error, response){
-     if(error){
-            console.log(error);
-     }else{
-            console.log("Email sent");
-         }
-    });
+    smtpTransport.sendMail(mailOptions, function (error, response) {
+      if (error) {
+        console.log(error)
+      } else {
+        console.log('Email sent')
+      }
+    })
   }
 }
