@@ -13,7 +13,6 @@ var cookieParser = require('cookie-parser')
 
 // Static directory
 app.use(express.static('public'))
-
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
 app.use(cookieParser())
