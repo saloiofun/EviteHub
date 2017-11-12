@@ -1,8 +1,10 @@
 import React from 'react'
-import RaisedButton from 'material-ui/RaisedButton'
+import Button from 'material-ui/Button'
 
 const Events = () => (
-  <RaisedButton label='Default' />
+  <Button raised color='primary'>
+    Events
+  </Button>
 )
 
 export default Events

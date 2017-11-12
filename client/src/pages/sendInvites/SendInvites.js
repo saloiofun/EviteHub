@@ -1,8 +1,10 @@
 import React from 'react'
-import RaisedButton from 'material-ui/RaisedButton'
+import Button from 'material-ui/Button'
 
 const SendInvites = () => (
-  <RaisedButton label='Default' />
+  <Button raised color='primary'>
+    Send Invites
+  </Button>
 )
 
 export default SendInvites
