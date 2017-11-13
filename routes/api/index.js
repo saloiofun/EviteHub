@@ -14,6 +14,6 @@ router.use('/user', userRoutes)
 router.use('/events', eventRoutes)
 
 // Email route
-router.use("/email", emailRoutes)
+router.use('/email', emailRoutes)
 
 module.exports = router
