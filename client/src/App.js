@@ -7,7 +7,10 @@ import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import List from 'material-ui/List'
 import Typography from 'material-ui/Typography'
-import IconButton from 'material-ui/IconButton'
+import Badge from 'material-ui/Badge';
+import IconButton from 'material-ui/IconButton';
+import Button from 'material-ui/Button';
+import NotificationsIcon from 'material-ui-icons/Notifications';
 import KeyboardArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
 import Avatar from 'material-ui/Avatar';
 import Hidden from 'material-ui/Hidden'
@@ -19,7 +22,7 @@ import GuestList from './pages/guestList'
 import SendInvites from './pages/sendInvites'
 import { DashboardListItems, EventsListItems, GuestListItems, SendInvitesListItems } from './tileData';
 
-const drawerWidth = 240
+const drawerWidth = 280
 
 const styles = theme => ({
   root: {
@@ -41,10 +44,16 @@ const styles = theme => ({
       width: `calc(100% - ${drawerWidth}px)`,
     },
   },
+  flex: {
+    flex: 1,
+  },
   navIconHide: {
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
+  },
+  badge: {
+    margin: `0 ${theme.spacing.unit * 2}px`,
   },
   drawerContainer: {
     height: '100vh'
@@ -129,9 +138,14 @@ class App extends React.Component {
                 >
                   <MenuIcon />
                 </IconButton>
-                <Typography type="title" color="inherit" noWrap>
+                <Typography type="title" color="inherit" className={classes.flex} noWrap>
                   EviteHub
                 </Typography>
+                <IconButton>
+                  <Badge className={classes.badge} badgeContent={4} color="accent">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
               </Toolbar>
             </AppBar>
             <Hidden mdUp>
