@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import API from "../utils/Api";
+import API from "../utils/API";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';

@@ -1,5 +1,5 @@
-module.exports = {
-  // Saved: require("./saveArticle")
-  User: require("./user")
-};
-  
+ module.exports = {
+   Guest: require('./guest'),
+   Event: require('./event'),
+   User: require('./user')
+ }
