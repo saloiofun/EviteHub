@@ -8,6 +8,8 @@ import Toolbar from 'material-ui/Toolbar'
 import List from 'material-ui/List'
 import Typography from 'material-ui/Typography'
 import IconButton from 'material-ui/IconButton'
+import KeyboardArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
+import Avatar from 'material-ui/Avatar';
 import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
 import MenuIcon from 'material-ui-icons/Menu'
@@ -47,7 +49,16 @@ const styles = theme => ({
   drawerContainer: {
     height: '100vh'
   },
-  drawerHeader: theme.mixins.toolbar,
+  bigAvatar: {
+    width: 150,
+    height: 150,
+    margin: '5px auto'
+  },
+  drawerHeader: {
+    height: '215px',
+    textAlign: 'center',
+    paddingTop: '20px'
+  },
   drawerPaper: {
     width: 250,
     [theme.breakpoints.up('md')]: {
@@ -55,6 +66,9 @@ const styles = theme => ({
       position: 'relative',
       height: '100%',
     },
+  },
+  icon: {
+    margin: theme.spacing.unit,
   },
   content: {
     backgroundColor: theme.palette.background.default,
@@ -83,7 +97,16 @@ class App extends React.Component {
 
     const drawer = (
         <div className={classes.drawerContainer}>
-          <div className={classes.drawerHeader} />
+          <div className={classes.drawerHeader}>
+            <Avatar
+              alt="John Doe"
+              src="/static/images/johnDoe.png"
+              className={classes.bigAvatar}
+            />
+            <Typography type="title" gutterBottom>
+              John Doe <KeyboardArrowDownIcon />
+            </Typography>
+          </div>
           <Divider />
           <List><DashboardListItems /></List>          
           <List><EventsListItems /></List>
