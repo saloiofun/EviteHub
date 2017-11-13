@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import API from "../utils/API";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Card, CardTitle, CardText } from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
+import Card, { CardContent } from 'material-ui/Card';
+import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 
 class Login extends Component {
@@ -32,7 +31,8 @@ class Login extends Component {
       password: this.state.password
     })
     .then(res => {
-      if ( res.status === 200 ){
+      console.log(res)
+      if ( res.data !== 'login failed' ){
         this.setState({ loggedin: true, user: res.data })
       }
     })
@@ -41,26 +41,24 @@ class Login extends Component {
 
   render() {
     return (
-      <MuiThemeProvider>
-        <div className="login">
-          <form onSubmit={this.handleFormSubmit}>
-          <CardTitle title="Login"/>
-            <Card>
-              <CardText>
-                <TextField id="username" name="username" floatingLabelText="Email Address"  type="text" fullWidth={true} onChange={this.handleInputChange} />
-                <TextField id="password" name="password" floatingLabelText="Password" type="password"  fullWidth={true} onChange={this.handleInputChange} />
-                <RaisedButton type="submit" fullWidth={true} primary={true} label="Log In" />
-              </CardText>
-            </Card>
-          </form><br />
+      <div className="login">
+        <Card>
+          <CardContent>
+            <form onSubmit={this.handleFormSubmit}>               
+              <TextField id="username" name="username" label="Email Address" type="text" margin="normal" fullWidth={true} onChange={this.handleInputChange} />
+              <TextField id="password" name="password" label="Password" type="password" margin="normal" fullWidth={true} onChange={this.handleInputChange} />
+              <br /><br />
+              <Button raised color="primary" type="submit">Log In</Button>
+            </form>
+          </CardContent>
+        </Card>
           { this.state.loggedin ? 'True' : 'False' }<br />
           { this.state.user._id }<br />
           { this.state.user.email }<br />
           { this.state.user.password }<br />
           { this.state.user.firstName }<br />
           { this.state.user.lastName }<br />
-        </div>
-      </MuiThemeProvider>
+      </div>
     );
   }
 }
