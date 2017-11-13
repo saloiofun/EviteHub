@@ -81,7 +81,7 @@ const styles = theme => ({
       marginTop: 64,
     },
   },
-});
+})
 
 class App extends React.Component {
   state = {
@@ -89,7 +89,7 @@ class App extends React.Component {
   };
 
   handleDrawerToggle = () => {
-    this.setState({ mobileOpen: !this.state.mobileOpen });
+    this.setState({ mobileOpen: !this.state.mobileOpen })
   };
 
   render() {
@@ -113,7 +113,7 @@ class App extends React.Component {
           <List><GuestListItems /></List>
           <List><SendInvitesListItems /></List>
         </div>
-    );
+    )
 
     return (
       <Router>
@@ -172,13 +172,13 @@ class App extends React.Component {
           </div>
         </div>
       </Router>
-    );
+    )
   }
 }
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-};
+}
 
 export default withStyles(styles, { withTheme: true })(App);
