@@ -27,6 +27,9 @@ const styles = theme => ({
   media: {
     height: 250
   },
+  progress: {
+    height: 150
+  },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
@@ -60,7 +63,7 @@ function Dashboard (props) {
         </Grid>
         <Grid item xs={12}>
           <CardMedia
-            className={classes.media}
+            className={classes.progress}
             image='/static/images/cards/progress.png'
             title='Progress'
           />
