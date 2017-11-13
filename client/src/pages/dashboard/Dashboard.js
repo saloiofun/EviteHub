@@ -14,11 +14,15 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Paper from 'material-ui/Paper'
 import Grid from 'material-ui/Grid'
+import Typography from 'material-ui/Typography'
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    marginTop: 30
+    [theme.breakpoints.up('sm')]: {
+      width: '80%'
+    },
+    margin: '0 auto'
   },
   paper: {
     padding: 16,
@@ -33,6 +37,15 @@ function Dashboard (props) {
   return (
     <div className={classes.root}>
       <Grid container spacing={24}>
+        <Grid item xs={12} sm={6}>
+          <Typography type='headline'>Title</Typography>
+        </Grid>
+        <Grid item xs={12} sm={5} align='right'>
+          <Typography type='headline'>Location</Typography>
+        </Grid>
+        <Grid item xs={12} sm={1} align='right'>
+          <Typography type='headline'>Date</Typography>
+        </Grid>
         <Grid item xs={12}>
           <Paper className={classes.paper}>xs=12</Paper>
         </Grid>
