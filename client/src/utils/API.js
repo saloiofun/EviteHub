@@ -16,6 +16,9 @@ export default {
   // Saves a guest to the database
   saveGuest: function (guestData) {
     return axios.post('/api/guests', guestData)
+  },
+  // User Registration
+  registerUser: function (userData) {
+    return axios.post('/api/user', userData)
   }
-
 }

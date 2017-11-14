@@ -26,14 +26,15 @@ class Registration extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
 
-    API.login({
-      username: this.state.username,
-      password: this.state.password
+    API.registerUser({
+      email: this.state.username,
+      password: this.state.password,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName
     })
     .then(res => {
-      console.log(res)
-      if ( res.data !== 'login failed' ){
-        this.setState({ loggedin: true, user: res.data })
+      if (res.data){
+        console.log(res.data);
       }
     })
     .catch(err => console.log(err))
@@ -44,7 +45,7 @@ class Registration extends Component {
       <div className="login">
         <Card>
           <CardContent>
-            <form>
+            <form onSubmit={this.handleFormSubmit}>
               <TextField id="firstName" name="firstName" label="First Name" type="text" margin="normal" fullWidth={true} onChange={this.handleInputChange} />
               <TextField id="lastName" name="lastName" label="Last Name" type="text" margin="normal" fullWidth={true} onChange={this.handleInputChange} />         
               <TextField id="username" name="username" label="Email Address" type="text" margin="normal" fullWidth={true} onChange={this.handleInputChange} />
