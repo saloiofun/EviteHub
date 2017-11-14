@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import API from "../../utils/API";
-import Card, { CardContent } from 'material-ui/Card';
-import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
+import React, { Component } from "react"
+import API from '../../utils/API'
+import Card, { CardContent } from 'material-ui/Card'
+import Button from 'material-ui/Button'
+import TextField from 'material-ui/TextField'
 
 class Registration extends Component {
   // Setting the initial values
@@ -10,8 +10,8 @@ class Registration extends Component {
     username: "",
     password: "",
     firstName: "",
-    LastName: ""
-  };
+    lastName: ""
+  }
 
   // handle any changes to the input fields
   handleInputChange = event => {
@@ -19,12 +19,12 @@ class Registration extends Component {
     // Set the state for the appropriate input field
     this.setState({
       [name]: value
-    });
-  };
+    })
+  }
 
   // When the form is submitted
   handleFormSubmit = event => {
-    event.preventDefault();
+    event.preventDefault()
 
     API.registerUser({
       email: this.state.username,
@@ -34,11 +34,11 @@ class Registration extends Component {
     })
     .then(res => {
       if (res.data){
-        console.log(res.data);
+        console.log(res.data)
       }
     })
     .catch(err => console.log(err))
-  };
+  }
 
   render() {
     return (
@@ -56,7 +56,7 @@ class Registration extends Component {
           </CardContent>
         </Card>
       </div>
-    );
+    )
   }
 }
 
