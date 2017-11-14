@@ -18,7 +18,7 @@ import Events from './pages/events'
 import GuestList from './pages/guestList'
 import SendInvites from './pages/sendInvites'
 import { DashboardListItems, EventsListItems, GuestListItems, SendInvitesListItems } from './tileData';
-import Login from './pages/Login.js'
+import Login from './pages/login'
 
 const drawerWidth = 240
 
