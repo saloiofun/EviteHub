@@ -59,18 +59,41 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err))
   },
-  deliverEmail: function (req, res) {
-    const mailOptions = {
-      to: req.body.to,
-      subject: 'Event Invitation',
-      text: `${req.body.user} has invited you to ${req.body.event}!\n Click on link for more details: ${req.body.url}`
-    }
-    smtpTransport.sendMail(mailOptions, function (error, response) {
-      if (error) {
-        console.log(error)
-      } else {
-        console.log('Email sent')
-      }
-    })
+  createTodo: function (req, res) {
+    db.Todo
+    .create(req.body)
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err))
+  },
+  updateTodo: function (req, res) {
+    db.Todo
+    .findOneAndUpdate({ _id: req.params.id }, req.body)
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err))
+  },
+  removeTodo: function (req, res) {
+    db.Todo
+      .findById({ _id: req.params.id })
+      .then(dbModel => dbModel.remove())
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err))
+  },
+  findAllTodo: function (req, res) {
+    db.Todo
+      .find({})
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err))
+  },
+  findDoneTodo: function (req, res) {
+    db.Todo
+      .find({ todoDone: true })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err))
+  },
+  findUndoneTodo: function (req, res) {
+    db.Todo
+      .find({ todoDone: false })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err))
   }
 }

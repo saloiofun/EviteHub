@@ -19,6 +19,7 @@ import GuestList from './pages/guestList'
 import SendInvites from './pages/sendInvites'
 import { DashboardListItems, EventsListItems, GuestListItems, SendInvitesListItems } from './tileData'
 import Login from './pages/login'
+import Registration from './pages/registration'
 
 const drawerWidth = 240
 
@@ -169,6 +170,7 @@ class App extends React.Component {
                   <Route exact path='/guest-list' component={GuestList} />
                   <Route exact path='/send-invites' component={SendInvites} />
                   <Route exact path='/login' component={Login} />
+                  <Route exact path='/registration' component={Registration} />
                 </Switch>            
             </main>
           </div>
