@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component } from 'react'
 import API from '../../utils/API'
 import Card, { CardContent } from 'material-ui/Card'
 import Button from 'material-ui/Button'
@@ -60,4 +60,4 @@ class Registration extends Component {
   }
 }
 
-export default Registration;
+export default Registration
