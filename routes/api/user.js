@@ -6,4 +6,10 @@ router.route('/')
   .get(userController.findAll)
   .post(userController.create)
 
+// router.route('/:username')
+//   .get(userController.findUserByEmail)
+
+router.route('/:id')
+  .get(userController.findUserById)
+
 module.exports = router

@@ -4,13 +4,13 @@ import Card, { CardContent } from 'material-ui/Card'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
 
-class Registration extends Component {
+class Login extends Component {
   // Setting the initial values
   state = {
     username: "",
     password: "",
-    firstName: "",
-    lastName: ""
+    loggedin: false,
+    user: {}
   }
 
   // handle any changes to the input fields
@@ -26,15 +26,14 @@ class Registration extends Component {
   handleFormSubmit = event => {
     event.preventDefault()
 
-    API.registerUser({
-      email: this.state.username,
-      password: this.state.password,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName
+    API.login({
+      username: this.state.username,
+      password: this.state.password
     })
     .then(res => {
-      if (res.data){
-        console.log(res.data)
+      console.log(res)
+      if ( res.data !== 'login failed' ){
+        this.setState({ loggedin: true, user: res.data })
       }
     })
     .catch(err => console.log(err))
@@ -45,19 +44,23 @@ class Registration extends Component {
       <div className="login">
         <Card>
           <CardContent>
-            <form onSubmit={this.handleFormSubmit}>
-              <TextField id="firstName" name="firstName" label="First Name" type="text" margin="normal" fullWidth={true} onChange={this.handleInputChange} />
-              <TextField id="lastName" name="lastName" label="Last Name" type="text" margin="normal" fullWidth={true} onChange={this.handleInputChange} />         
+            <form onSubmit={this.handleFormSubmit}>               
               <TextField id="username" name="username" label="Email Address" type="text" margin="normal" fullWidth={true} onChange={this.handleInputChange} />
               <TextField id="password" name="password" label="Password" type="password" margin="normal" fullWidth={true} onChange={this.handleInputChange} />
               <br /><br />
-              <Button raised color="primary" type="submit">Register</Button>
+              <Button raised color="primary" type="submit">Log In</Button>
             </form>
           </CardContent>
         </Card>
+          { this.state.loggedin ? 'True' : 'False' }<br />
+          { this.state.user._id }<br />
+          { this.state.user.email }<br />
+          { this.state.user.password }<br />
+          { this.state.user.firstName }<br />
+          { this.state.user.lastName }<br />
       </div>
     )
   }
 }
 
-export default Registration
+export default Login;

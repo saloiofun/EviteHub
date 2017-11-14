@@ -17,6 +17,10 @@ export default {
   saveGuest: function (guestData) {
     return axios.post('/api/guests', guestData)
   },
+  // login
+  login: function (data) {
+    return axios.post('/login', data)
+  },
   // User Registration
   registerUser: function (userData) {
     return axios.post('/api/user', userData)
