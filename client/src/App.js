@@ -30,8 +30,7 @@ const styles = theme => ({
   root: {
     width: '100%',
     height: '100vh',
-    zIndex: 1,
-    overflow: 'hidden',
+    zIndex: 1
   },
   appFrame: {
     position: 'relative',
