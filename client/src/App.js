@@ -7,12 +7,11 @@ import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import List from 'material-ui/List'
 import Typography from 'material-ui/Typography'
-import Badge from 'material-ui/Badge';
-import IconButton from 'material-ui/IconButton';
-import Button from 'material-ui/Button';
-import NotificationsIcon from 'material-ui-icons/Notifications';
+import Badge from 'material-ui/Badge'
+import IconButton from 'material-ui/IconButton'
+import NotificationsIcon from 'material-ui-icons/Notifications'
 import KeyboardArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
-import Avatar from 'material-ui/Avatar';
+import Avatar from 'material-ui/Avatar'
 import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
 import MenuIcon from 'material-ui-icons/Menu'
@@ -36,25 +35,25 @@ const styles = theme => ({
     position: 'relative',
     display: 'flex',
     width: '100%',
-    height: '100%',
+    height: '100%'
   },
   appBar: {
     position: 'absolute',
     marginLeft: drawerWidth,
     [theme.breakpoints.up('md')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-    },
+      width: `calc(100% - ${drawerWidth}px)`
+    }
   },
   flex: {
-    flex: 1,
+    flex: 1
   },
   navIconHide: {
     [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
+      display: 'none'
+    }
   },
   badge: {
-    margin: `0 ${theme.spacing.unit * 2}px`,
+    margin: `0 ${theme.spacing.unit * 2}px`
   },
   drawerContainer: {
     height: '100vh'
@@ -74,11 +73,11 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       width: drawerWidth,
       position: 'relative',
-      height: '100%',
-    },
+      height: '100%'
+    }
   },
   icon: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit
   },
   content: {
     backgroundColor: theme.palette.background.default,
@@ -88,41 +87,41 @@ const styles = theme => ({
     marginTop: 56,
     [theme.breakpoints.up('sm')]: {
       height: 'calc(100% - 64px)',
-      marginTop: 64,
-    },
-  },
+      marginTop: 64
+    }
+  }
 })
 
 class App extends React.Component {
   state = {
-    mobileOpen: false,
+    mobileOpen: false
   };
 
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen })
   };
 
-  render() {
-    const { classes, theme } = this.props;
+  render () {
+    const { classes, theme } = this.props
 
     const drawer = (
-        <div className={classes.drawerContainer}>
-          <div className={classes.drawerHeader}>
-            <Avatar
-              alt="John Doe"
-              src="/static/images/johnDoe.png"
-              className={classes.bigAvatar}
+      <div className={classes.drawerContainer}>
+        <div className={classes.drawerHeader}>
+          <Avatar
+            alt='John Doe'
+            src='/static/images/johnDoe.png'
+            className={classes.bigAvatar}
             />
-            <Typography type="title" gutterBottom>
+          <Typography type='title' gutterBottom>
               John Doe <KeyboardArrowDownIcon />
-            </Typography>
-          </div>
-          <Divider />
-          <List><DashboardListItems /></List>          
-          <List><EventsListItems /></List>
-          <List><GuestListItems /></List>
-          <List><SendInvitesListItems /></List>
+          </Typography>
         </div>
+        <Divider />
+        <List><DashboardListItems /></List>
+        <List><EventsListItems /></List>
+        <List><GuestListItems /></List>
+        <List><SendInvitesListItems /></List>
+      </div>
     )
 
     return (
@@ -132,18 +131,18 @@ class App extends React.Component {
             <AppBar className={classes.appBar}>
               <Toolbar>
                 <IconButton
-                  color="contrast"
-                  aria-label="open drawer"
+                  color='contrast'
+                  aria-label='open drawer'
                   onClick={this.handleDrawerToggle}
                   className={classes.navIconHide}
                 >
                   <MenuIcon />
                 </IconButton>
-                <Typography type="title" color="inherit" className={classes.flex} noWrap>
+                <Typography type='title' color='inherit' className={classes.flex} noWrap>
                   EviteHub
                 </Typography>
                 <IconButton>
-                  <Badge className={classes.badge} badgeContent={4} color="accent">
+                  <Badge className={classes.badge} badgeContent={4} color='accent'>
                     <NotificationsIcon />
                   </Badge>
                 </IconButton>
@@ -151,40 +150,40 @@ class App extends React.Component {
             </AppBar>
             <Hidden mdUp>
               <Drawer
-                type="temporary"
+                type='temporary'
                 anchor={theme.direction === 'rtl' ? 'right' : 'left'}
                 open={this.state.mobileOpen}
                 classes={{
-                  paper: classes.drawerPaper,
+                  paper: classes.drawerPaper
                 }}
                 onRequestClose={this.handleDrawerToggle}
                 ModalProps={{
-                  keepMounted: true, // Better open performance on mobile.
+                  keepMounted: true // Better open performance on mobile.
                 }}
               >
                 {drawer}
               </Drawer>
             </Hidden>
-            <Hidden mdDown implementation="css">
+            <Hidden mdDown implementation='css'>
               <Drawer
-                type="permanent"
+                type='permanent'
                 open
                 classes={{
-                  paper: classes.drawerPaper,
+                  paper: classes.drawerPaper
                 }}
               >
                 {drawer}
               </Drawer>
             </Hidden>
             <main className={classes.content}>
-                <Switch>
-                  <Route exact path='/' component={Dashboard} />
-                  <Route exact path='/events' component={Events} />
-                  <Route exact path='/guest-list' component={GuestList} />
-                  <Route exact path='/send-invites' component={SendInvites} />
-                  <Route exact path='/login' component={Login} />
-                  <Route exact path='/registration' component={Registration} />
-                </Switch>            
+              <Switch>
+                <Route exact path='/' component={Dashboard} />
+                <Route exact path='/events' component={Events} />
+                <Route exact path='/guest-list' component={GuestList} />
+                <Route exact path='/send-invites' component={SendInvites} />
+                <Route exact path='/login' component={Login} />
+                <Route exact path='/registration' component={Registration} />
+              </Switch>
             </main>
           </div>
         </div>
@@ -195,7 +194,7 @@ class App extends React.Component {
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
 }
 
 export default withStyles(styles, { withTheme: true })(App)

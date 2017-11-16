@@ -1,42 +1,42 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List';
-import Checkbox from 'material-ui/Checkbox';
-import IconButton from 'material-ui/IconButton';
-import CommentIcon from 'material-ui-icons/Comment';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
+import Checkbox from 'material-ui/Checkbox'
+import IconButton from 'material-ui/IconButton'
+import CommentIcon from 'material-ui-icons/Comment'
 
 const styles = theme => ({
   root: {
     width: '100%',
     maxWidth: 360,
-    background: theme.palette.background.paper,
-  },
-});
+    background: theme.palette.background.paper
+  }
+})
 
 class CheckboxList extends React.Component {
   state = {
-    checked: [0],
+    checked: [0]
   };
 
   handleToggle = value => () => {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+    const { checked } = this.state
+    const currentIndex = checked.indexOf(value)
+    const newChecked = [...checked]
 
     if (currentIndex === -1) {
-      newChecked.push(value);
+      newChecked.push(value)
     } else {
-      newChecked.splice(currentIndex, 1);
+      newChecked.splice(currentIndex, 1)
     }
 
     this.setState({
-      checked: newChecked,
-    });
+      checked: newChecked
+    })
   };
 
-  render() {
-    const { classes } = this.props;
+  render () {
+    const { classes } = this.props
 
     return (
       <div className={classes.root}>
@@ -56,7 +56,7 @@ class CheckboxList extends React.Component {
               />
               <ListItemText primary={`Line item ${value + 1}`} />
               <ListItemSecondaryAction>
-                <IconButton aria-label="Comments">
+                <IconButton aria-label='Comments'>
                   <CommentIcon />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -64,12 +64,12 @@ class CheckboxList extends React.Component {
           ))}
         </List>
       </div>
-    );
+    )
   }
 }
 
 CheckboxList.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+  classes: PropTypes.object.isRequired
+}
 
-export default withStyles(styles)(CheckboxList);
+export default withStyles(styles)(CheckboxList)
