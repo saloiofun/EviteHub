@@ -13,15 +13,6 @@ import { DashboardListItems, EventsListItems, GuestListItems, SendInvitesListIte
 const drawerWidth = 250
 
 const styles = theme => ({
-  container: {
-    borderRight: '1px solid rgba(0, 0, 0, 0.12)',
-    flex: '1 0 auto',
-    display: 'flex',
-    position: 'fixed',
-    overflowY: 'auto',
-    flexDirection: 'column',
-    zIndex: 1300
-  },
   bigAvatar: {
     width: 150,
     height: 150,
@@ -94,7 +85,7 @@ class SideBar extends Component {
             {drawer}
           </Drawer>
         </Hidden>
-        <Hidden mdDown implementation='css' classes={classes.container}>
+        <Hidden mdDown implementation='css'>
           <Drawer
             type='permanent'
             open
