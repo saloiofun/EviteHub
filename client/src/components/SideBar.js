@@ -10,11 +10,17 @@ import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
 import { DashboardListItems, EventsListItems, GuestListItems, SendInvitesListItems } from '../components/tileData'
 
-const drawerWidth = 280
+const drawerWidth = 250
 
 const styles = theme => ({
-  drawerContainer: {
-    height: '100vh'
+  container: {
+    borderRight: '1px solid rgba(0, 0, 0, 0.12)',
+    flex: '1 0 auto',
+    display: 'flex',
+    position: 'fixed',
+    overflowY: 'auto',
+    flexDirection: 'column',
+    zIndex: 1300
   },
   bigAvatar: {
     width: 150,
@@ -30,7 +36,6 @@ const styles = theme => ({
     width: 250,
     [theme.breakpoints.up('md')]: {
       width: drawerWidth,
-      position: 'relative',
       height: '100%'
     }
   },
@@ -52,7 +57,7 @@ class SideBar extends Component {
     const { classes, theme } = this.props
 
     const drawer = (
-      <div className={classes.drawerContainer}>
+      <div>
         <div className={classes.drawerHeader}>
           <Avatar
             alt='John Doe'
@@ -72,7 +77,7 @@ class SideBar extends Component {
     )
 
     return (
-      <div>
+      <div className={classes.root}>
         <Hidden mdUp>
           <Drawer
             type='temporary'
@@ -89,7 +94,7 @@ class SideBar extends Component {
             {drawer}
           </Drawer>
         </Hidden>
-        <Hidden mdDown implementation='css'>
+        <Hidden mdDown implementation='css' classes={classes.container}>
           <Drawer
             type='permanent'
             open

@@ -9,11 +9,11 @@ import NotificationsIcon from 'material-ui-icons/Notifications'
 import MenuIcon from 'material-ui-icons/Menu'
 import Typography from 'material-ui/Typography'
 
-const drawerWidth = 280
+const drawerWidth = 250
 
 const styles = theme => ({
   appBar: {
-    position: 'absolute',
+    position: 'fixed',
     marginLeft: drawerWidth,
     [theme.breakpoints.up('md')]: {
       width: `calc(100% - ${drawerWidth}px)`

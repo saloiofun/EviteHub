@@ -10,7 +10,7 @@ import CheckboxList from '../../components/Todo'
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
+    flex: '1 1 100%',
     [theme.breakpoints.up('sm')]: {
       width: '80%'
     },
