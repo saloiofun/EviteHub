@@ -27,15 +27,14 @@ const styles = theme => ({
   },
   content: {
     flex: '1 1 100%',
-    backgroundColor: theme.palette.background.default,
     width: `calc(100% - ${drawerWidth}px)`,
-    padding: theme.spacing.unit * 3,
-    height: 'calc(100% - 56px)',
+    padding: theme.spacing.unit * 2,
     marginTop: 56,
+    marginBottom: 100,
     [theme.breakpoints.up('md')]: {
-      height: 'calc(100% - 64px)',
       marginLeft: drawerWidth,
-      marginTop: 64
+      marginTop: 64,
+      marginBottom: 100
     }
   }
 })
