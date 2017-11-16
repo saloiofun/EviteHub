@@ -11,7 +11,7 @@ import Registration from './pages/registration'
 import NavBar from './components/NavBar'
 import SideBar from './components/SideBar'
 
-const drawerWidth = 280
+const drawerWidth = 250
 
 const styles = theme => ({
   root: {
@@ -28,7 +28,7 @@ const styles = theme => ({
   content: {
     flex: '1 1 100%',
     backgroundColor: theme.palette.background.default,
-    margin: '0 auto',
+    marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     padding: theme.spacing.unit * 3,
     height: 'calc(100% - 56px)',
