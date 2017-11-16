@@ -28,13 +28,13 @@ const styles = theme => ({
   content: {
     flex: '1 1 100%',
     backgroundColor: theme.palette.background.default,
-    marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     padding: theme.spacing.unit * 3,
     height: 'calc(100% - 56px)',
     marginTop: 56,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       height: 'calc(100% - 64px)',
+      marginLeft: drawerWidth,
       marginTop: 64
     }
   }
