@@ -14,7 +14,8 @@ import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
 import MenuIcon from 'material-ui-icons/Menu'
 import Dashboard from './pages/dashboard'
-import Events from './pages/events'
+import chooseEventAction from './pages/chooseEventAction'
+import addEvent from './pages/addEvent'
 import GuestList from './pages/guestList'
 import SendInvites from './pages/sendInvites'
 import { DashboardListItems, EventsListItems, GuestListItems, SendInvitesListItems } from './tileData'
@@ -166,7 +167,8 @@ class App extends React.Component {
             <main className={classes.content}>
                 <Switch>
                   <Route exact path='/' component={Dashboard} />
-                  <Route exact path='/events' component={Events} />
+                  <Route exact path='/events' component={chooseEventAction} />
+                  <Route exact path='/events/add' component={addEvent} />
                   <Route exact path='/guest-list' component={GuestList} />
                   <Route exact path='/send-invites' component={SendInvites} />
                   <Route exact path='/login' component={Login} />
