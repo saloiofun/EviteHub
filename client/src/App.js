@@ -47,7 +47,7 @@ class App extends React.Component {
       <Router>
         <div className={classes.root}>
           <div className={classes.appFrame}>
-            <header><NavBar /></header>
+            <NavBar />
             <SideBar />
             <main className={classes.content}>
               <Switch>
