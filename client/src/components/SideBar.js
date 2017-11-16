@@ -8,7 +8,7 @@ import KeyboardArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
 import Avatar from 'material-ui/Avatar'
 import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
-import { DashboardListItems, EventsListItems, GuestListItems, SendInvitesListItems } from '../components/tileData'
+import { DashboardListItems, EventsListItems, GuestListItems, SendInvitesListItems } from '../components/drawerItems'
 
 const drawerWidth = 250
 
