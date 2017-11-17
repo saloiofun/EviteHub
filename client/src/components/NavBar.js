@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { withStyles } from 'material-ui/styles'
+import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
+import blueGrey from 'material-ui/colors/blueGrey'
 import PropTypes from 'prop-types'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
@@ -10,6 +11,12 @@ import MenuIcon from 'material-ui-icons/Menu'
 import Typography from 'material-ui/Typography'
 
 const drawerWidth = 250
+
+const theme = createMuiTheme({
+  palette: {
+    primary: blueGrey
+  }
+})
 
 const styles = theme => ({
   appBar: {
@@ -43,26 +50,28 @@ class NavBar extends Component {
   render () {
     const { classes } = this.props
     return (
-      <AppBar className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            color='contrast'
-            aria-label='open drawer'
-            onClick={this.handleDrawerToggle}
-            className={classes.navIconHide}
-                >
-            <MenuIcon />
-          </IconButton>
-          <Typography type='title' color='inherit' className={classes.flex} noWrap>
-                  EviteHub
-                </Typography>
-          <IconButton>
-            <Badge className={classes.badge} badgeContent={4} color='accent'>
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      <MuiThemeProvider theme={theme}>
+        <AppBar className={classes.appBar}>
+          <Toolbar>
+            <IconButton
+              color='contrast'
+              aria-label='open drawer'
+              onClick={this.handleDrawerToggle}
+              className={classes.navIconHide}
+          >
+              <MenuIcon />
+            </IconButton>
+            <Typography type='title' color='inherit' className={classes.flex} noWrap>
+            EviteHub
+          </Typography>
+            <IconButton>
+              <Badge className={classes.badge} badgeContent={4} color='accent'>
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+      </MuiThemeProvider>
     )
   }
 }
@@ -71,4 +80,4 @@ NavBar.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(NavBar)
+export default withStyles(styles, theme)(NavBar)
