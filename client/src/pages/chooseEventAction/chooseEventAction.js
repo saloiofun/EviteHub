@@ -13,7 +13,7 @@ const styles = theme => ({
     minWidth: 300,
     width: '100%'
   },
-  image: {
+  action: {
     position: 'relative',
     height: 200,
     [theme.breakpoints.down('sm')]: {
@@ -33,7 +33,7 @@ const styles = theme => ({
       border: '4px solid currentColor'
     }
   },
-  imageButton: {
+  actionButton: {
     position: 'absolute',
     left: 0,
     right: 0,
@@ -44,7 +44,7 @@ const styles = theme => ({
     justifyContent: 'center',
     color: theme.palette.common.white
   },
-  imageSrc: {
+  actionSrc: {
     position: 'absolute',
     left: 0,
     right: 0,
@@ -53,7 +53,7 @@ const styles = theme => ({
     backgroundSize: 'cover',
     backgroundPosition: 'center 40%'
   },
-  imageBackdrop: {
+  actionBackdrop: {
     position: 'absolute',
     left: 0,
     right: 0,
@@ -63,11 +63,11 @@ const styles = theme => ({
     opacity: 0.4,
     transition: theme.transitions.create('opacity')
   },
-  imageTitle: {
+  actionTitle: {
     position: 'relative',
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 4}px ${theme.spacing.unit + 6}px`
   },
-  imageMarked: {
+  actionMarked: {
     height: 3,
     width: 18,
     background: theme.palette.common.white,
@@ -78,59 +78,68 @@ const styles = theme => ({
   }
 })
 
-const images = [
+const actions = [
   {
-    url: 'https://thumb1.shutterstock.com/display_pic_with_logo/1312810/220840597/stock-vector-stick-figure-business-ideas-220840597.jpg',
     title: 'View Events',
     width: '100%',
     height: '100%'
   },
   {
-    url: 'https://openclipart.org/image/2400px/svg_to_png/176288/stick-person-base.png',
     title: 'Add A New Event',
     width: '100%',
     height: '100%'
   }
 ]
 
-function Events (props) {
-  const { classes } = props
+class Events extends React.Component {
+  directToPage = (page) => {
+    if (page.includes('Add')) {
+      this.props.history.push('/events/add')
+    } else {
+      this.props.history.push('/events/view')
+    }
+  }
 
-  return (
-    <Grid container className={classes.root} style={{height: '100%'}}>
-      {images.map(image => (
-        <Grid item xs={12} sm={6}>
-          <ButtonBase
-            focusRipple
-            key={image.title}
-            className={classes.image}
-            style={{
-              width: image.width,
-              height: image.height
-            }}
-          >
-            <div
+  render () {
+    const { classes } = this.props
+
+    return (
+      <Grid container className={classes.root} style={{height: '100%'}}>
+        {actions.map(action => (
+          <Grid item xs={12} sm={6}>
+            <ButtonBase
+              onClick={() => this.directToPage(action.title)}
+              focusRipple
+              key={action.title}
+              className={classes.action}
               style={{
-                backgroundColor: `black`
+                width: action.width,
+                height: action.height
               }}
+          >
+              <div
+                style={{
+                  backgroundColor: `black`
+                }}
             />
-            <div className={classes.imageBackdrop} />
-            <div className={classes.imageButton}>
-              <Typography
-                component='h3'
-                type='subheading'
-                color='inherit'
-                className={classes.imageTitle}
+              <div className={classes.actionBackdrop} />
+              <div className={classes.actionButton}>
+                <Typography
+                  component='h3'
+                  type='subheading'
+                  color='inherit'
+                  className={classes.actionTitle}
               >
-                {image.title}
-                <div className={classes.imageMarked} />
-              </Typography>
-            </div>
-          </ButtonBase>
-        </Grid>
+                  {action.title}
+                  <div className={classes.actionMarked} />
+                </Typography>
+              </div>
+            </ButtonBase>
+          </Grid>
       ))}
-    </Grid>
-  )
+      </Grid>
+    )
+  }
 }
 
 Events.propTypes = {
