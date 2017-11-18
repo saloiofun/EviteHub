@@ -5,6 +5,7 @@ import teal from 'material-ui/colors/teal'
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import TodayIcon from 'material-ui-icons/Today'
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -16,8 +17,7 @@ const styles = theme => ({
 
 const options = [
   'Housewarming Party',
-  'Baby Shower',
-  'View All'
+  'Baby Shower'
 ]
 
 class EventsDropdown extends Component {
@@ -78,6 +78,12 @@ class EventsDropdown extends Component {
               {option}
             </MenuItem>
           ))}
+          <MenuItem
+            component={Link} to='/events'
+            onClick={this.handleRequestClose}
+            >
+            View All
+          </MenuItem>
         </Menu>
       </div>
     )
