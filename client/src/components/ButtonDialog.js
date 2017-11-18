@@ -3,12 +3,10 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
-import TextField from 'material-ui/TextField'
 import orange from 'material-ui/colors/orange'
 import Dialog, {
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle
 } from 'material-ui/Dialog'
 
