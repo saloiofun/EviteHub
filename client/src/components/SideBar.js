@@ -9,7 +9,7 @@ import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
 import UserAvatar from './UserAvatar'
 import Brand from './Brand'
-import EventsDropdown from './eventsDropdown'
+import EventsDropdown from './EventsDropdown'
 import { DashboardListItems, GuestListItems, SendInvitesListItems } from './drawerItems'
 
 const drawerWidth = 250
