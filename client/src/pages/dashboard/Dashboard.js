@@ -13,7 +13,6 @@ import ProgressCard from '../../components/progressCard'
 import TodayIcon from 'material-ui-icons/Today'
 import GroupIcon from 'material-ui-icons/Group'
 import ListIcon from 'material-ui-icons/List'
-import WebIcon from 'material-ui-icons/Web'
 
 const styles = theme => ({
   root: {

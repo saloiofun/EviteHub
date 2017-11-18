@@ -51,7 +51,8 @@ class App extends React.Component {
             <SideBar />
             <main className={classes.content}>
               <Switch>
-                <Route exact path='/' component={Dashboard} />
+                <Route exact path='/' component={Login} />
+                <Route exact path='/dashboard' component={Dashboard} />
                 <Route exact path='/events' component={Events} />
                 <Route exact path='/guest-list' component={GuestList} />
                 <Route exact path='/send-invites' component={SendInvites} />
