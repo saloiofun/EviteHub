@@ -6,6 +6,7 @@ import BorderVertical from 'material-ui-icons/BorderVertical'
 import Search from 'material-ui-icons/Search'
 import ButtonRaised from './ButtonRaised'
 import ButtonDialog from './ButtonDialog'
+import CreateEvent from './CreateEvent'
 
 const styles = theme => ({
   leftIcon: {
@@ -22,7 +23,7 @@ function IconLabelButtons (props) {
     <div>
       <ButtonDialog text='New Event'>
         <Pages className={classes.leftIcon} />
-        Sample Form
+        <CreateEvent />
       </ButtonDialog>
       <ButtonRaised text='Invitation Maker'>
         <BorderVertical className={classes.leftIcon} />
