@@ -5,6 +5,7 @@ import { withStyles } from 'material-ui/styles'
 import Dashboard from './pages/dashboard'
 import chooseEventAction from './pages/chooseEventAction'
 import addEvent from './pages/addEvent'
+import viewEvents from './pages/viewEvents'
 import GuestList from './pages/guestList'
 import SendInvites from './pages/sendInvites'
 import Login from './pages/login'
@@ -55,6 +56,7 @@ class App extends React.Component {
                 <Route exact path='/' component={Dashboard} />
                 <Route exact path='/events' component={chooseEventAction} />
                 <Route exact path='/events/add' component={addEvent} />
+                <Route exact path='/events/view' component={viewEvents} />
                 <Route exact path='/guest-list' component={GuestList} />
                 <Route exact path='/send-invites' component={SendInvites} />
                 <Route exact path='/login' component={Login} />
