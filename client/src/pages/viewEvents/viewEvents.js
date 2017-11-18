@@ -6,6 +6,7 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 import API from '../../utils/Api'
+import Button from 'material-ui/Button'
 
 const styles = theme => ({
   root: {
@@ -79,7 +80,9 @@ class SimpleCard extends React.Component {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Link to='/' dense>View</Link>
+                  <Button dense component={Link} to='/' >
+                    View
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
