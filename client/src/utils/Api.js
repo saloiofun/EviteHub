@@ -28,5 +28,9 @@ export default {
   // Gets all events of user
   getEvents: function () {
     return axios.get('/api/events/')
+  },
+  // Create Event
+  saveEvent: function (data) {
+    return axios.post('/api/events', data)
   }
 }
