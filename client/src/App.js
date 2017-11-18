@@ -54,9 +54,8 @@ class App extends React.Component {
             <main className={classes.content}>
               <Switch>
                 <Route exact path='/' component={Dashboard} />
-                <Route exact path='/events' component={chooseEventAction} />
+                <Route exact path='/events' component={viewEvents} />
                 <Route exact path='/events/add' component={addEvent} />
-                <Route exact path='/events/view' component={viewEvents} />
                 <Route exact path='/guest-list' component={GuestList} />
                 <Route exact path='/send-invites' component={SendInvites} />
                 <Route exact path='/login' component={Login} />

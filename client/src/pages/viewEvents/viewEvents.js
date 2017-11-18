@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
-import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 import API from '../../utils/Api'
@@ -79,7 +79,7 @@ class SimpleCard extends React.Component {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button dense>Learn More</Button>
+                  <Link to='/' dense>View</Link>
                 </CardActions>
               </Card>
             </Grid>
