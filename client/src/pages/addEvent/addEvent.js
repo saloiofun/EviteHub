@@ -102,6 +102,11 @@ class addEvent extends React.Component {
       location: this.state.location,
       date: this.state.selectedDate
     }
+    this.setState({
+      name: '',
+      location: '',
+      description: ''
+    })
     console.log(eventData)
     API.saveEvent(eventData)
   }
