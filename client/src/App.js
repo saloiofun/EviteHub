@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Dashboard from './pages/dashboard'
 import chooseEventAction from './pages/chooseEventAction'
-import addEvent from './pages/addEvent'
 import GuestList from './pages/guestList'
 import SendInvites from './pages/sendInvites'
 import Login from './pages/login'
@@ -54,7 +53,6 @@ class App extends React.Component {
               <Switch>
                 <Route exact path='/' component={Login} />
                 <Route exact path='/events' component={chooseEventAction} />
-                <Route exact path='/events/add' component={addEvent} />
                 <Route exact path='/dashboard' component={Dashboard} />
                 <Route exact path='/guest-list' component={GuestList} />
                 <Route exact path='/send-invites' component={SendInvites} />
