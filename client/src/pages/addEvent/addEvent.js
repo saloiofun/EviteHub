@@ -8,6 +8,7 @@ import moment from 'moment'
 import { DateTimePicker } from 'material-ui-pickers'
 import KeyboardArrowLeftIcon from 'material-ui-icons/KeyboardArrowLeft'
 import Button from 'material-ui/Button'
+import API from '../../utils/Api'
 
 const styles = theme => ({
   root: {
@@ -75,7 +76,8 @@ const styles = theme => ({
 class addEvent extends React.Component {
   state = {
     name: '',
-    age: '',
+    location: '',
+    description: '',
     selectedDate: moment()
   };
 
@@ -91,6 +93,17 @@ class addEvent extends React.Component {
     this.setState({
       [name]: event.target.value
     })
+  }
+
+  onSubmit = () => {
+    var eventData = {
+      eventName: this.state.name,
+      description: this.state.description,
+      location: this.state.location,
+      date: this.state.selectedDate
+    }
+    console.log(eventData)
+    API.saveEvent(eventData)
   }
 
   renderCustomDayForDateTime = (date, selectedDate, dayInCurrentMonth, dayComponent) => {
@@ -138,6 +151,8 @@ class addEvent extends React.Component {
                   id='location'
                   label='Location'
                   defaultValue=''
+                  value={this.state.location}
+                  onChange={this.handleChange('location')}
                   className={classes.textField}
                   margin='normal'
             />
@@ -162,15 +177,17 @@ class addEvent extends React.Component {
                   InputLabelProps={{
                     shrink: true
                   }}
+                  value={this.state.description}
                   multiline
                   character='10'
+                  onChange={this.handleChange('description')}
                   placeholder='Event Description'
                   fullWidth
                   margin='normal'
                 />
               </Grid>
               <Grid item xs={12} align='center'>
-                <Button raised color='primary' >
+                <Button raised color='primary' onClick={this.onSubmit}>
                   Submit
                 </Button>
               </Grid>
