@@ -24,5 +24,9 @@ export default {
   // User Registration
   registerUser: function (userData) {
     return axios.post('/api/user', userData)
+  },
+  // Create Event
+  saveEvent: function (data) {
+    return axios.post('/api/events', data)
   }
 }
