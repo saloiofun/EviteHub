@@ -7,6 +7,7 @@ import Grid from 'material-ui/Grid'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import CheckboxList from '../../components/Todo'
+import PageHeader from '../../components/PageHeader'
 
 const styles = theme => ({
   root: {
@@ -51,16 +52,8 @@ function Dashboard (props) {
 
   return (
     <div className={classes.root}>
+      <PageHeader />
       <Grid container spacing={24}>
-        <Grid item xs={12} sm={6}>
-          <Typography type='headline'>Title</Typography>
-        </Grid>
-        <Grid item xs={12} sm={5} align='right'>
-          <Typography type='headline'>Location</Typography>
-        </Grid>
-        <Grid item xs={12} sm={1} align='right'>
-          <Typography type='headline'>Date</Typography>
-        </Grid>
         <Grid item xs={12}>
           <CardMedia
             className={classes.progress}
