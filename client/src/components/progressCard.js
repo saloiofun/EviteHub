@@ -13,7 +13,7 @@ const styles = theme => ({
     flexDirection: 'column'
   },
   content: {
-    flex: '0 1 auto'
+    flex: '0 1'
   }
 })
 
@@ -23,15 +23,15 @@ function MediaControlCard (props) {
   return (
     <div>
       <Card className={classes.card}>
+        <CardContent>{props.children}</CardContent>
         <div className={classes.details}>
-          <CardContent className={classes.content}>
-            <Typography type='display1'>{props.info}</Typography>
+          <CardContent className={classes.content} align='left'>
+            <Typography type='display2'>{props.info}</Typography>
             <Typography type='headline' color='secondary'>
               {props.title}
             </Typography>
           </CardContent>
         </div>
-        <CardContent>{props.children}</CardContent>
       </Card>
     </div>
   )

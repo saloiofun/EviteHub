@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import teal from 'material-ui/colors/teal'
 import { withStyles } from 'material-ui/styles'
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
 import Paper from 'material-ui/Paper'
@@ -9,6 +10,10 @@ import Typography from 'material-ui/Typography'
 import CheckboxList from '../../components/Todo'
 import PageHeader from '../../components/PageHeader'
 import ProgressCard from '../../components/progressCard'
+import TodayIcon from 'material-ui-icons/Today'
+import GroupIcon from 'material-ui-icons/Group'
+import ListIcon from 'material-ui-icons/List'
+import WebIcon from 'material-ui-icons/Web'
 
 const styles = theme => ({
   root: {
@@ -45,6 +50,11 @@ const styles = theme => ({
   pos: {
     marginBottom: 12,
     color: theme.palette.text.secondary
+  },
+  progressIcon: {
+    width: 100,
+    height: 'auto',
+    fill: teal[300]
   }
 })
 
@@ -56,16 +66,24 @@ function Dashboard (props) {
       <PageHeader />
       <Grid container spacing={24}>
         <Grid item xs={3}>
-          <ProgressCard title='Days Left' info='3'/>
+          <ProgressCard title='Days Left' info='3'>
+            <TodayIcon className={classes.progressIcon}/>
+          </ProgressCard>
         </Grid>
         <Grid item xs={3}>
-          <ProgressCard title='RSVP' info='25/150'/>
+          <ProgressCard title='RSVP' info='25/150'>
+            <GroupIcon className={classes.progressIcon}/>
+          </ProgressCard>
         </Grid>
         <Grid item xs={3}>
-          <ProgressCard title='To Do' info='15/50'/>
+          <ProgressCard title='To Do' info='15/50'>
+            <ListIcon className={classes.progressIcon}/>
+          </ProgressCard>
         </Grid>
         <Grid item xs={3}>
-          <ProgressCard title='Website' info='45%'/>
+          <ProgressCard title='Website' info='45%'>
+            <WebIcon className={classes.progressIcon}/>
+          </ProgressCard>
         </Grid>
         <Grid item xs={12} sm={8}>
           <Card className={classes.card}>
