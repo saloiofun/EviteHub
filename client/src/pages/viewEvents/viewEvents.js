@@ -71,7 +71,7 @@ class SimpleCard extends React.Component {
                   </Typography>
                   <Typography className={classes.info} component='p'>
                     Location: {event.location} <br />
-                    Date: {event.date} <br />
+                    Date: {event.date.slice(0, 10)} <br />
                     Time: {event.time}
                   </Typography>
                   <Typography component='p'>
