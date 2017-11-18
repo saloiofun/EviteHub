@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
 import teal from 'material-ui/colors/teal'
+import orange from 'material-ui/colors/orange'
 import PropTypes from 'prop-types'
 import Drawer from 'material-ui/Drawer'
 import List from 'material-ui/List'
@@ -30,6 +31,10 @@ const theme = createMuiTheme({
     MuiTypography: {
       subheading: {
         color: 'white'
+      },
+      colorSecondary: {
+        fontWeight: 500,
+        color: orange[300]
       }
     },
     MuiListItemIcon: {
