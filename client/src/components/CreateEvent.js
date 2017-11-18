@@ -1,23 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import Paper from 'material-ui/Paper'
 import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
 import moment from 'moment'
-import { DateTimePicker } from 'material-ui-pickers'
-import KeyboardArrowLeftIcon from 'material-ui-icons/KeyboardArrowLeft'
+// import { DateTimePicker } from 'material-ui-pickers'
+import { TimePicker, DatePicker } from 'material-ui-pickers'
 import Button from 'material-ui/Button'
-import API from '../../utils/Api'
+import API from '../utils/Api'
 
 const styles = theme => ({
-  root: {
-    flex: '1 1 100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '50%'
-    },
-    margin: '0 auto'
-  },
   paper: {
     padding: '10px'
   },
@@ -26,9 +18,7 @@ const styles = theme => ({
     flexWrap: 'wrap'
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200
+    width: 500
   },
   dayWrapper: {
     position: 'relative'
@@ -81,10 +71,6 @@ class addEvent extends React.Component {
     selectedDate: moment()
   };
 
-  goBack = () => {
-    this.props.history.push('/events')
-  }
-
   handleDateChange = (date) => {
     this.setState({ selectedDate: date })
   }
@@ -130,74 +116,71 @@ class addEvent extends React.Component {
     const { selectedDate } = this.state
     const { classes } = this.props
     return (
-      <div className={classes.root}>
+      <div>
         <Grid container direction='column' >
-          <Grid item xs={12}>
-            <Button onClick={this.goBack}>
-              <KeyboardArrowLeftIcon />
-            </Button>
-          </Grid>
-          <Paper className={classes.paper} elevation={4}>
-            <form className={classes.container} noValidate autoComplete='off'>
-              <Grid item xs={12} align='center'>
-                <TextField
-                  required
-                  id='name'
-                  label='Name'
-                  className={classes.textField}
-                  value={this.state.name}
-                  onChange={this.handleChange('name')}
-                  margin='normal'
+          <form className={classes.container} noValidate autoComplete='off'>
+            <Grid item xs={12}>
+              <TextField
+                required
+                id='name'
+                label='Name'
+                className={classes.textField}
+                value={this.state.name}
+                onChange={this.handleChange('name')}
+                margin='normal'
             />
-              </Grid>
-              <Grid item xs={12} align='center'>
-                <TextField
-                  required
-                  id='location'
-                  label='Location'
-                  defaultValue=''
-                  value={this.state.location}
-                  onChange={this.handleChange('location')}
-                  className={classes.textField}
-                  margin='normal'
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                id='location'
+                label='Location'
+                value={this.state.location}
+                onChange={this.handleChange('location')}
+                className={classes.textField}
+                margin='normal'
             />
-              </Grid>
-              <Grid item xs={12} align='center'>
-                <div key='custom_day' className='picker'>
-                  <DateTimePicker
-                    id='dateTime'
-                    label='Date and Time'
-                    style={{width: '200px'}}
-                    autoSubmit={false}
-                    value={selectedDate}
-                    onChange={this.handleDateChange}
-                    renderDay={this.renderCustomDayForDateTime}
+            </Grid>
+            <Grid item xs={6}>
+              <DatePicker
+                label='Date'
+                value={selectedDate}
+                onChange={this.handleDateChange}
+                animateYearScrolling={false}
+                leftArrowIcon='<'
+                rightArrowIcon='>'
               />
-                </div>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id='full-width'
-                  label='Event Description'
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  value={this.state.description}
-                  multiline
-                  character='10'
-                  onChange={this.handleChange('description')}
-                  placeholder='Event Description'
-                  fullWidth
-                  margin='normal'
+            </Grid>
+            <Grid item xs={6}>
+              <TimePicker
+                label='Time'
+                value={this.state.selectedDate}
+                onChange={this.handleDateChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                id='full-width'
+                label='Event Description'
+                InputLabelProps={{
+                  shrink: true
+                }}
+                value={this.state.description}
+                multiline
+                character='10'
+                onChange={this.handleChange('description')}
+                placeholder='Event Description'
+                fullWidth
+                margin='normal'
                 />
-              </Grid>
-              <Grid item xs={12} align='center'>
-                <Button raised color='primary' onClick={this.onSubmit}>
+            </Grid>
+            <Grid item xs={12} align='center'>
+              <Button raised color='primary' onClick={this.onSubmit}>
                   Submit
                 </Button>
-              </Grid>
-            </form>
-          </Paper>
+            </Grid>
+          </form>
         </Grid>
       </div>
     )
