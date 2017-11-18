@@ -6,8 +6,10 @@ import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Badge from 'material-ui/Badge'
 import IconButton from 'material-ui/IconButton'
+import Hidden from 'material-ui/Hidden'
 import NotificationsIcon from 'material-ui-icons/Notifications'
 import MenuIcon from 'material-ui-icons/Menu'
+import NavButtons from '../components/NavButtons'
 
 const drawerWidth = 250
 
@@ -29,6 +31,11 @@ const styles = theme => ({
   },
   navIconHide: {
     [theme.breakpoints.up('md')]: {
+      display: 'none'
+    }
+  },
+  navButtonsHide: {
+    [theme.breakpoints.up('xs')]: {
       display: 'none'
     }
   },
@@ -57,9 +64,13 @@ class NavBar extends Component {
               aria-label='open drawer'
               onClick={this.handleDrawerToggle}
               className={classes.navIconHide}
-          >
+            >
               <MenuIcon />
             </IconButton>
+            <Hidden smDown>
+              <NavButtons />
+            </Hidden>
+            <div className={classes.flex} />
             <IconButton>
               <Badge className={classes.badge} badgeContent={4} color='accent'>
                 <NotificationsIcon />

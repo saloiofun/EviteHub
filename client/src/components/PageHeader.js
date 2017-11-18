@@ -17,7 +17,7 @@ function PaperSheet (props) {
   return (
     <div>
       <Paper className={classes.root} elevation={4}>
-        <Typography type='headline' component='h3'>
+        <Typography type='display1' component='h3'>
           Dashboard
         </Typography>
         <Typography type='body1' component='p'>

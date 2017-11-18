@@ -1,13 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
-import IconButton from 'material-ui/IconButton'
+import Card, { CardContent } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
-import SkipPreviousIcon from 'material-ui-icons/SkipPrevious'
-import Button from 'material-ui/Button'
-import PlayArrowIcon from 'material-ui-icons/PlayArrow'
-import SkipNextIcon from 'material-ui-icons/SkipNext'
 
 const styles = theme => ({
   card: {
@@ -50,7 +45,7 @@ function MediaControlCard (props) {
             </Typography>
           </CardContent>
         </div>
-        <CardMedia>{props.children}</CardMedia>
+        <CardContent>{props.children}</CardContent>
       </Card>
     </div>
   )

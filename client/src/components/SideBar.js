@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
-import orange from 'material-ui/colors/orange'
 import teal from 'material-ui/colors/teal'
 import PropTypes from 'prop-types'
 import Drawer from 'material-ui/Drawer'
@@ -34,7 +33,7 @@ const theme = createMuiTheme({
     },
     MuiListItemIcon: {
       root: {
-        color: orange[600]
+        color: teal[900]
       }
     }
   }
