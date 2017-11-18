@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
-import blueGrey from 'material-ui/colors/blueGrey'
+import teal from 'material-ui/colors/teal'
 import PropTypes from 'prop-types'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
@@ -13,7 +13,7 @@ const drawerWidth = 250
 
 const theme = createMuiTheme({
   palette: {
-    primary: blueGrey
+    primary: teal
   }
 })
 

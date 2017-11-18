@@ -1,8 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
+import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
+
+const theme = createMuiTheme({
+  overrides: {
+    MuiTypography: {
+      subheading: {
+        color: '#FFF'
+      },
+      colorSecondary: {
+        color: '#FFF'
+      }
+    }
+  }
+})
 
 const styles = theme => ({
   root: {
@@ -17,18 +30,20 @@ const styles = theme => ({
 function UserAvatar (props) {
   const { classes } = props
   return (
-    <div className={classes.root}>
-      <List>
-        <ListItem>
-          <Avatar
-            alt='John Doe'
-            src='/static/images/johnDoe.png'
-            className={classes.bigAvatar}
+    <MuiThemeProvider theme={theme}>
+      <div className={classes.root}>
+        <List>
+          <ListItem>
+            <Avatar
+              alt='John Doe'
+              src='/static/images/johnDoe.png'
+              className={classes.bigAvatar}
           />
-          <ListItemText primary='John Doe' secondary='johndoe@example.com' />
-        </ListItem>
-      </List>
-    </div>
+            <ListItemText primary='John Doe' secondary='johndoe@example.com' />
+          </ListItem>
+        </List>
+      </div>
+    </MuiThemeProvider>
   )
 }
 
@@ -36,4 +51,4 @@ UserAvatar.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(UserAvatar)
+export default withStyles(styles, theme)(UserAvatar)
