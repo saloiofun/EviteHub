@@ -167,7 +167,12 @@ class addEvent extends React.Component {
                   placeholder='Event Description'
                   fullWidth
                   margin='normal'
-            />
+                />
+              </Grid>
+              <Grid item xs={12} align='center'>
+                <Button raised color='primary' >
+                  Submit
+                </Button>
               </Grid>
             </form>
           </Paper>
