@@ -56,7 +56,7 @@ function Dashboard (props) {
       <PageHeader />
       <Grid container spacing={24}>
         <Grid item xs={3}>
-          <ProgressCard title='Event Day' />
+          <ProgressCard title='Days Left' />
         </Grid>
         <Grid item xs={3}>
           <ProgressCard title='RSVP' />
