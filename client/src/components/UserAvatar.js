@@ -4,9 +4,9 @@ import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import IconButton from 'material-ui/IconButton'
 import Avatar from 'material-ui/Avatar'
-import PowerSettingsNew from 'material-ui-icons/PowerSettingsNew'
-import Settings from 'material-ui-icons/Settings'
-import Email from 'material-ui-icons/Email'
+import PowerSettingsNewIcon from 'material-ui-icons/PowerSettingsNew'
+import EmailIcon from 'material-ui-icons/Email'
+import SettingsIcon from 'material-ui-icons/Settings'
 
 const theme = createMuiTheme({
   overrides: {
@@ -58,16 +58,15 @@ function UserAvatar (props) {
         </List>
         <div className={classes.details}>
           <IconButton className={classes.button} aria-label='Logout'>
-            <PowerSettingsNew />
+            <PowerSettingsNewIcon />
           </IconButton>
-          <IconButton className={classes.button} aria-label='Message'>
-            <Email />
+          <IconButton className={classes.button} aria-label='Inbox'>
+            <EmailIcon />
           </IconButton>
           <IconButton className={classes.button} aria-label='Settings'>
-            <Settings />
+            <SettingsIcon />
           </IconButton>
         </div>
-
       </div>
     </MuiThemeProvider>
   )

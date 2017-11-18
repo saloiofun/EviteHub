@@ -8,6 +8,7 @@ import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
 import UserAvatar from '../components/UserAvatar'
 import Brand from '../components/Brand'
+import EventsDropdown from './EventsDropdown'
 import { DashboardListItems, EventsListItems, GuestListItems, SendInvitesListItems } from '../components/drawerItems'
 
 const drawerWidth = 250
@@ -86,8 +87,9 @@ class SideBar extends Component {
         <div className={classes.drawerHeader}>
           <Brand />
         </div>
-        <Divider />
         <UserAvatar />
+        <Divider />
+        <EventsDropdown />
         <Divider />
         <List><DashboardListItems /></List>
         <List><EventsListItems /></List>
