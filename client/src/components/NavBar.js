@@ -8,7 +8,6 @@ import Badge from 'material-ui/Badge'
 import IconButton from 'material-ui/IconButton'
 import NotificationsIcon from 'material-ui-icons/Notifications'
 import MenuIcon from 'material-ui-icons/Menu'
-import Typography from 'material-ui/Typography'
 
 const drawerWidth = 250
 
@@ -61,9 +60,6 @@ class NavBar extends Component {
           >
               <MenuIcon />
             </IconButton>
-            <Typography type='title' color='inherit' className={classes.flex} noWrap>
-            EviteHub
-          </Typography>
             <IconButton>
               <Badge className={classes.badge} badgeContent={4} color='accent'>
                 <NotificationsIcon />

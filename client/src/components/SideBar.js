@@ -1,28 +1,54 @@
 import React, { Component } from 'react'
-import { withStyles } from 'material-ui/styles'
+import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
+import blueGrey from 'material-ui/colors/blueGrey'
 import PropTypes from 'prop-types'
 import Drawer from 'material-ui/Drawer'
 import List from 'material-ui/List'
-import Typography from 'material-ui/Typography'
-import KeyboardArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
-import Avatar from 'material-ui/Avatar'
 import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
+import UserAvatar from '../components/UserAvatar'
+import Brand from '../components/Brand'
 import { DashboardListItems, EventsListItems, GuestListItems, SendInvitesListItems } from '../components/drawerItems'
 
 const drawerWidth = 250
 
+const theme = createMuiTheme({
+  overrides: {
+    MuiPaper: {
+      // Name of the styleSheet
+      root: {
+        // Name of the rule
+        backgroundColor: blueGrey[700]
+      }
+    }
+  }
+})
+
 const styles = theme => ({
   bigAvatar: {
-    width: 150,
-    height: 150,
+    width: 60,
+    height: 60,
     margin: '5px auto'
   },
+  // drawerHeader: theme.mixins.toolbar,
   drawerHeader: {
+    height: 64,
+    backgroundColor: blueGrey[500],
+    margin: '0 auto'
+  },
+  drawerAvatar: {
     height: '215px',
     textAlign: 'center',
     paddingTop: '20px'
   },
+  flex: {
+    flex: '0 1 100%'
+  },
+  // drawerHeader: {
+  //   height: '215px',
+  //   textAlign: 'center',
+  //   paddingTop: '20px'
+  // },
   drawerPaper: {
     width: 250,
     [theme.breakpoints.up('md')]: {
@@ -45,20 +71,15 @@ class SideBar extends Component {
   }
 
   render () {
-    const { classes, theme } = this.props
+    const { classes } = this.props
 
     const drawer = (
       <div>
         <div className={classes.drawerHeader}>
-          <Avatar
-            alt='John Doe'
-            src='/static/images/johnDoe.png'
-            className={classes.bigAvatar}
-            />
-          <Typography type='title' gutterBottom>
-              John Doe <KeyboardArrowDownIcon />
-          </Typography>
+          <Brand />
         </div>
+        <Divider />
+        <UserAvatar />
         <Divider />
         <List><DashboardListItems /></List>
         <List><EventsListItems /></List>
@@ -68,11 +89,11 @@ class SideBar extends Component {
     )
 
     return (
-      <div className={classes.root}>
+      <MuiThemeProvider theme={theme}>
         <Hidden mdUp>
           <Drawer
             type='temporary'
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            anchor='left'
             open={this.state.mobileOpen}
             classes={{
               paper: classes.drawerPaper
@@ -96,13 +117,12 @@ class SideBar extends Component {
             {drawer}
           </Drawer>
         </Hidden>
-      </div>
+      </MuiThemeProvider>
     )
   }
 }
 SideBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles, { withTheme: true })(SideBar)
+export default withStyles(styles, theme)(SideBar)
