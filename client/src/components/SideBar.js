@@ -1,27 +1,67 @@
 import React, { Component } from 'react'
-import { withStyles } from 'material-ui/styles'
+import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
+import teal from 'material-ui/colors/teal'
+import orange from 'material-ui/colors/orange'
 import PropTypes from 'prop-types'
 import Drawer from 'material-ui/Drawer'
 import List from 'material-ui/List'
-import Typography from 'material-ui/Typography'
-import KeyboardArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
-import Avatar from 'material-ui/Avatar'
 import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
-import { DashboardListItems, EventsListItems, GuestListItems, SendInvitesListItems } from '../components/drawerItems'
+import UserAvatar from './UserAvatar'
+import Brand from './Brand'
+import EventsDropdown from './EventsDropdown'
+import { DashboardListItems, GuestListItems, SendInvitesListItems } from './drawerItems'
 
 const drawerWidth = 250
 
+const theme = createMuiTheme({
+  overrides: {
+    MuiPaper: {
+      // Name of the styleSheet
+      root: {
+        // Name of the rule
+        backgroundColor: teal[500]
+      }
+    },
+    MuiDrawer: {
+      paperAnchorDockedLeft: {
+        borderRight: 'none'
+      }
+    },
+    MuiTypography: {
+      subheading: {
+        color: 'white'
+      },
+      colorSecondary: {
+        fontWeight: 500,
+        color: orange[300]
+      }
+    },
+    MuiListItemIcon: {
+      root: {
+        color: teal[900]
+      }
+    }
+  }
+})
+
 const styles = theme => ({
   bigAvatar: {
-    width: 150,
-    height: 150,
+    width: 60,
+    height: 60,
     margin: '5px auto'
   },
   drawerHeader: {
+    height: 64,
+    backgroundColor: teal[800]
+  },
+  drawerAvatar: {
     height: '215px',
     textAlign: 'center',
     paddingTop: '20px'
+  },
+  flex: {
+    flex: '0 1 100%'
   },
   drawerPaper: {
     width: 250,
@@ -45,34 +85,29 @@ class SideBar extends Component {
   }
 
   render () {
-    const { classes, theme } = this.props
+    const { classes } = this.props
 
     const drawer = (
       <div>
         <div className={classes.drawerHeader}>
-          <Avatar
-            alt='John Doe'
-            src='/static/images/johnDoe.png'
-            className={classes.bigAvatar}
-            />
-          <Typography type='title' gutterBottom>
-              John Doe <KeyboardArrowDownIcon />
-          </Typography>
+          <Brand />
         </div>
+        <UserAvatar />
+        <Divider />
+        <EventsDropdown />
         <Divider />
         <List><DashboardListItems /></List>
-        <List><EventsListItems /></List>
         <List><GuestListItems /></List>
         <List><SendInvitesListItems /></List>
       </div>
     )
 
     return (
-      <div className={classes.root}>
+      <MuiThemeProvider theme={theme}>
         <Hidden mdUp>
           <Drawer
             type='temporary'
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            anchor='left'
             open={this.state.mobileOpen}
             classes={{
               paper: classes.drawerPaper
@@ -96,13 +131,12 @@ class SideBar extends Component {
             {drawer}
           </Drawer>
         </Hidden>
-      </div>
+      </MuiThemeProvider>
     )
   }
 }
 SideBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles, { withTheme: true })(SideBar)
+export default withStyles(styles, theme)(SideBar)
