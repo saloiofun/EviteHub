@@ -8,6 +8,7 @@ import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import CheckboxList from '../../components/Todo'
 import PageHeader from '../../components/PageHeader'
+import ProgressCard from '../../components/progressCard'
 
 const styles = theme => ({
   root: {
@@ -54,12 +55,17 @@ function Dashboard (props) {
     <div className={classes.root}>
       <PageHeader />
       <Grid container spacing={24}>
-        <Grid item xs={12}>
-          <CardMedia
-            className={classes.progress}
-            image='/static/images/cards/progress.png'
-            title='Progress'
-          />
+        <Grid item xs={3}>
+          <ProgressCard title='Event Day' />
+        </Grid>
+        <Grid item xs={3}>
+          <ProgressCard title='RSVP' />
+        </Grid>
+        <Grid item xs={3}>
+          <ProgressCard title='To Do' />
+        </Grid>
+        <Grid item xs={3}>
+          <ProgressCard title='Website' />
         </Grid>
         <Grid item xs={12} sm={8}>
           <Card className={classes.card}>
