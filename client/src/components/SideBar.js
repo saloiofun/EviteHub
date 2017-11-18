@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
-import blueGrey from 'material-ui/colors/blueGrey'
+import orange from 'material-ui/colors/orange'
+import teal from 'material-ui/colors/teal'
 import PropTypes from 'prop-types'
 import Drawer from 'material-ui/Drawer'
 import List from 'material-ui/List'
@@ -18,7 +19,22 @@ const theme = createMuiTheme({
       // Name of the styleSheet
       root: {
         // Name of the rule
-        backgroundColor: blueGrey[700]
+        backgroundColor: teal[500]
+      }
+    },
+    MuiDrawer: {
+      paperAnchorDockedLeft: {
+        borderRight: 'none'
+      }
+    },
+    MuiTypography: {
+      subheading: {
+        color: 'white'
+      }
+    },
+    MuiListItemIcon: {
+      root: {
+        color: orange[600]
       }
     }
   }
@@ -30,11 +46,9 @@ const styles = theme => ({
     height: 60,
     margin: '5px auto'
   },
-  // drawerHeader: theme.mixins.toolbar,
   drawerHeader: {
     height: 64,
-    backgroundColor: blueGrey[500],
-    margin: '0 auto'
+    backgroundColor: teal[800]
   },
   drawerAvatar: {
     height: '215px',
@@ -44,11 +58,6 @@ const styles = theme => ({
   flex: {
     flex: '0 1 100%'
   },
-  // drawerHeader: {
-  //   height: '215px',
-  //   textAlign: 'center',
-  //   paddingTop: '20px'
-  // },
   drawerPaper: {
     width: 250,
     [theme.breakpoints.up('md')]: {
