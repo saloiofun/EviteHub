@@ -16,7 +16,7 @@ function CircularDeterminate (props) {
       <CircularProgress
         color={props.color}
         className={classes.progress}
-        size={200}
+        size={150}
         mode='determinate'
         value={props.value}
         min={0}

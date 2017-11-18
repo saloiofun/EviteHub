@@ -56,22 +56,22 @@ function Dashboard (props) {
       <PageHeader />
       <Grid container spacing={24}>
         <Grid item xs={3}>
-          <ProgressCard title='Days Left' />
+          <ProgressCard title='Days Left' info='3'/>
         </Grid>
         <Grid item xs={3}>
-          <ProgressCard title='RSVP' />
+          <ProgressCard title='RSVP' info='25/150'/>
         </Grid>
         <Grid item xs={3}>
-          <ProgressCard title='To Do' />
+          <ProgressCard title='To Do' info='15/50'/>
         </Grid>
         <Grid item xs={3}>
-          <ProgressCard title='Website' />
+          <ProgressCard title='Website' info='45%'/>
         </Grid>
         <Grid item xs={12} sm={8}>
           <Card className={classes.card}>
             <CardMedia
               className={classes.media}
-              image='/static/images/cards/website.png'
+              image='/static/images/cards/contemplative-reptile.jpg'
               title='Website'
             />
             <CardContent>

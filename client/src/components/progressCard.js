@@ -13,21 +13,7 @@ const styles = theme => ({
     flexDirection: 'column'
   },
   content: {
-    flex: '1 0 auto'
-  },
-  cover: {
-    width: 151,
-    height: 151
-  },
-  controls: {
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit
-  },
-  playIcon: {
-    height: 38,
-    width: 38
+    flex: '0 1 auto'
   }
 })
 
@@ -39,9 +25,9 @@ function MediaControlCard (props) {
       <Card className={classes.card}>
         <div className={classes.details}>
           <CardContent className={classes.content}>
-            <Typography type='headline'>{props.title}</Typography>
-            <Typography type='subheading' color='secondary'>
-              Mac Miller
+            <Typography type='display1'>{props.info}</Typography>
+            <Typography type='headline' color='secondary'>
+              {props.title}
             </Typography>
           </CardContent>
         </div>
