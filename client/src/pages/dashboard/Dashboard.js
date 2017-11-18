@@ -13,7 +13,6 @@ import ProgressCard from '../../components/progressCard'
 import TodayIcon from 'material-ui-icons/Today'
 import GroupIcon from 'material-ui-icons/Group'
 import ListIcon from 'material-ui-icons/List'
-import WebIcon from 'material-ui-icons/Web'
 
 const styles = theme => ({
   root: {
@@ -65,24 +64,19 @@ function Dashboard (props) {
     <div className={classes.root}>
       <PageHeader />
       <Grid container spacing={24}>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={4}>
           <ProgressCard title='Days Left' info='3'>
             <TodayIcon className={classes.progressIcon} />
           </ProgressCard>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={4}>
           <ProgressCard title='RSVP' info='25/150'>
             <GroupIcon className={classes.progressIcon} />
           </ProgressCard>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={4}>
           <ProgressCard title='To Do' info='15/50'>
             <ListIcon className={classes.progressIcon} />
-          </ProgressCard>
-        </Grid>
-        <Grid item xs={3}>
-          <ProgressCard title='Website' info='45%'>
-            <WebIcon className={classes.progressIcon} />
           </ProgressCard>
         </Grid>
         <Grid item xs={12} sm={8}>
