@@ -44,17 +44,25 @@ class GuestList extends Component {
   componentDidMount () {
     this.loadGuest()
   }
-// handle call all guest
+  // handle call all guest
   loadGuest = () => {
     API.getGuests()
       .then(res => this.setState({ allGuest: res.data }))
       .catch(err => console.log(err))
   };
-// handle delete a guest with the given id
+  // handle delete a guest with the given id
   deleteGuest = id => {
     API.deleteGuest(id)
       .then(res => this.loadGuest())
       .catch(err => console.log(err))
+  };
+  // open new guest modal
+  newDialogOpen = () => {
+    this.setState({ newDialog: true })
+  };
+  // close new guest modal
+  newDialogClose = () => {
+    this.setState({ newDialog: false })
   };
 }
 export default GuestList
