@@ -27,8 +27,8 @@ const styles = theme => ({
     },
     margin: '0 auto'
   },
-  textField: {
-    marginTop: theme.spacing.unit
+  spaceBottom: {
+    marginBottom: theme.spacing.unit
   },
   TableCell: { textAlign: 'center' },
   Avatar: { backgroundColor: '#009688' },
@@ -157,7 +157,7 @@ class GuestList extends Component {
         <Dialog open={this.state.newDialog} onRequestClose={this.newDialogClose}>
           <DialogTitle>New Guest</DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText className={classes.spaceBottom}>
              You can add a new guest information here
            </DialogContentText>
             <Grid container spacing={24}>
