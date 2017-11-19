@@ -2,9 +2,16 @@ const db = require('../models')
 
 // Defining methods for the Controller
 module.exports = {
-  findGuestAttend: function (req, res) {
+  findGuest: function (req, res) {
     db.Guest
-      .find({ rsvp: true })
+      .find({})
+      .sort({ rsvp: -1 })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err))
+  },
+  findGuestById: function (req, res) {
+    db.Guest
+      .findById({_id: req.params.id})
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err))
   },
