@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router, Route, Switch } from 'react-router-dom'
+import { Redirect, Router, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Dashboard from './pages/dashboard'
@@ -13,6 +13,7 @@ import Home from './pages/home'
 import Callback from './callback'
 import Auth from './auth'
 import history from './history'
+import Profile from './pages/profile'
 
 // Authentication
 const auth = new Auth()
@@ -69,6 +70,13 @@ class App extends React.Component {
                 <Route exact path='/guest-list' component={GuestList} />
                 <Route exact path='/send-invites' component={SendInvites} />
                 <Route exact path='/registration' component={Registration} />
+                <Route path='/profile' render={(props) => (
+                !auth.isAuthenticated() ? (
+                  <Redirect to='/' />
+                ) : (
+                  <Profile auth={auth} {...props} />
+                )
+                )} />
                 <Route path='/callback' render={(props) => {
                   handleAuthentication(props)
                   return <Callback {...props} />
