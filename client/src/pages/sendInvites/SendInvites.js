@@ -5,6 +5,7 @@ import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
 import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
+import API from '../../utils/Api'
 
 const styles = theme => ({
   root: {
@@ -25,7 +26,10 @@ const styles = theme => ({
 
 class SendInvites extends React.Component {
   state = {
-    subject: 'Event Name'
+    to: '',
+    subject: 'Event Name',
+    message: `Hi, you are invited to my event! 
+Please click on the link to let me know if you can make it!`
   }
 
   handleChange = name => event => {
@@ -33,6 +37,24 @@ class SendInvites extends React.Component {
       [name]: event.target.value
     })
   };
+
+  onSend = () => {
+    var email = {
+      to: this.state.to,
+      subject: this.state.subject,
+      message: this.state.message,
+      user: 'Test User',
+      url: 'google.com'
+    }
+    console.log(email)
+    // API.sendEmail(email)
+    // .then(function(data){
+    //   console.log(data)
+    // })
+    // .catch(function(err){
+    //   if (err) throw err
+    // });
+  }
 
   render () {
     const { classes } = this.props
@@ -44,9 +66,11 @@ class SendInvites extends React.Component {
             <TextField
               label='To'
               placeholder='To'
+              value={this.state.to}
               className={classes.textField}
               fullWidth
               margin='normal'
+              onChange={this.handleChange('to')}
           />
           </Grid>
           <Grid item xs={11} className={classes.grids}>
@@ -62,20 +86,21 @@ class SendInvites extends React.Component {
           </Grid>
           <Grid item xs={11} className={classes.grids}>
             <TextField
-              id='body'
+              id='message'
+              label='Message'
               multiline
               rows='10'
               fullWidth
-              defaultValue={`Hi you are invited to my event! 
-Please click on the link to let me know if you can make it!`}
+              value={this.state.message}
               className={classes.textField}
               margin='normal'
+              onChange={this.handleChange('message')}
             />
           </Grid>
           <Grid item xs={2} align='center'>
-            <Button raised color='primary' >
-            Send
-          </Button>
+            <Button raised color='primary' onClick = {this.onSend} >
+              Send
+            </Button>
           </Grid>
         </Grid>
       </Paper>
