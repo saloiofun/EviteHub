@@ -1,6 +1,6 @@
 const db = require('../models')
 
-// Defining methods for the Controller
+// Defining methods for guest Controller
 module.exports = {
   findGuest: function (req, res) {
     db.Guest
