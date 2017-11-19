@@ -7,18 +7,15 @@ import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 import API from '../../utils/Api'
 import Button from 'material-ui/Button'
+import PageHeader from '../../components/PageHeader'
 
 const styles = theme => ({
   root: {
     flex: '1 1 100%',
     [theme.breakpoints.up('sm')]: {
-      width: '50%'
+      width: '80%'
     },
     margin: '0 auto'
-  },
-  card: {
-    width: '100%',
-    marginTop: 20
   },
   title: {
     marginBottom: 16,
@@ -53,10 +50,11 @@ class SimpleCard extends React.Component {
   render () {
     const { classes } = this.props
     return (
-      <div >
-        <Grid container>
+      <div className={classes.root}>
+        <PageHeader title='Events' body={`Manage your Events!`} />
+        <Grid container spacing={24}>
           {this.state.events.map(event => (
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
