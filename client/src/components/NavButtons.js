@@ -22,7 +22,7 @@ function IconLabelButtons (props) {
   const { classes } = props
   return (
     <div>
-      <ButtonDialog text='New Event'>
+      <ButtonDialog text='New Event' title='New Event'>
         <Pages className={classes.leftIcon} />
         <CreateEvent />
       </ButtonDialog>
