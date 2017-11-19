@@ -15,7 +15,6 @@ module.exports = {
       .catch(err => res.status(422).json(err))
   },
   createEvent: function (req, res) {
-    console.log(req)
     db.Event
       .create(req.body)
       .then(dbModel => res.json(dbModel))

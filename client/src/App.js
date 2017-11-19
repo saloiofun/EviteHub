@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Dashboard from './pages/dashboard'
-import Events from './pages/events'
+import viewEvents from './pages/viewEvents'
 import GuestList from './pages/guestList'
 import SendInvites from './pages/sendInvites'
 import Login from './pages/login'
@@ -51,8 +51,9 @@ class App extends React.Component {
             <SideBar />
             <main className={classes.content}>
               <Switch>
-                <Route exact path='/' component={Dashboard} />
-                <Route exact path='/events' component={Events} />
+                <Route exact path='/' component={Login} />
+                <Route exact path='/events' component={viewEvents} />
+                <Route exact path='/dashboard' component={Dashboard} />
                 <Route exact path='/guest-list' component={GuestList} />
                 <Route exact path='/send-invites' component={SendInvites} />
                 <Route exact path='/login' component={Login} />

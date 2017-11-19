@@ -9,7 +9,8 @@ import IconButton from 'material-ui/IconButton'
 import Hidden from 'material-ui/Hidden'
 import NotificationsIcon from 'material-ui-icons/Notifications'
 import MenuIcon from 'material-ui-icons/Menu'
-import NavButtons from '../components/NavButtons'
+import NavButtons from './NavButtons'
+import ButtonRaised from './ButtonRaised'
 
 const drawerWidth = 250
 
@@ -71,6 +72,7 @@ class NavBar extends Component {
               <NavButtons />
             </Hidden>
             <div className={classes.flex} />
+            <ButtonRaised text='Sign in' link='/login' />
             <IconButton>
               <Badge className={classes.badge} badgeContent={4} color='accent'>
                 <NotificationsIcon />

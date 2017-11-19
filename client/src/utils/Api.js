@@ -24,5 +24,13 @@ export default {
   // User Registration
   registerUser: function (userData) {
     return axios.post('/api/user', userData)
+  },
+  // Gets all events of user
+  getEvents: function () {
+    return axios.get('/api/events/')
+  },
+  // Create Event
+  saveEvent: function (data) {
+    return axios.post('/api/events', data)
   }
 }
