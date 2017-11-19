@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
+import { Link } from 'react-router-dom'
 import teal from 'material-ui/colors/teal'
 import PropTypes from 'prop-types'
 import AppBar from 'material-ui/AppBar'
@@ -72,7 +73,7 @@ class NavBar extends Component {
               <NavButtons />
             </Hidden>
             <div className={classes.flex} />
-            <ButtonRaised text='Sign in' link='/login' />
+            <ButtonRaised text='Sign in' component={Link} to='/login' />
             <IconButton>
               <Badge className={classes.badge} badgeContent={4} color='accent'>
                 <NotificationsIcon />

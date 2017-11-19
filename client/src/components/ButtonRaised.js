@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 import orange from 'material-ui/colors/orange'
 import Button from 'material-ui/Button'
@@ -24,7 +23,7 @@ const styles = theme => ({
 function ButtonRaised (props) {
   const { classes } = props
   return (
-    <Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' component={Link} to={`${props.link}`}>
+    <Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' {...props}>
       {props.children}
       {props.text}
     </Button>

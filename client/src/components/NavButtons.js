@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 import Pages from 'material-ui-icons/Pages'
 import BorderVertical from 'material-ui-icons/BorderVertical'
@@ -25,10 +26,10 @@ function IconLabelButtons (props) {
         <Pages className={classes.leftIcon} />
         <CreateEvent />
       </ButtonDialog>
-      <ButtonRaised text='Invitation Maker'>
+      <ButtonRaised text='Invitation Maker' component={Link} to='/events'>
         <BorderVertical className={classes.leftIcon} />
       </ButtonRaised>
-      <ButtonRaised text='Find'>
+      <ButtonRaised text='Find' component={Link} to='/guest-list' >
         <Search className={classes.leftIcon} />
       </ButtonRaised>
     </div>
