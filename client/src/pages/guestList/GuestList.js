@@ -38,10 +38,16 @@ const styles = theme => ({
   FaceIcon: { color: 'white' }
 })
 
-const GuestList = () => (
-  <Button raised color='primary'>
-    Guest List
-  </Button>
-)
-
+class GuestList extends Component {
+  state = {
+    allGuest: [],
+    newDialog: false,
+    editDialog: false,
+    editGuest: {},
+    id: '',
+    name: '',
+    party: '',
+    email: ''
+  };
+}
 export default GuestList
