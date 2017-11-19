@@ -27,6 +27,17 @@ const styles = theme => ({
   FaceIcon: { color: 'white' }
 })
 
+const styles = theme => ({
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 250
+  },
+  TableCell: { textAlign: 'center' },
+  Avatar: { backgroundColor: '#009688' },
+  FaceIcon: { color: 'white' }
+})
+
 const GuestList = () => (
   <Button raised color='primary'>
     Guest List
