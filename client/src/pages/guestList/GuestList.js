@@ -14,9 +14,18 @@ import Button from 'material-ui/Button'
 import Tooltip from 'material-ui/Tooltip'
 import { withStyles } from 'material-ui/styles'
 import PropTypes from 'prop-types'
+import PageHeader from '../../components/PageHeader'
+import { FormControlLabel, FormGroup } from 'material-ui/Form'
 
 // const for style
 const styles = theme => ({
+  root: {
+    flex: '1 1 100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '80%'
+    },
+    margin: '0 auto'
+  },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
@@ -84,36 +93,47 @@ class GuestList extends Component {
   render () {
     const { classes } = this.props
     return (
-      <div>
-
+      <div className={classes.root}>
+        <PageHeader title='Guest List' body='Manage your Guest List!' />
         <Chip
           avatar={
             <Avatar className={classes.Avatar}>
               <FaceIcon className={classes.FaceIcon} />
             </Avatar>
          }
-          label=' Add a Guest ' style={{ backgroundColor: '#009688', color: 'white'}}
-          onRequestDelete={this.newDialogOpen} deleteIcon={<AddIcon style={{ color: 'white'}} />}
+          label=' Add a Guest ' style={{backgroundColor: '#009688', color: 'white'}}
+          onRequestDelete={this.newDialogOpen} deleteIcon={<AddIcon style={{color: 'white'}} />}
        />
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell className={classes.TableCell}>NAME</TableCell>
-              <TableCell className={classes.TableCell}>RSVP</TableCell>
-              <TableCell className={classes.TableCell}>PARTY</TableCell>
-              <TableCell className={classes.TableCell}>CONTACT</TableCell>
-              <TableCell className={classes.TableCell}>EDIT</TableCell>
+              <TableCell>NAME</TableCell>
+              <TableCell>RSVP</TableCell>
+              <TableCell>PARTY</TableCell>
+              <TableCell>CONTACT</TableCell>
+              <TableCell>EDIT</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {this.state.allGuest.map(n => {
               return (
                 <TableRow key={n._id}>
-                  <TableCell className={classes.TableCell}>{n.guestName}</TableCell>
-                  <TableCell className={classes.TableCell}><Switch checked={n.rsvp} onChange={this.rsvpToggle(n._id, n.rsvp)} />{n.rsvp ? 'Yes' : 'No'}</TableCell>
-                  <TableCell className={classes.TableCell}>{n.guestParty}</TableCell>
-                  <TableCell className={classes.TableCell}>{n.guestEmail}</TableCell>
-                  <TableCell className={classes.TableCell}>
+                  <TableCell>{n.guestName}</TableCell>
+                  <TableCell>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={n.rsvp}
+                            onChange={this.rsvpToggle(n._id, n.rsvp)} />
+                      }
+                        label={n.rsvp ? 'Yes' : 'No'}
+                      />
+                    </FormGroup>
+                  </TableCell>
+                  <TableCell>{n.guestParty}</TableCell>
+                  <TableCell>{n.guestEmail}</TableCell>
+                  <TableCell>
                     <Tooltip title='Delete' placement='right'>
                       <IconButton onClick={() => this.deleteGuest(n._id)}>
                         <Delete />
@@ -142,7 +162,9 @@ class GuestList extends Component {
            />
             <TextField
               margin='dense'
+              type='number'
               name='party'
+              inputProps={{min: 0}}
               className={classes.textField}
               label='No. of Party'
               onChange={this.handleInputChange}
