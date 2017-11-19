@@ -8,6 +8,7 @@ import Grid from 'material-ui/Grid'
 import API from '../../utils/Api'
 import Button from 'material-ui/Button'
 import PageHeader from '../../components/PageHeader'
+import Divider from 'material-ui/Divider'
 
 const styles = theme => ({
   root: {
@@ -55,16 +56,13 @@ class SimpleCard extends React.Component {
         <Grid container spacing={24}>
           {this.state.events.map(event => (
             <Grid item xs={12} sm={4}>
-              <Card className={classes.card}>
+              <Card>
                 <CardMedia
                   className={classes.media}
                   image='/static/images/events/event.jpg'
                   title='Event'
               />
                 <CardContent>
-                  <Typography type='body1' className={classes.title}>
-                    Event
-                  </Typography>
                   <Typography type='headline' component='h2'>
                     {event.eventName}
                   </Typography>
@@ -77,9 +75,13 @@ class SimpleCard extends React.Component {
                     Description: {event.description}
                   </Typography>
                 </CardContent>
+                <Divider />
                 <CardActions>
                   <Button dense component={Link} to='/' >
                     View
+                  </Button>
+                  <Button dense component={Link} to='/' >
+                    Delete
                   </Button>
                 </CardActions>
               </Card>
