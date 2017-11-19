@@ -171,7 +171,7 @@ class GuestList extends Component {
   }
 }
 
-TextField.propTypes = {
+GuestList.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
