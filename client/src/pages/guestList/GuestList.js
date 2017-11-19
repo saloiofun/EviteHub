@@ -16,6 +16,7 @@ import { withStyles } from 'material-ui/styles'
 import PropTypes from 'prop-types'
 import PageHeader from '../../components/PageHeader'
 import { FormControlLabel, FormGroup } from 'material-ui/Form'
+import Grid from 'material-ui/Grid'
 
 // const for style
 const styles = theme => ({
@@ -27,9 +28,7 @@ const styles = theme => ({
     margin: '0 auto'
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 250
+    marginTop: theme.spacing.unit
   },
   TableCell: { textAlign: 'center' },
   Avatar: { backgroundColor: '#009688' },
@@ -161,31 +160,39 @@ class GuestList extends Component {
             <DialogContentText>
              You can add a new guest information here
            </DialogContentText>
-            <TextField
-              autoFocus
-              margin='dense'
-              name='name'
-              className={classes.textField}
-              label='Guest Name'
-              onChange={this.handleInputChange}
-           />
-            <TextField
-              margin='dense'
-              type='number'
-              name='party'
-              inputProps={{min: 0}}
-              className={classes.textField}
-              label='No. of Party'
-              onChange={this.handleInputChange}
-           />
-            <TextField
-              margin='dense'
-              name='email'
-              label='Email Address'
-              type='email'
-              fullWidth
-              onChange={this.handleInputChange}
-           />
+            <Grid container spacing={24}>
+              <Grid item xs={12} lg={6}>
+                <TextField
+                  autoFocus
+                  margin='dense'
+                  name='name'
+                  label='Guest Name'
+                  fullWidth
+                  onChange={this.handleInputChange}
+              />
+              </Grid>
+              <Grid item xs={12} lg={6}>
+                <TextField
+                  margin='dense'
+                  type='number'
+                  name='party'
+                  inputProps={{min: 0}}
+                  label='No. of Party'
+                  fullWidth
+                  onChange={this.handleInputChange}
+              />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  margin='dense'
+                  name='email'
+                  label='Email Address'
+                  type='email'
+                  fullWidth
+                  onChange={this.handleInputChange}
+              />
+              </Grid>
+            </Grid>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.newDialogClose} color='primary'>
