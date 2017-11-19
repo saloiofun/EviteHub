@@ -6,7 +6,7 @@ export default {
     return axios.get('/api/guests')
   },
   // Gets the guest with the given id
-  getGuest: function (id) {
+  getGuestId: function (id) {
     return axios.get('/api/guests/' + id)
   },
   // Deletes the guest with the given id
@@ -16,6 +16,10 @@ export default {
   // Saves a guest to the database
   saveGuest: function (guestData) {
     return axios.post('/api/guests', guestData)
+  },
+  // Update a guest in the database
+  updateGuest: function (id, guestData) {
+    return axios.put('/api/guests/' + id, guestData)
   },
   // login
   login: function (data) {
