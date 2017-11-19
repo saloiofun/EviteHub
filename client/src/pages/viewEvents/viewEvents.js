@@ -55,7 +55,7 @@ class viewEvents extends React.Component {
         <PageHeader title='Events' body={`Manage your Events!`} />
         <Grid container spacing={24}>
           {this.state.events.map(event => (
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={4} key={event._id}>
               <Card>
                 <CardMedia
                   className={classes.media}
