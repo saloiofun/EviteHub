@@ -16,6 +16,17 @@ import Tooltip from 'material-ui/Tooltip'
 import { withStyles } from 'material-ui/styles'
 import PropTypes from 'prop-types'
 
+const styles = theme => ({
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 250
+  },
+  TableCell: { textAlign: 'center' },
+  Avatar: { backgroundColor: '#009688' },
+  FaceIcon: { color: 'white' }
+})
+
 const GuestList = () => (
   <Button raised color='primary'>
     Guest List
