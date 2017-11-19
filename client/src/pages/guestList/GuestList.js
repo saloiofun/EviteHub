@@ -64,5 +64,24 @@ class GuestList extends Component {
   newDialogClose = () => {
     this.setState({ newDialog: false })
   };
+  // handle input changes
+  handleInputChange = event => {
+    const { name, value } = event.target
+    this.setState({ [name]: value })
+  };
+  // Handle saves a guest to the database then close modal and call all guest
+  saveGuest = () => {
+    if (this.state.name && this.state.party && this.state.email) {
+      API.saveGuest({ guestName: this.state.name, guestParty: this.state.party, guestEmail: this.state.email })
+        .then(res => this.loadGuest(), this.newDialogClose())
+        .catch(err => console.log(err))
+    }
+  };
+  // handle RSVP toggle
+  rsvpToggle = (id, rsvp) => (event, checked) => {
+    API.updateGuest(id, {'rsvp': !rsvp})
+    .then(res => this.loadGuest())
+      .catch(err => console.log(err))
+  };
 }
 export default GuestList
