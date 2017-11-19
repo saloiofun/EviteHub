@@ -3,7 +3,7 @@ const controller = require('../../controllers/guestController')
 
 // Matches with "/api/guests"
 router.route('/')
-  .get(controller.findGuestAttend)
+  .get(controller.findGuest)
   .post(controller.createGuest)
 
 // Matches with "/api/guests/:id"

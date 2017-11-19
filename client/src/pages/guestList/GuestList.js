@@ -3,7 +3,6 @@ import API from '../../utils/Api'
 import Switch from 'material-ui/Switch'
 import IconButton from 'material-ui/IconButton'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
-import Edit from 'material-ui-icons/Edit'
 import Delete from 'material-ui-icons/Delete'
 import Chip from 'material-ui/Chip'
 import AddIcon from 'material-ui-icons/Add'
@@ -29,12 +28,11 @@ const styles = theme => ({
 })
 
 class GuestList extends Component {
-  // set state
+  // set initial state
   state = {
     allGuest: [],
     newDialog: false,
     editDialog: false,
-    editGuest: {},
     id: '',
     name: '',
     party: '',
@@ -83,5 +81,98 @@ class GuestList extends Component {
     .then(res => this.loadGuest())
       .catch(err => console.log(err))
   };
+  render () {
+    const { classes } = this.props
+    return (
+      <div>
+
+        <Chip
+          avatar={
+            <Avatar className={classes.Avatar}>
+              <FaceIcon className={classes.FaceIcon} />
+            </Avatar>
+         }
+          label=' Add a Guest ' style={{ backgroundColor: '#009688', color: 'white'}}
+          onRequestDelete={this.newDialogOpen} deleteIcon={<AddIcon style={{ color: 'white'}} />}
+       />
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell className={classes.TableCell}>NAME</TableCell>
+              <TableCell className={classes.TableCell}>RSVP</TableCell>
+              <TableCell className={classes.TableCell}>PARTY</TableCell>
+              <TableCell className={classes.TableCell}>CONTACT</TableCell>
+              <TableCell className={classes.TableCell}>EDIT</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {this.state.allGuest.map(n => {
+              return (
+                <TableRow key={n._id}>
+                  <TableCell className={classes.TableCell}>{n.guestName}</TableCell>
+                  <TableCell className={classes.TableCell}><Switch checked={n.rsvp} onChange={this.rsvpToggle(n._id, n.rsvp)} />{n.rsvp ? 'Yes' : 'No'}</TableCell>
+                  <TableCell className={classes.TableCell}>{n.guestParty}</TableCell>
+                  <TableCell className={classes.TableCell}>{n.guestEmail}</TableCell>
+                  <TableCell className={classes.TableCell}>
+                    <Tooltip title='Delete' placement='right'>
+                      <IconButton onClick={() => this.deleteGuest(n._id)}>
+                        <Delete />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+
+        <Dialog open={this.state.newDialog} onRequestClose={this.newDialogClose}>
+          <DialogTitle>New Guest</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+             You can add a new guest information here
+           </DialogContentText>
+            <TextField
+              autoFocus
+              margin='dense'
+              name='name'
+              className={classes.textField}
+              label='Guest Name'
+              onChange={this.handleInputChange}
+           />
+            <TextField
+              margin='dense'
+              name='party'
+              className={classes.textField}
+              label='No. of Party'
+              onChange={this.handleInputChange}
+           />
+            <TextField
+              margin='dense'
+              name='email'
+              label='Email Address'
+              type='email'
+              fullWidth
+              onChange={this.handleInputChange}
+           />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.newDialogClose} color='primary'>
+             Cancel
+           </Button>
+            <Button onClick={this.saveGuest} color='primary'>
+             Submit
+           </Button>
+          </DialogActions>
+        </Dialog>
+
+      </div>
+    )
+  }
 }
-export default GuestList
+
+TextField.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
+export default withStyles(styles)(GuestList)
