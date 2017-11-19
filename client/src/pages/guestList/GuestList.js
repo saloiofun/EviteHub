@@ -16,17 +16,7 @@ import Tooltip from 'material-ui/Tooltip'
 import { withStyles } from 'material-ui/styles'
 import PropTypes from 'prop-types'
 
-const styles = theme => ({
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 250
-  },
-  TableCell: { textAlign: 'center' },
-  Avatar: { backgroundColor: '#009688' },
-  FaceIcon: { color: 'white' }
-})
-
+// const for style
 const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
@@ -39,6 +29,7 @@ const styles = theme => ({
 })
 
 class GuestList extends Component {
+  // set state
   state = {
     allGuest: [],
     newDialog: false,
@@ -48,6 +39,22 @@ class GuestList extends Component {
     name: '',
     party: '',
     email: ''
+  };
+  // mount component
+  componentDidMount () {
+    this.loadGuest()
+  }
+// handle call all guest
+  loadGuest = () => {
+    API.getGuests()
+      .then(res => this.setState({ allGuest: res.data }))
+      .catch(err => console.log(err))
+  };
+// handle delete a guest with the given id
+  deleteGuest = id => {
+    API.deleteGuest(id)
+      .then(res => this.loadGuest())
+      .catch(err => console.log(err))
   };
 }
 export default GuestList
