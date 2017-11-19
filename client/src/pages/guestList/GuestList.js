@@ -160,39 +160,41 @@ class GuestList extends Component {
             <DialogContentText className={classes.spaceBottom}>
              You can add a new guest information here
            </DialogContentText>
-            <Grid container spacing={24}>
-              <Grid item xs={12} lg={6}>
-                <TextField
-                  autoFocus
-                  margin='dense'
-                  name='name'
-                  label='Guest Name'
-                  fullWidth
-                  onChange={this.handleInputChange}
+            <form noValidate autoComplete='off'>
+              <Grid container spacing={24}>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    autoFocus
+                    margin='dense'
+                    name='name'
+                    label='Guest Name'
+                    fullWidth
+                    onChange={this.handleInputChange}
               />
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <TextField
-                  margin='dense'
-                  type='number'
-                  name='party'
-                  inputProps={{min: 0}}
-                  label='No. of Party'
-                  fullWidth
-                  onChange={this.handleInputChange}
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    margin='dense'
+                    type='number'
+                    name='party'
+                    inputProps={{min: 0}}
+                    label='No. of Party'
+                    fullWidth
+                    onChange={this.handleInputChange}
               />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  margin='dense'
-                  name='email'
-                  label='Email Address'
-                  type='email'
-                  fullWidth
-                  onChange={this.handleInputChange}
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    margin='dense'
+                    name='email'
+                    label='Email Address'
+                    type='email'
+                    fullWidth
+                    onChange={this.handleInputChange}
               />
+                </Grid>
               </Grid>
-            </Grid>
+            </form>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.newDialogClose} color='primary'>

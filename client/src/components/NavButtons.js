@@ -3,11 +3,9 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 import classNames from 'classnames'
-import Pages from 'material-ui-icons/Pages'
 import BorderVertical from 'material-ui-icons/BorderVertical'
 import Search from 'material-ui-icons/Search'
 import Button from 'material-ui/Button'
-import ButtonDialog from './ButtonDialog'
 import CreateEvent from './CreateEvent'
 import orange from 'material-ui/colors/orange'
 
@@ -27,10 +25,7 @@ function IconLabelButtons (props) {
   const { classes } = props
   return (
     <div>
-      <ButtonDialog text='New Event' title='New Event'>
-        <Pages className={classes.leftIcon} />
-        <CreateEvent />
-      </ButtonDialog>
+      <CreateEvent />
       <Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' component={Link} to='/events'>
         <BorderVertical className={classes.leftIcon} />
         Invitation Maker
