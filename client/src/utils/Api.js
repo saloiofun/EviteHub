@@ -33,8 +33,20 @@ export default {
   getEvents: function () {
     return axios.get('/api/events/')
   },
+  // Delete Event
+  deleteEvent:  function(id) {
+    return axios.delete('/api/events/' + id)
+  },
   // Create Event
   saveEvent: function (data) {
     return axios.post('/api/events', data)
+  },
+  // Find event by Id
+  getEventId: function (id) {
+    return axios.get('/api/events/' + id)
+  },
+  // Update event
+  updateEvent: function (id, eventData){
+    return axios.put('/api/events/' + id, eventData)
   }
 }

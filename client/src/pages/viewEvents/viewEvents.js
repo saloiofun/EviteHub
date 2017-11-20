@@ -41,11 +41,21 @@ class viewEvents extends React.Component {
   }
 
   componentDidMount () {
+    this.loadEvents()
+  }
+
+  loadEvents = () => {
     API.getEvents()
     .then(res => {
       this.setState({ events: res.data })
     })
     .catch(err => this.setState({ error: err.message }))
+  }
+
+  onDelete = (id) =>{
+    API.deleteEvent(id)
+    .then(res => this.loadEvents())
+    .catch(err => console.log(err))
   }
 
   render () {
@@ -80,7 +90,7 @@ class viewEvents extends React.Component {
                   <Button dense component={Link} to='/' >
                     View
                   </Button>
-                  <Button dense component={Link} to='/' >
+                  <Button dense onClick = {() => this.onDelete(event._id)} component={Link} to='/' >
                     Delete
                   </Button>
                 </CardActions>
