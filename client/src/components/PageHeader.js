@@ -18,10 +18,10 @@ function PaperSheet (props) {
     <div>
       <Paper className={classes.root} elevation={4}>
         <Typography type='display1' component='h3'>
-          Dashboard
+          {props.title}
         </Typography>
         <Typography type='body1' component='p'>
-          Welcome back, John Doe!
+          {props.body}
         </Typography>
       </Paper>
     </div>
