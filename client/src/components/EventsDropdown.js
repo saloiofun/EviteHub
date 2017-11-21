@@ -5,6 +5,7 @@ import teal from 'material-ui/colors/teal'
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import TodayIcon from 'material-ui-icons/Today'
+import Divider from 'material-ui/Divider'
 import { Link } from 'react-router-dom'
 
 const styles = theme => ({
@@ -78,6 +79,7 @@ class EventsDropdown extends Component {
               {option}
             </MenuItem>
           ))}
+          <Divider />
           <MenuItem
             component={Link} to='/events'
             onClick={this.handleRequestClose}

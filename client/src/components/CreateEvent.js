@@ -154,7 +154,7 @@ class addEvent extends React.Component {
           <DialogTitle>New Event</DialogTitle>
           <DialogContent>
             <DialogContentText className={classes.spaceBottom}>
-             Start a memorable Event!
+             Start a memorable event!
            </DialogContentText>
             <div>
               <form noValidate autoComplete='off'>

@@ -17,9 +17,7 @@ const drawerWidth = 250
 const theme = createMuiTheme({
   overrides: {
     MuiPaper: {
-      // Name of the styleSheet
       root: {
-        // Name of the rule
         backgroundColor: teal[500]
       }
     },
