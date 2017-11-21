@@ -12,20 +12,17 @@ class Profile extends Component {
       this.setState({ profile: userProfile })
     }
   }
+
   render () {
     const { profile } = this.state
     return (
-      <div className='container'>
-        <div className='profile-area'>
-          <h1>{profile.name}</h1>
-          <div header='Profile'>
-            <img src={profile.picture} alt='profile' />
-            <div>
-              <div>Nickname</div>
-              <h3>{profile.nickname}</h3>
-            </div>
-            <pre>{JSON.stringify(profile, null, 2)}</pre>
-          </div>
+      <div className='profile-area'>
+        <h1>{profile.name}</h1>
+        <div header='Profile'>
+          <img src={profile.picture} alt='profile' />
+          <div>Nickname</div>
+          <h3>{profile.nickname}</h3>
+          <pre>{JSON.stringify(profile, null, 2)}</pre>
         </div>
       </div>
     )
