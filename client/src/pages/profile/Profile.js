@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import AuthAPI from '../../utils/AuthAPI'
 
 class Profile extends Component {
   componentWillMount () {
@@ -11,6 +12,16 @@ class Profile extends Component {
     } else {
       this.setState({ profile: userProfile })
     }
+  }
+
+  componentDidMount () {
+    // Get Token
+    AuthAPI.getToken()
+    .then(res => {
+      // Use Token and call API to get Users
+      AuthAPI.getUsers(res.data.token_type, res.data.access_token)
+      .then(res => console.log(res.data))
+    })
   }
 
   render () {
