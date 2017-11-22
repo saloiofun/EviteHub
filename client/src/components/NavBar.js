@@ -48,12 +48,6 @@ const styles = theme => ({
   leftIcon: {
     marginRight: theme.spacing.unit
   },
-  button: {
-    margin: theme.spacing.unit
-  },
-  raisedAccent: {
-    backgroundColor: orange[700]
-  },
   flex: {
     flex: 1
   },

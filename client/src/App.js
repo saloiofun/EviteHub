@@ -6,7 +6,6 @@ import Dashboard from './pages/dashboard'
 import viewEvents from './pages/viewEvents'
 import GuestList from './pages/guestList'
 import SendInvites from './pages/sendInvites'
-import Registration from './pages/registration'
 import NavBar from './components/NavBar'
 import SideBar from './components/SideBar'
 import Home from './pages/home'
@@ -68,7 +67,6 @@ class App extends React.Component {
                 <Route exact path='/dashboard' component={Dashboard} />
                 <Route exact path='/guest-list' component={GuestList} />
                 <Route exact path='/send-invites' component={SendInvites} />
-                <Route exact path='/registration' component={Registration} />
                 <Route path='/callback' render={(props) => {
                   handleAuthentication(props)
                   return <Callback {...props} />
