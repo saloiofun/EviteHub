@@ -7,18 +7,16 @@ import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 import API from '../../utils/Api'
 import Button from 'material-ui/Button'
+import PageHeader from '../../components/PageHeader'
+import Divider from 'material-ui/Divider'
 
 const styles = theme => ({
   root: {
     flex: '1 1 100%',
     [theme.breakpoints.up('sm')]: {
-      width: '50%'
+      width: '80%'
     },
     margin: '0 auto'
-  },
-  card: {
-    width: '100%',
-    marginTop: 20
   },
   title: {
     marginBottom: 16,
@@ -37,7 +35,7 @@ const styles = theme => ({
   }
 })
 
-class SimpleCard extends React.Component {
+class viewEvents extends React.Component {
   state = {
     events: []
   }
@@ -53,20 +51,18 @@ class SimpleCard extends React.Component {
   render () {
     const { classes } = this.props
     return (
-      <div >
-        <Grid container>
+      <div className={classes.root}>
+        <PageHeader title='Events' body={`Manage your Events!`} />
+        <Grid container spacing={24}>
           {this.state.events.map(event => (
-            <Grid item xs={12} sm={6}>
-              <Card className={classes.card}>
+            <Grid item xs={12} sm={4} key={event._id}>
+              <Card>
                 <CardMedia
                   className={classes.media}
                   image='/static/images/events/event.jpg'
                   title='Event'
               />
                 <CardContent>
-                  <Typography type='body1' className={classes.title}>
-                    Event
-                  </Typography>
                   <Typography type='headline' component='h2'>
                     {event.eventName}
                   </Typography>
@@ -79,9 +75,13 @@ class SimpleCard extends React.Component {
                     Description: {event.description}
                   </Typography>
                 </CardContent>
+                <Divider />
                 <CardActions>
                   <Button dense component={Link} to='/' >
                     View
+                  </Button>
+                  <Button dense component={Link} to='/' >
+                    Delete
                   </Button>
                 </CardActions>
               </Card>
@@ -93,8 +93,8 @@ class SimpleCard extends React.Component {
   }
 }
 
-SimpleCard.propTypes = {
+viewEvents.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(SimpleCard)
+export default withStyles(styles)(viewEvents)

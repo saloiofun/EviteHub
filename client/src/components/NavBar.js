@@ -4,14 +4,14 @@ import teal from 'material-ui/colors/teal'
 import PropTypes from 'prop-types'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
-import Badge from 'material-ui/Badge'
 import IconButton from 'material-ui/IconButton'
 import Hidden from 'material-ui/Hidden'
-import NotificationsIcon from 'material-ui-icons/Notifications'
 import MenuIcon from 'material-ui-icons/Menu'
 import NavButtons from './NavButtons'
 import Button from 'material-ui/Button'
 import classNames from 'classnames'
+import Badge from 'material-ui/Badge'
+import NotificationsIcon from 'material-ui-icons/Notifications'
 import orange from 'material-ui/colors/orange'
 
 const drawerWidth = 250
@@ -35,9 +35,6 @@ const styles = theme => ({
       width: `calc(100% - ${drawerWidth}px)`
     }
   },
-  flex: {
-    flex: 1
-  },
   navIconHide: {
     [theme.breakpoints.up('md')]: {
       display: 'none'
@@ -47,6 +44,18 @@ const styles = theme => ({
     [theme.breakpoints.up('xs')]: {
       display: 'none'
     }
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit
+  },
+  button: {
+    margin: theme.spacing.unit
+  },
+  raisedAccent: {
+    backgroundColor: orange[700]
+  },
+  flex: {
+    flex: 1
   },
   badge: {
     margin: `0 ${theme.spacing.unit * 2}px`

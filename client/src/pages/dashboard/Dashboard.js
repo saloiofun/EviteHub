@@ -62,7 +62,7 @@ function Dashboard (props) {
 
   return (
     <div className={classes.root}>
-      <PageHeader />
+      <PageHeader title='Dashboard' body={`Welcome back, John Doe!`} />
       <Grid container spacing={24}>
         <Grid item xs={12} sm={4}>
           <ProgressCard title='Days Left' info='3'>
