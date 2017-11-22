@@ -3,7 +3,8 @@ import API from '../../utils/Api'
 import Switch from 'material-ui/Switch'
 import IconButton from 'material-ui/IconButton'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
-import Delete from 'material-ui-icons/Delete'
+import EditIcon from 'material-ui-icons/Edit'
+import DeleteIcon from 'material-ui-icons/Delete'
 import Chip from 'material-ui/Chip'
 import AddIcon from 'material-ui-icons/Add'
 import FaceIcon from 'material-ui-icons/Face'
@@ -46,16 +47,30 @@ class GuestList extends Component {
     party: '',
     email: ''
   };
+
   // mount component
   componentDidMount () {
     this.loadGuest()
   }
+
   // handle call all guest
   loadGuest = () => {
     API.getGuests()
       .then(res => this.setState({ allGuest: res.data }))
       .catch(err => console.log(err))
   }
+
+  // handle data that want to edit
+  editGuest = id => {
+    API.getGuestId(id)
+      .then(res => this.setState({
+        'id': res.data._id,
+        'name': res.data.guestName,
+        'party': res.data.guestParty,
+        'email': res.data.guestEmail
+      }, this.editDialogOpen))
+      .catch(err => console.log(err))
+  };
 
   // handle delete a guest with the given id
   deleteGuest = id => {
@@ -71,8 +86,22 @@ class GuestList extends Component {
 
   // close new guest modal
   newDialogClose = () => {
-    this.setState({ newDialog: false })
+    this.setState({
+      'newDialog': false, 'id': '', 'name': '', 'party': '', 'email': ''
+    })
   }
+
+  // open edit guest modal
+  editDialogOpen = () => {
+    this.setState({ editDialog: true })
+  };
+
+  // close edit guest modal
+  editDialogClose = () => {
+    this.setState({
+      'editDialog': false, 'id': '', 'name': '', 'party': '', 'email': ''
+    })
+  };
 
   // handle input changes
   handleInputChange = event => {
@@ -88,6 +117,14 @@ class GuestList extends Component {
         .catch(err => console.log(err))
     }
   }
+
+  // Handle saves edited data to the database then close modal and call all guest
+  editSave = id => {
+    let data = {'guestName': this.state.name, 'guestParty': this.state.party, 'guestEmail': this.state.email}
+    API.updateGuest(id, data)
+    .then(res => this.loadGuest(), this.editDialogClose())
+      .catch(err => console.log(err))
+  };
 
   // handle RSVP toggle
   rsvpToggle = (id, rsvp) => (event, checked) => {
@@ -116,8 +153,8 @@ class GuestList extends Component {
           <TableHead>
             <TableRow>
               <TableCell>NAME</TableCell>
-              <TableCell>RSVP</TableCell>
               <TableCell>PARTY</TableCell>
+              <TableCell>RSVP</TableCell>
               <TableCell>CONTACT</TableCell>
               <TableCell>EDIT</TableCell>
             </TableRow>
@@ -127,6 +164,7 @@ class GuestList extends Component {
               return (
                 <TableRow key={n._id}>
                   <TableCell>{n.guestName}</TableCell>
+                  <TableCell>{n.guestParty}</TableCell>
                   <TableCell>
                     <FormGroup>
                       <FormControlLabel
@@ -134,17 +172,21 @@ class GuestList extends Component {
                           <Switch
                             checked={n.rsvp}
                             onChange={this.rsvpToggle(n._id, n.rsvp)} />
-                      }
+                          }
                         label={n.rsvp ? 'Yes' : 'No'}
                       />
                     </FormGroup>
                   </TableCell>
-                  <TableCell>{n.guestParty}</TableCell>
                   <TableCell>{n.guestEmail}</TableCell>
                   <TableCell>
+                    <Tooltip title='Edit' placement='left'>
+                      <IconButton onClick={() => this.editGuest(n._id)}>
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
                     <Tooltip title='Delete' placement='right'>
                       <IconButton onClick={() => this.deleteGuest(n._id)}>
-                        <Delete />
+                        <DeleteIcon />
                       </IconButton>
                     </Tooltip>
                   </TableCell>
@@ -170,7 +212,7 @@ class GuestList extends Component {
                     label='Guest Name'
                     fullWidth
                     onChange={this.handleInputChange}
-              />
+                  />
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
@@ -181,7 +223,7 @@ class GuestList extends Component {
                     label='No. of Party'
                     fullWidth
                     onChange={this.handleInputChange}
-              />
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -191,7 +233,7 @@ class GuestList extends Component {
                     type='email'
                     fullWidth
                     onChange={this.handleInputChange}
-              />
+                  />
                 </Grid>
               </Grid>
             </form>
@@ -203,6 +245,58 @@ class GuestList extends Component {
             <Button onClick={this.saveGuest} color='primary'>
              Submit
            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog open={this.state.editDialog} onRequestClose={this.editDialogClose}>
+          <DialogTitle>Edit Guest</DialogTitle>
+          <DialogContent>
+            <DialogContentText className={classes.spaceBottom}>
+              You can edit the guest here
+            </DialogContentText>
+            <Grid container spacing={24}>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  margin='dense'
+                  name='name'
+                  label='Guest Name'
+                  fullWidth
+                  value={this.state.name}
+                  onChange={this.handleInputChange}
+            />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  margin='dense'
+                  type='number'
+                  name='party'
+                  inputProps={{min: 0}}
+                  label='No. of Party'
+                  fullWidth
+                  value={this.state.party}
+                  onChange={this.handleInputChange}
+            />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  margin='dense'
+                  name='email'
+                  label='Email'
+                  type='email'
+                  fullWidth
+                  value={this.state.email}
+                  onChange={this.handleInputChange}
+            />
+              </Grid>
+            </Grid>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.editDialogClose} color='primary'>
+              Cancel
+            </Button>
+            <Button onClick={() => this.editSave(this.state.id)} color='primary'>
+              Submit
+            </Button>
           </DialogActions>
         </Dialog>
 
