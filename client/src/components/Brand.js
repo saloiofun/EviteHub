@@ -24,9 +24,6 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     fill: orange[900]
   },
-  rightIcon: {
-    marginLeft: theme.spacing.unit
-  },
   brandHover: {
     '&:hover': {
       fill: orange[700]
