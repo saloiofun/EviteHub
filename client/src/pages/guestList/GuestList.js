@@ -3,8 +3,8 @@ import API from '../../utils/Api'
 import Switch from 'material-ui/Switch'
 import IconButton from 'material-ui/IconButton'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
-import Edit from 'material-ui-icons/Edit'
-import Delete from 'material-ui-icons/Delete'
+import EditIcon from 'material-ui-icons/Edit'
+import DeleteIcon from 'material-ui-icons/Delete'
 import Chip from 'material-ui/Chip'
 import AddIcon from 'material-ui-icons/Add'
 import FaceIcon from 'material-ui-icons/Face'
@@ -153,8 +153,8 @@ class GuestList extends Component {
           <TableHead>
             <TableRow>
               <TableCell>NAME</TableCell>
-              <TableCell>RSVP</TableCell>
               <TableCell>PARTY</TableCell>
+              <TableCell>RSVP</TableCell>
               <TableCell>CONTACT</TableCell>
               <TableCell>EDIT</TableCell>
             </TableRow>
@@ -164,6 +164,7 @@ class GuestList extends Component {
               return (
                 <TableRow key={n._id}>
                   <TableCell>{n.guestName}</TableCell>
+                  <TableCell>{n.guestParty}</TableCell>
                   <TableCell>
                     <FormGroup>
                       <FormControlLabel
@@ -176,17 +177,16 @@ class GuestList extends Component {
                       />
                     </FormGroup>
                   </TableCell>
-                  <TableCell>{n.guestParty}</TableCell>
                   <TableCell>{n.guestEmail}</TableCell>
                   <TableCell>
                     <Tooltip title='Edit' placement='left'>
                       <IconButton onClick={() => this.editGuest(n._id)}>
-                        <Edit />
+                        <EditIcon />
                       </IconButton>
                     </Tooltip>
                     <Tooltip title='Delete' placement='right'>
                       <IconButton onClick={() => this.deleteGuest(n._id)}>
-                        <Delete />
+                        <DeleteIcon />
                       </IconButton>
                     </Tooltip>
                   </TableCell>
@@ -251,33 +251,44 @@ class GuestList extends Component {
         <Dialog open={this.state.editDialog} onRequestClose={this.editDialogClose}>
           <DialogTitle>Edit Guest</DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText className={classes.spaceBottom}>
               You can edit the guest here
             </DialogContentText>
-            <TextField
-              autoFocus
-              margin='dense'
-              name='name'
-              label='Name'
-              value={this.state.name}
-              onChange={this.handleInputChange}
+            <Grid container spacing={24}>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  margin='dense'
+                  name='name'
+                  label='Guest Name'
+                  fullWidth
+                  value={this.state.name}
+                  onChange={this.handleInputChange}
             />
-            <TextField
-              margin='dense'
-              name='party'
-              label='Party'
-              value={this.state.party}
-              onChange={this.handleInputChange}
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  margin='dense'
+                  type='number'
+                  name='party'
+                  inputProps={{min: 0}}
+                  label='No. of Party'
+                  fullWidth
+                  value={this.state.party}
+                  onChange={this.handleInputChange}
             />
-            <TextField
-              margin='dense'
-              name='email'
-              label='Email'
-              type='email'
-              fullWidth
-              value={this.state.email}
-              onChange={this.handleInputChange}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  margin='dense'
+                  name='email'
+                  label='Email'
+                  type='email'
+                  fullWidth
+                  value={this.state.email}
+                  onChange={this.handleInputChange}
             />
+              </Grid>
+            </Grid>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.editDialogClose} color='primary'>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
-import teal from 'material-ui/colors/teal'
+import { withStyles } from 'material-ui/styles'
 import PropTypes from 'prop-types'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
@@ -15,12 +14,6 @@ import NotificationsIcon from 'material-ui-icons/Notifications'
 import orange from 'material-ui/colors/orange'
 
 const drawerWidth = 250
-
-const theme = createMuiTheme({
-  palette: {
-    primary: teal
-  }
-})
 
 const styles = theme => ({
   button: {
@@ -82,31 +75,29 @@ class NavBar extends Component {
     const { isAuthenticated } = this.props.auth
 
     return (
-      <MuiThemeProvider theme={theme}>
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <IconButton
-              color='contrast'
-              aria-label='open drawer'
-              onClick={this.handleDrawerToggle}
-              className={classes.navIconHide}
+      <AppBar className={classes.appBar}>
+        <Toolbar>
+          <IconButton
+            color='contrast'
+            aria-label='open drawer'
+            onClick={this.handleDrawerToggle}
+            className={classes.navIconHide}
             >
-              <MenuIcon />
-            </IconButton>
-            <Hidden smDown>
-              <NavButtons />
-            </Hidden>
-            <div className={classes.flex} />
-            { !isAuthenticated() && (<Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' onClick={this.login.bind(this)}>Sign In</Button>) }
-            { isAuthenticated() && (<Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' onClick={this.logout.bind(this)}>Sign Out</Button>) }
-            <IconButton>
-              <Badge className={classes.badge} badgeContent={4} color='accent'>
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      </MuiThemeProvider>
+            <MenuIcon />
+          </IconButton>
+          <Hidden smDown>
+            <NavButtons />
+          </Hidden>
+          <div className={classes.flex} />
+          { !isAuthenticated() && (<Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' onClick={this.login.bind(this)}>Sign In</Button>) }
+          { isAuthenticated() && (<Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' onClick={this.logout.bind(this)}>Sign Out</Button>) }
+          <IconButton>
+            <Badge className={classes.badge} badgeContent={4} color='accent'>
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
     )
   }
 }
@@ -115,4 +106,4 @@ NavBar.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles, theme)(NavBar)
+export default withStyles(styles)(NavBar)
