@@ -6,7 +6,7 @@ export default {
     return axios.get('/api/guests')
   },
   // Gets the guest with the given id
-  getGuest: function (id) {
+  getGuestId: function (id) {
     return axios.get('/api/guests/' + id)
   },
   // Deletes the guest with the given id
@@ -17,6 +17,10 @@ export default {
   saveGuest: function (guestData) {
     return axios.post('/api/guests', guestData)
   },
+  // Update a guest in the database
+  updateGuest: function (id, guestData) {
+    return axios.put('/api/guests/' + id, guestData)
+  },
   // login
   login: function (data) {
     return axios.post('/login', data)
@@ -24,5 +28,13 @@ export default {
   // User Registration
   registerUser: function (userData) {
     return axios.post('/api/user', userData)
+  },
+  // Gets all events of user
+  getEvents: function () {
+    return axios.get('/api/events/')
+  },
+  // Create Event
+  saveEvent: function (data) {
+    return axios.post('/api/events', data)
   }
 }

@@ -4,7 +4,7 @@ import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import DashboardIcon from 'material-ui-icons/Dashboard'
 
 export const DashboardListItems = props =>
-  <ListItem button component={Link} to='/'>
+  <ListItem button component={Link} to='/dashboard'>
     <ListItemIcon>
       <DashboardIcon />
     </ListItemIcon>
