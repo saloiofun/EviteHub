@@ -1,12 +1,11 @@
 import React from 'react'
 import { Redirect, Router, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
+import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
 import Dashboard from './pages/dashboard'
 import viewEvents from './pages/viewEvents'
 import GuestList from './pages/guestList'
 import SendInvites from './pages/sendInvites'
-import Registration from './pages/registration'
 import NavBar from './components/NavBar'
 import SideBar from './components/SideBar'
 import Home from './pages/home'
@@ -14,6 +13,7 @@ import Callback from './callback'
 import Auth from './auth'
 import history from './history'
 import Profile from './pages/profile'
+import teal from 'material-ui/colors/teal'
 
 // Authentication
 const auth = new Auth()
@@ -25,6 +25,12 @@ const handleAuthentication = (nextState, replace) => {
 }
 
 const drawerWidth = 250
+
+const theme = createMuiTheme({
+  palette: {
+    primary: teal
+  }
+})
 
 const styles = theme => ({
   root: {
@@ -57,35 +63,36 @@ class App extends React.Component {
     const { classes } = this.props
 
     return (
-      <Router history={history} component={Home}>
-        <div className={classes.root}>
-          <div className={classes.appFrame}>
-            <Route path='/' render={(props) => <NavBar auth={auth} {...props} />} />
-            <SideBar />
-            <main className={classes.content}>
-              <Switch>
-                <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
-                <Route exact path='/events' component={viewEvents} />
-                <Route exact path='/dashboard' component={Dashboard} />
-                <Route exact path='/guest-list' component={GuestList} />
-                <Route exact path='/send-invites' component={SendInvites} />
-                <Route exact path='/registration' component={Registration} />
-                <Route path='/profile' render={(props) => (
+      <MuiThemeProvider theme={theme}>
+        <Router history={history} component={Home}>
+          <div className={classes.root}>
+            <div className={classes.appFrame}>
+              <Route path='/' render={(props) => <NavBar auth={auth} {...props} />} />
+              <SideBar />
+              <main className={classes.content}>
+                <Switch>
+                  <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
+                  <Route exact path='/events' component={viewEvents} />
+                  <Route exact path='/dashboard' component={Dashboard} />
+                  <Route exact path='/guest-list' component={GuestList} />
+                  <Route exact path='/send-invites' component={SendInvites} />
+                  <Route path='/profile' render={(props) => (
                 !auth.isAuthenticated() ? (
                   <Redirect to='/' />
                 ) : (
                   <Profile auth={auth} {...props} />
                 )
                 )} />
-                <Route path='/callback' render={(props) => {
-                  handleAuthentication(props)
-                  return <Callback {...props} />
-                }} />
-              </Switch>
-            </main>
+                  <Route path='/callback' render={(props) => {
+                    handleAuthentication(props)
+                    return <Callback {...props} />
+                  }} />
+                </Switch>
+              </main>
+            </div>
           </div>
-        </div>
-      </Router>
+        </Router>
+      </MuiThemeProvider>
     )
   }
 }
