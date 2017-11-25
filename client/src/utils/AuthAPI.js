@@ -52,5 +52,13 @@ export default {
         'content-type': 'application/json'
       }
     })
+  },
+  getUserByID: function (tokenType, accessToken, userID) {
+    return axios.get(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/api/v2/users/${userID}`, {
+      headers: {
+        authorization: `${tokenType} ${accessToken}`,
+        'content-type': 'application/json'
+      }
+    })
   }
 }
