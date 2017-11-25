@@ -21,10 +21,6 @@ export default {
   updateGuest: function (id, guestData) {
     return axios.put('/api/guests/' + id, guestData)
   },
-  // login
-  login: function (data) {
-    return axios.post('/login', data)
-  },
   // User Registration
   registerUser: function (userData) {
     return axios.post('/api/user', userData)

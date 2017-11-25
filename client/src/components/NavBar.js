@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
-import teal from 'material-ui/colors/teal'
+import { withStyles } from 'material-ui/styles'
 import PropTypes from 'prop-types'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
@@ -8,22 +7,21 @@ import IconButton from 'material-ui/IconButton'
 import Hidden from 'material-ui/Hidden'
 import MenuIcon from 'material-ui-icons/Menu'
 import NavButtons from './NavButtons'
+import Button from 'material-ui/Button'
+import classNames from 'classnames'
 import Badge from 'material-ui/Badge'
 import NotificationsIcon from 'material-ui-icons/Notifications'
-import { Link } from 'react-router-dom'
-import classNames from 'classnames'
-import Button from 'material-ui/Button'
 import orange from 'material-ui/colors/orange'
 
 const drawerWidth = 250
 
-const theme = createMuiTheme({
-  palette: {
-    primary: teal
-  }
-})
-
 const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit
+  },
+  raisedAccent: {
+    backgroundColor: orange[700]
+  },
   appBar: {
     marginLeft: drawerWidth,
     [theme.breakpoints.up('md')]: {
@@ -43,12 +41,6 @@ const styles = theme => ({
   leftIcon: {
     marginRight: theme.spacing.unit
   },
-  button: {
-    margin: theme.spacing.unit
-  },
-  raisedAccent: {
-    backgroundColor: orange[700]
-  },
   flex: {
     flex: 1
   },
@@ -66,35 +58,46 @@ class NavBar extends Component {
     this.setState({ mobileOpen: !this.state.mobileOpen })
   }
 
+  goTo (route) {
+    this.props.history.replace(`/${route}`)
+  }
+
+  login () {
+    this.props.auth.login()
+  }
+
+  logout () {
+    this.props.auth.logout()
+  }
+
   render () {
     const { classes } = this.props
+    const { isAuthenticated } = this.props.auth
+
     return (
-      <MuiThemeProvider theme={theme}>
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <IconButton
-              color='contrast'
-              aria-label='open drawer'
-              onClick={this.handleDrawerToggle}
-              className={classes.navIconHide}
+      <AppBar className={classes.appBar}>
+        <Toolbar>
+          <IconButton
+            color='contrast'
+            aria-label='open drawer'
+            onClick={this.handleDrawerToggle}
+            className={classes.navIconHide}
             >
-              <MenuIcon />
-            </IconButton>
-            <Hidden smDown>
-              <NavButtons />
-            </Hidden>
-            <div className={classes.flex} />
-            <Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' component={Link} to='/login'>
-              Sign in
-            </Button>
-            <IconButton>
-              <Badge className={classes.badge} badgeContent={4} color='accent'>
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      </MuiThemeProvider>
+            <MenuIcon />
+          </IconButton>
+          <Hidden smDown>
+            <NavButtons />
+          </Hidden>
+          <div className={classes.flex} />
+          { !isAuthenticated() && (<Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' onClick={this.login.bind(this)}>Sign In</Button>) }
+          { isAuthenticated() && (<Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' onClick={this.logout.bind(this)}>Sign Out</Button>) }
+          <IconButton>
+            <Badge className={classes.badge} badgeContent={4} color='accent'>
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
     )
   }
 }
@@ -103,4 +106,4 @@ NavBar.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles, theme)(NavBar)
+export default withStyles(styles)(NavBar)
