@@ -21,5 +21,28 @@ export default {
         'content-type': 'application/json'
       }
     })
+  },
+  updateUser: function (tokenType, accessToken) {
+    return axios({
+      method: 'patch',
+      url: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/api/v2/users/google-oauth2|111176812360524449794`,
+      headers: {
+        authorization: `${tokenType} ${accessToken}`,
+        'content-type': 'application/json'
+      },
+      data: {
+        'app_metadata': {
+          'event_id': [15, 25]
+        }
+      }
+    })
+  },
+  getUserByEmail: function (tokenType, accessToken) {
+    return axios.get(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/api/v2/users-by-email?email=saloiofun@gmail.com`, {
+      headers: {
+        authorization: `${tokenType} ${accessToken}`,
+        'content-type': 'application/json'
+      }
+    })
   }
 }
