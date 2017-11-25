@@ -22,23 +22,31 @@ export default {
       }
     })
   },
-  updateUser: function (tokenType, accessToken) {
+  updateUser: function (tokenType, accessToken, userID) {
     return axios({
       method: 'patch',
-      url: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/api/v2/users/google-oauth2|111176812360524449794`,
+      url: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/api/v2/users/${userID}`,
       headers: {
         authorization: `${tokenType} ${accessToken}`,
         'content-type': 'application/json'
       },
       data: {
         'app_metadata': {
-          'event_id': [15, 25]
+          'event_id': [15, 25, 305]
         }
       }
     })
   },
-  getUserByEmail: function (tokenType, accessToken) {
-    return axios.get(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/api/v2/users-by-email?email=saloiofun@gmail.com`, {
+  getUserByEmail: function (tokenType, accessToken, email) {
+    return axios.get(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/api/v2/users-by-email?email=${email}`, {
+      headers: {
+        authorization: `${tokenType} ${accessToken}`,
+        'content-type': 'application/json'
+      }
+    })
+  },
+  getEventsByEmail: function (tokenType, accessToken, email) {
+    return axios.get(`https://evitehub.auth0.com/api/v2/users-by-email?fields=app_metadata&include_fields=true&email=${email}`, {
       headers: {
         authorization: `${tokenType} ${accessToken}`,
         'content-type': 'application/json'
