@@ -21,6 +21,7 @@ class Profile extends Component {
       // Use Token and call API to get Users
       AuthAPI.getUsers(res.data.token_type, res.data.access_token)
       .then(res => console.log(res.data))
+      .catch(err => console.log(err))
 
       // Use Token and call API to update User meta
       AuthAPI.updateUser(res.data.token_type, res.data.access_token)
@@ -30,6 +31,7 @@ class Profile extends Component {
       // Use Token and call API to get User by Email
       AuthAPI.getUserByEmail(res.data.token_type, res.data.access_token)
       .then(res => console.log(res.data))
+      .catch(err => console.log(err))
     })
   }
 
