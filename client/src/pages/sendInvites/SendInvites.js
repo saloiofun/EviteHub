@@ -5,6 +5,7 @@ import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
 import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
+import Typography from 'material-ui/Typography'
 import API from '../../utils/Api'
 
 const styles = theme => ({
@@ -29,8 +30,19 @@ class SendInvites extends React.Component {
     to: '',
     subject: 'Event Name',
     message: `Hi, you are invited to my event! 
-Please click on the link to let me know if you can make it!`
+Please click on the link to let me know if you can make it!`,
+    error: false
   }
+
+  validateEmail = (email) => {
+   var reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+   if (reg.test(email)){
+     return true;
+   }
+   else{
+     return false;
+   }
+  } 
 
   handleChange = name => event => {
     this.setState({
@@ -46,14 +58,26 @@ Please click on the link to let me know if you can make it!`
       user: 'Test User',
       url: 'google.com'
     }
+
+    var emailArray = email.to.split(',')
+
+    for (var i in emailArray){
+      console.log("Email: ", emailArray[i])
+      console.log("Email valid: ", this.validateEmail(emailArray[i]))
+      if (!this.validateEmail(emailArray[i])){
+        this.setState({error: true})
+        return
+      }
+    }
+
     console.log(email)
-    // API.sendEmail(email)
-    // .then(function(data){
-    //   console.log(data)
-    // })
-    // .catch(function(err){
-    //   if (err) throw err
-    // });
+    API.sendEmail(email)
+    .then(function(data){
+      console.log(data)
+    })
+    .catch(function(err){
+      if (err) throw err
+    });
   }
 
   render () {
@@ -62,10 +86,14 @@ Please click on the link to let me know if you can make it!`
     return (
       <Paper className={classes.root}>
         <Grid container>
+          {this.state.error ? <Grid item xs={12} >
+              <Typography align='center' color='error' >Error: Make sure all you entered all emails correctly</Typography>
+            </Grid> : <Grid/>}
+            
           <Grid item xs={11} className={classes.grids}>
             <TextField
               label='To'
-              placeholder='To'
+              placeholder='Separate emails by commas'
               value={this.state.to}
               className={classes.textField}
               fullWidth
