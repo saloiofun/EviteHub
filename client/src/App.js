@@ -72,17 +72,11 @@ class App extends React.Component {
               <main className={classes.content}>
                 <Switch>
                   <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
-                  <Route exact path='/events' component={viewEvents} />
-                  <Route exact path='/dashboard' component={Dashboard} />
-                  <Route exact path='/guest-list' component={GuestList} />
-                  <Route exact path='/send-invites' component={SendInvites} />
-                  <Route path='/profile' render={(props) => (
-                !auth.isAuthenticated() ? (
-                  <Redirect to='/' />
-                ) : (
-                  <Profile auth={auth} {...props} />
-                )
-                )} />
+                  <Route exact path='/events' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <viewEvents auth={auth} {...props} />)} />
+                  <Route exact path='/dashboard' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Dashboard auth={auth} {...props} />)} />
+                  <Route exact path='/guest-list' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <GuestList auth={auth} {...props} />)} />
+                  <Route exact path='/send-invites' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <SendInvites auth={auth} {...props} />)} />
+                  <Route exact path='/profile' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Profile auth={auth} {...props} />)} />
                   <Route path='/callback' render={(props) => {
                     handleAuthentication(props)
                     return <Callback {...props} />
