@@ -90,11 +90,6 @@ class Home extends Component {
             </Grid>
             <Grid item xs={6} lg={3}>
               <Card className={classNames(classes.card, classes.cardItem)}>
-                <CardMedia
-                  className={classes.media}
-                  image='/static/images/cards/contemplative-reptile.jpg'
-                  title='Contemplative Reptile'
-                />
                 <CardContent>
                   <Icon color='primary' style={{ fontSize: 48 }}>assignment</Icon>
                   <Typography type='headline' component='h2'>Events</Typography>
