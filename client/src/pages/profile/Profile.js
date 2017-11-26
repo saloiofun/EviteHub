@@ -38,7 +38,7 @@ class Profile extends Component {
       .then(res => console.log(res.data[0]))
       .catch(err => console.log(err))
 
-      // Use Token and call API to update User meta
+      // Use Token and call API to get User by ID
       AuthAPI.getUserByID(res.data.token_type, res.data.access_token, 'google-oauth2|111176812360524449794')
       .then(res => console.log(res.data))
       .catch(err => console.log(err))
