@@ -1,11 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import orange from 'material-ui/colors/orange'
 import { withStyles, MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import DeviceHub from 'material-ui-icons/DeviceHub'
-import Typography from 'material-ui/Typography'
 import Toolbar from 'material-ui/Toolbar'
 import ButtonBase from 'material-ui/ButtonBase'
 
