@@ -104,24 +104,23 @@ class addEvent extends React.Component {
     this.setState({ selectedDate: date })
   }
 
-  nameWordCount = () =>{
+  nameWordCount = () => {
     return `${10 - this.state.name.length}`
   }
-  descriptionWordCount = () =>{
+  descriptionWordCount = () => {
     return `${280 - this.state.description.length}`
   }
 
-
   handleChange = name => event => {
     var value = event.target.value
-    if (name === "name"){
-      if (value.length >= 10){
-        value = value.slice(0,10)
+    if (name === 'name') {
+      if (value.length >= 10) {
+        value = value.slice(0, 10)
         this.setState.nameLimit = true
       }
-    }else if (name === "description"){
-      if (value.length >= 280){
-        value = value.slice(0,280)
+    } else if (name === 'description') {
+      if (value.length >= 280) {
+        value = value.slice(0, 280)
         this.setState.descriptionLimit = true
       }
     }
@@ -189,8 +188,8 @@ class addEvent extends React.Component {
                       value={this.state.name}
                       onChange={this.handleChange('name')}
                       fullWidth
-                      helperText = {this.nameWordCount()}
-                      disabled = {this.state.nameLimit}
+                      helperText={this.nameWordCount()}
+                      disabled={this.state.nameLimit}
                       margin='dense'
                     />
                   </Grid>
@@ -239,8 +238,8 @@ class addEvent extends React.Component {
                       onChange={this.handleChange('description')}
                       placeholder="What's the event about?"
                       fullWidth
-                      helperText = {this.descriptionWordCount()}
-                      disabled = {this.state.descriptionLimit}
+                      helperText={this.descriptionWordCount()}
+                      disabled={this.state.descriptionLimit}
                       margin='dense'
                     />
                   </Grid>
