@@ -89,7 +89,9 @@ class addEvent extends React.Component {
     selectedDate: moment(),
     open: false,
     nameLimit: false,
-    descriptionLimit: false
+    descriptionLimit: false,
+    maxName: 20,
+    maxDescription: 280
   };
 
   handleClickOpen = () => {
@@ -105,22 +107,22 @@ class addEvent extends React.Component {
   }
 
   nameWordCount = () => {
-    return `${10 - this.state.name.length}`
+    return `${this.state.maxName - this.state.name.length}`
   }
   descriptionWordCount = () => {
-    return `${280 - this.state.description.length}`
+    return `${this.state.maxDescription - this.state.description.length}`
   }
 
   handleChange = name => event => {
     var value = event.target.value
     if (name === 'name') {
-      if (value.length >= 10) {
-        value = value.slice(0, 10)
+      if (value.length >= this.state.maxName) {
+        value = value.slice(0, this.state.maxName)
         this.setState.nameLimit = true
       }
     } else if (name === 'description') {
-      if (value.length >= 280) {
-        value = value.slice(0, 280)
+      if (value.length >= this.state.maxDescription) {
+        value = value.slice(0, this.state.maxDescription)
         this.setState.descriptionLimit = true
       }
     }
