@@ -1,7 +1,5 @@
 var nodemailer = require('nodemailer')
 
-
-
 module.exports = {
   deliverEmail: function (req, res) {
     var smtpTransport = nodemailer.createTransport({

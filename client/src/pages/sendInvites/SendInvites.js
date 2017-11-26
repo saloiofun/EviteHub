@@ -36,14 +36,13 @@ Please click on the link to let me know if you can make it!`,
   }
 
   validateEmail = (email) => {
-   var reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-   if (reg.test(email)){
-     return true;
-   }
-   else{
-     return false;
-   }
-  } 
+    var reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+    if (reg.test(email)) {
+      return true
+    } else {
+      return false
+    }
+  }
 
   handleChange = name => event => {
     this.setState({
@@ -63,8 +62,8 @@ Please click on the link to let me know if you can make it!`,
 
     var emailArray = email.to.split(',')
 
-    for (var i in emailArray){
-      if (!this.validateEmail(emailArray[i])){
+    for (var i in emailArray) {
+      if (!this.validateEmail(emailArray[i])) {
         this.setState({error: true})
         return
       }
@@ -72,11 +71,11 @@ Please click on the link to let me know if you can make it!`,
     this.setState({error: false})
     console.log(email)
     API.sendEmail(email)
-    .then((data)=> {
+    .then((data) => {
       console.log(data)
       this.setState({emailsSent: true})
     })
-    .catch((err)=> {
+    .catch((err) => {
       if (err) throw err
     })
   }
@@ -88,12 +87,12 @@ Please click on the link to let me know if you can make it!`,
       <Paper className={classes.root}>
         <Grid container>
           {this.state.error ? <Grid item xs={12} >
-              <Typography align='center' color='error' >Error: Make sure all you entered all emails correctly</Typography>
-          </Grid> : <Grid/>}
+            <Typography align='center' color='error' >Error: Make sure all you entered all emails correctly</Typography>
+          </Grid> : <Grid />}
           {this.state.emailsSent ? <Grid item xs={12} >
             <Typography align='center' color='primary' > Invite(s) were sent!</Typography>
-          </Grid> : <Grid/>}
-            
+          </Grid> : <Grid />}
+
           <Grid item xs={11} className={classes.grids}>
             <TextField
               label='To'
@@ -130,7 +129,7 @@ Please click on the link to let me know if you can make it!`,
             />
           </Grid>
           <Grid item xs={2} align='center'>
-            <Button raised color='primary' onClick = {this.onSend} >
+            <Button raised color='primary' onClick={this.onSend} >
               Send
             </Button>
           </Grid>
