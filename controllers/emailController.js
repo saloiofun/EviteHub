@@ -1,16 +1,17 @@
 var nodemailer = require('nodemailer')
 
-var smtpTransport = nodemailer.createTransport({
-  service: 'gmail',
-  host: 'smtp.gmail.com',
-  auth: {
-    user: 'evitehubbot@gmail.com',
-    pass: ['Enter Passwordf Here']
-  }
-})
+
 
 module.exports = {
   deliverEmail: function (req, res) {
+    var smtpTransport = nodemailer.createTransport({
+      service: 'gmail',
+      host: 'smtp.gmail.com',
+      auth: {
+        user: 'evitehubbot@gmail.com',
+        pass: process.env.EMAIL_PASSWORD
+      }
+    })
     const mailOptions = {
       to: req.body.to,
       subject: req.body.subject,
@@ -19,8 +20,10 @@ module.exports = {
     smtpTransport.sendMail(mailOptions, function (error, response) {
       if (error) {
         console.log(error)
+        res.json(error)
       } else {
         console.log('Email sent')
+        res.json(response)
       }
     })
   }

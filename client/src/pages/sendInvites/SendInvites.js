@@ -31,7 +31,8 @@ class SendInvites extends React.Component {
     subject: 'Event Name',
     message: `Hi, you are invited to my event! 
 Please click on the link to let me know if you can make it!`,
-    error: false
+    error: false,
+    emailsSent: false
   }
 
   validateEmail = (email) => {
@@ -51,6 +52,7 @@ Please click on the link to let me know if you can make it!`,
   };
 
   onSend = () => {
+    this.setState({emailsSent: false})
     var email = {
       to: this.state.to,
       subject: this.state.subject,
@@ -62,22 +64,21 @@ Please click on the link to let me know if you can make it!`,
     var emailArray = email.to.split(',')
 
     for (var i in emailArray){
-      console.log("Email: ", emailArray[i])
-      console.log("Email valid: ", this.validateEmail(emailArray[i]))
       if (!this.validateEmail(emailArray[i])){
         this.setState({error: true})
         return
       }
     }
-
+    this.setState({error: false})
     console.log(email)
     API.sendEmail(email)
-    .then(function(data){
+    .then((data)=> {
       console.log(data)
+      this.setState({emailsSent: true})
     })
-    .catch(function(err){
+    .catch((err)=> {
       if (err) throw err
-    });
+    })
   }
 
   render () {
@@ -88,7 +89,10 @@ Please click on the link to let me know if you can make it!`,
         <Grid container>
           {this.state.error ? <Grid item xs={12} >
               <Typography align='center' color='error' >Error: Make sure all you entered all emails correctly</Typography>
-            </Grid> : <Grid/>}
+          </Grid> : <Grid/>}
+          {this.state.emailsSent ? <Grid item xs={12} >
+            <Typography align='center' color='primary' > Invite(s) were sent!</Typography>
+          </Grid> : <Grid/>}
             
           <Grid item xs={11} className={classes.grids}>
             <TextField
