@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import orange from 'material-ui/colors/orange'
 import { withStyles, MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
+import Typography from 'material-ui/Typography'
 import Toolbar from 'material-ui/Toolbar'
 import ButtonBase from 'material-ui/ButtonBase'
 
@@ -42,7 +43,8 @@ function Brand (props) {
       <span>
         <Toolbar disableGutters>
           <ButtonBase className={classes.root} component={Link} to='/'>
-            <img src='/static/images/evitehub-logo.png' alt='EviteHub' />
+            <img src='/static/images/evitehub-icon.png' alt='EviteHub' width='50' />
+            <Typography type='title'>eviteHub</Typography>
           </ButtonBase>
         </Toolbar>
       </span>

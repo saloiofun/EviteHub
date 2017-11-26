@@ -4,16 +4,6 @@ body {
   font-family: 'Roboto', sans-serif;
   background: #f1f1f1
 }
-.login {
-  width: 320px;
-  padding: 8% 0 0;
-  margin: auto;
-}
-.media-fluid {
-  display: block;
-  width: 100%;
-  height: auto;
-}
 .featured-image {
   color: #fff;
   text-align: center;
