@@ -44,14 +44,8 @@ function Brand (props) {
     <MuiThemeProvider theme={theme}>
       <span>
         <Toolbar disableGutters>
-          <ButtonBase className={classes.root} component={Link} to='/dashboard'>
-            <DeviceHub
-              className={classNames(classes.leftIcon, classes.brandHover)}
-              style={{
-                width: 36,
-                height: 36
-              }} />
-            <Typography type='title'>eviteHub</Typography>
+          <ButtonBase className={classes.root} component={Link} to='/'>
+            <img src='/static/images/evitehub-logo.png' alt='EviteHub' />
           </ButtonBase>
         </Toolbar>
       </span>
