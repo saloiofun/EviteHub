@@ -5,7 +5,7 @@ import { withStyles } from 'material-ui/styles'
 import orange from 'material-ui/colors/orange'
 import classNames from 'classnames'
 import Grid from 'material-ui/Grid'
-import Card, { CardContent, CardMedia } from 'material-ui/Card'
+import Card, { CardContent } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import { Face, Print, ViewList, Assignment } from 'material-ui-icons'
 
