@@ -7,7 +7,7 @@ import classNames from 'classnames'
 import Grid from 'material-ui/Grid'
 import Card, { CardContent, CardMedia } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
-import Icon from 'material-ui/Icon'
+import { Face, Print, ViewList, Assignment } from 'material-ui-icons'
 
 const styles = theme => ({
   root: {
@@ -22,6 +22,9 @@ const styles = theme => ({
   },
   cardItem: {
     textAlign: 'center'
+  },
+  iconColor: {
+    color: orange[700]
   }
 })
 
@@ -58,7 +61,7 @@ class Home extends Component {
             <Grid item xs={6} lg={3}>
               <Card className={classNames(classes.card, classes.cardItem)}>
                 <CardContent>
-                  <Icon color='primary' style={{ fontSize: 48 }}>face</Icon>
+                  <Face className={classes.iconColor} style={{ width: 64, height: 64 }} />
                   <Typography type='headline' component='h2'>Invitations</Typography>
                   <Typography component='p'>
                     Create your guest list and send out invitations for your event. Send out reminders and more...
@@ -69,7 +72,7 @@ class Home extends Component {
             <Grid item xs={6} lg={3}>
               <Card className={classNames(classes.card, classes.cardItem)}>
                 <CardContent>
-                  <Icon color='primary' style={{ fontSize: 48 }}>print</Icon>
+                  <Print className={classes.iconColor} style={{ width: 64, height: 64 }} />
                   <Typography type='headline' component='h2'>Guest List</Typography>
                   <Typography component='p'>
                     Use our guest list to keep track of who's RSVP'd, Invite guest. Send out invitations and more...
@@ -80,7 +83,7 @@ class Home extends Component {
             <Grid item xs={6} lg={3}>
               <Card className={classNames(classes.card, classes.cardItem)}>
                 <CardContent>
-                  <Icon color='primary' style={{ fontSize: 48 }}>view_list</Icon>
+                  <ViewList className={classes.iconColor} style={{ width: 64, height: 64 }} />
                   <Typography type='headline' component='h2'>Checklist</Typography>
                   <Typography component='p'>
                     Stay on schedule and keep track of your checklist of items needed for your event
@@ -91,7 +94,7 @@ class Home extends Component {
             <Grid item xs={6} lg={3}>
               <Card className={classNames(classes.card, classes.cardItem)}>
                 <CardContent>
-                  <Icon color='primary' style={{ fontSize: 48 }}>assignment</Icon>
+                  <Assignment className={classes.iconColor} style={{ width: 64, height: 64 }} />
                   <Typography type='headline' component='h2'>Events</Typography>
                   <Typography component='p'>
                     You can create multiple events and keep track of each event with guestlist, invitations and more...
