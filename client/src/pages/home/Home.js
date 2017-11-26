@@ -34,7 +34,7 @@ class Home extends Component {
   }
 
   render () {
-    // const { isAuthenticated } = this.props.auth
+    const { isAuthenticated } = this.props.auth
     const { classes } = this.props
 
     return (
@@ -44,22 +44,12 @@ class Home extends Component {
             <div className='featured-content-gradient'>
               <h1 className='featured-title'>Take the Hassle out of Event Planning</h1>
               <p>Plan your next Event with us by using our easy to use Event Planner. Event Planning has never been easier.</p>
-              <Button
-                raised
-                color='primary'
-                className={classes.button}
-                onClick={this.login.bind(this)}
-              >
-                Sign Up
-              </Button>
-              <Button
-                raised
-                color='accent'
-                className={classNames(classes.button, classes.raisedAccent)}
-                onClick={this.login.bind(this)}
-              >
-                Sign In
-              </Button>
+              { !isAuthenticated() && (
+                <div>
+                  <Button raised color='primary' className={classes.button} onClick={this.login.bind(this)}>Sign Up</Button>
+                  <Button raised color='accent' className={classNames(classes.button, classes.raisedAccent)} onClick={this.login.bind(this)}>Sign In</Button>
+                </div>
+              )}
             </div>
           </div>
         </div>
