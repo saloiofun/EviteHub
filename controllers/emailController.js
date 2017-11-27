@@ -13,7 +13,7 @@ module.exports = {
     const mailOptions = {
       to: req.body.to,
       subject: req.body.subject,
-      text: `${req.body.message}\n Click on link for more details: ${req.body.url}`
+      html: `<p>${req.body.message}</p> <a href='${req.body.url}' target='_blank'>Click here for more details.</a>`
     }
     smtpTransport.sendMail(mailOptions, function (error, response) {
       if (error) {

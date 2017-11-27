@@ -32,7 +32,8 @@ class SendInvites extends React.Component {
     message: `Hi, you are invited to my event! 
 Please click on the link to let me know if you can make it!`,
     error: false,
-    emailsSent: false
+    emailsSent: false,
+    emailURL: 'https://www.google.com/'
   }
 
   validateEmail = (email) => {
@@ -57,7 +58,7 @@ Please click on the link to let me know if you can make it!`,
       subject: this.state.subject,
       message: this.state.message,
       user: 'Test User',
-      url: 'google.com'
+      url: this.state.emailURL
     }
 
     var emailArray = email.to.split(',')
@@ -69,10 +70,8 @@ Please click on the link to let me know if you can make it!`,
       }
     }
     this.setState({error: false})
-    console.log(email)
     API.sendEmail(email)
     .then((data) => {
-      console.log(data)
       this.setState({emailsSent: true})
     })
     .catch((err) => {
