@@ -1,25 +1,27 @@
 var nodemailer = require('nodemailer')
-var smtpTransport = nodemailer.createTransport({
-  service: 'gmail',
-  host: 'smtp.gmail.com',
-  auth: {
-    user: '[ENTER EMAIL HERE]',
-    pass: '[ENTER EMAIL PASSWORD]'
-  }
-})
 
 module.exports = {
   deliverEmail: function (req, res) {
+    var smtpTransport = nodemailer.createTransport({
+      service: 'gmail',
+      host: 'smtp.gmail.com',
+      auth: {
+        user: 'evitehubbot@gmail.com',
+        pass: process.env.EMAIL_PASSWORD
+      }
+    })
     const mailOptions = {
       to: req.body.to,
-      subject: 'Event Invitation',
-      text: `${req.body.user} has invited you to ${req.body.event}!\n Click on link for more details: ${req.body.url}`
+      subject: req.body.subject,
+      html: `<p>${req.body.message}</p> <a href='${req.body.url}' target='_blank'>Click here for more details.</a>`
     }
     smtpTransport.sendMail(mailOptions, function (error, response) {
       if (error) {
         console.log(error)
+        res.json(error)
       } else {
         console.log('Email sent')
+        res.json(response)
       }
     })
   }
