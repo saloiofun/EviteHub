@@ -86,7 +86,7 @@ class NavBar extends Component {
             <MenuIcon />
           </IconButton>
           <Hidden smDown>
-            <NavButtons />
+            { isAuthenticated() && (<NavButtons />) }
           </Hidden>
           <div className={classes.flex} />
           { !isAuthenticated() && (<Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' onClick={this.login.bind(this)}>Sign In</Button>) }
