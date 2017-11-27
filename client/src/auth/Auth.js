@@ -8,7 +8,7 @@ export default class Auth {
     redirectUri: process.env.REACT_APP_AUTH0_REDIRECTURI,
     audience: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/userinfo`,
     responseType: 'token id_token',
-    scope: 'openid profile'
+    scope: 'openid profile email'
   });
 
   userProfile;
