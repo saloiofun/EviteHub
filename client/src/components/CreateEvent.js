@@ -229,14 +229,13 @@ class addEvent extends React.Component {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      id='full-width'
+                      id='description'
                       label='Event Description'
                       InputLabelProps={{
                         shrink: true
                       }}
                       value={this.state.description}
                       multiline
-                      character='10'
                       onChange={this.handleChange('description')}
                       placeholder="What's the event about?"
                       fullWidth
