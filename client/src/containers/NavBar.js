@@ -3,38 +3,23 @@ import { withStyles } from 'material-ui/styles'
 import PropTypes from 'prop-types'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
-import IconButton from 'material-ui/IconButton'
 import Hidden from 'material-ui/Hidden'
-import MenuIcon from 'material-ui-icons/Menu'
-import NavButtons from './NavButtons'
-import RaisedButton from './RaisedButton'
-import Brand from './Brand'
+import NavButtons from '../components/NavButtons'
+import RaisedButton from '../components/RaisedButton'
+import Brand from '../components/Brand'
+import ToggleSidebar from '../components/ToggleSidebar'
+
+import compose from 'recompose/compose'
+import { connect } from 'react-redux'
+import * as actionTypes from '../constants/ActionTypes'
 
 const styles = theme => ({
-  navIconHide: {
-    [theme.breakpoints.up('md')]: {
-      display: 'none'
-    }
-  },
-  navButtonsHide: {
-    [theme.breakpoints.up('xs')]: {
-      display: 'none'
-    }
-  },
   navSpace: {
     paddingRight: 16
   }
 })
 
 class NavBar extends Component {
-  state = {
-    mobileOpen: false
-  }
-
-  handleDrawerToggle = () => {
-    this.setState({ mobileOpen: !this.state.mobileOpen })
-  }
-
   goTo (route) {
     this.props.history.replace(`/${route}`)
   }
@@ -54,18 +39,11 @@ class NavBar extends Component {
     return (
       <AppBar>
         <Toolbar disableGutters className={classes.navSpace}>
-          <IconButton
-            color='contrast'
-            aria-label='open drawer'
-            onClick={this.handleDrawerToggle}
-            className={classes.navIconHide}
-            >
-            <MenuIcon />
-          </IconButton>
+          <ToggleSidebar onClick={this.props.onToggleSidebar} />
+          <Brand />
           <Hidden smDown>
             { isAuthenticated() && (<NavButtons />) }
           </Hidden>
-          <Brand />
           { !isAuthenticated() && (<RaisedButton onClick={this.login.bind(this)}>Sign In</RaisedButton>) }
           { isAuthenticated() && (<RaisedButton onClick={this.logout.bind(this)}>Sign Out</RaisedButton>) }
         </Toolbar>
@@ -78,4 +56,15 @@ NavBar.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(NavBar)
+const mapDispatchToProps = dispatch => {
+  return {
+    onToggleSidebar: () => dispatch({type: actionTypes.TOGGLE_SIDEBAR})
+  }
+}
+
+export default compose(
+  withStyles(styles, {
+    name: 'NavBar'
+  }),
+  connect(null, mapDispatchToProps)
+)(NavBar)

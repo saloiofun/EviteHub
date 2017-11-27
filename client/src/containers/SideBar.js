@@ -7,10 +7,15 @@ import Drawer from 'material-ui/Drawer'
 import List from 'material-ui/List'
 import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
-import UserAvatar from './UserAvatar'
-import Brand from './Brand'
-import EventsDropdown from './EventsDropdown'
-import { DashboardListItems, GuestListItems, SendInvitesListItems } from './drawerItems'
+
+import UserAvatar from '../components/UserAvatar'
+import Brand from '../components/Brand'
+import EventsDropdown from '../components/EventsDropdown'
+import { DashboardListItems, GuestListItems, SendInvitesListItems } from '../components/drawerItems'
+
+import compose from 'recompose/compose'
+import { connect } from 'react-redux'
+import * as actionTypes from '../constants/ActionTypes'
 
 const drawerWidth = 250
 
@@ -53,35 +58,16 @@ const styles = theme => ({
     height: 64,
     backgroundColor: teal[800]
   },
-  drawerAvatar: {
-    height: '215px',
-    textAlign: 'center',
-    paddingTop: '20px'
-  },
-  flex: {
-    flex: '0 1 100%'
-  },
   drawerPaper: {
     width: 250,
     [theme.breakpoints.up('md')]: {
       width: drawerWidth,
       height: '100%'
     }
-  },
-  icon: {
-    margin: theme.spacing.unit
   }
 })
 
 class SideBar extends Component {
-  state = {
-    mobileOpen: false
-  }
-
-  handleDrawerToggle = () => {
-    this.setState({ mobileOpen: !this.state.mobileOpen })
-  }
-
   render () {
     const { classes } = this.props
 
@@ -106,11 +92,11 @@ class SideBar extends Component {
           <Drawer
             type='temporary'
             anchor='left'
-            open={this.state.mobileOpen}
+            open={this.props.sideBar}
             classes={{
               paper: classes.drawerPaper
             }}
-            onRequestClose={this.handleDrawerToggle}
+            onRequestClose={this.props.onToggleSidebar}
             ModalProps={{
               keepMounted: true // Better open performance on mobile.
             }}
@@ -137,4 +123,20 @@ SideBar.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles, theme)(SideBar)
+const mapStateToProps = state => {
+  return {
+    sideBar: state.mobileOpen
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onToggleSidebar: () => dispatch({type: actionTypes.TOGGLE_SIDEBAR})
+  }
+}
+
+export default compose(
+  withStyles(styles, theme, {
+    name: 'SideBar'
+  }), connect(mapStateToProps, mapDispatchToProps)
+)(SideBar)

@@ -5,7 +5,6 @@ import { withStyles, MuiThemeProvider, createMuiTheme } from 'material-ui/styles
 import Typography from 'material-ui/Typography'
 import Toolbar from 'material-ui/Toolbar'
 import ButtonBase from 'material-ui/ButtonBase'
-import classNames from 'classnames'
 import teal from 'material-ui/colors/teal'
 
 const brandWidth = 250

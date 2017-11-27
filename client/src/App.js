@@ -6,8 +6,8 @@ import Dashboard from './pages/dashboard'
 import viewEvents from './pages/viewEvents'
 import GuestList from './pages/guestList'
 import SendInvites from './pages/sendInvites'
-import NavBar from './components/NavBar'
-import SideBar from './components/SideBar'
+import NavBar from './containers/NavBar'
+import SideBar from './containers/SideBar'
 import Home from './pages/home'
 import Callback from './callback'
 import Auth from './auth'
@@ -67,7 +67,7 @@ class App extends React.Component {
           <div className={classes.root}>
             <div className={classes.appFrame}>
               <Route path='/' render={(props) => <NavBar auth={auth} {...props} />} />
-              {/* <SideBar /> */}
+              <SideBar />
               <main className={classes.content}>
                 <Switch>
                   <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
