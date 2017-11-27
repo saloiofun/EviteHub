@@ -20,6 +20,9 @@ const styles = theme => ({
     [theme.breakpoints.up('xs')]: {
       display: 'none'
     }
+  },
+  navSpace: {
+    paddingRight: 16
   }
 })
 
@@ -50,7 +53,7 @@ class NavBar extends Component {
 
     return (
       <AppBar>
-        <Toolbar>
+        <Toolbar disableGutters className={classes.navSpace}>
           <IconButton
             color='contrast'
             aria-label='open drawer'

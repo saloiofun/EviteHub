@@ -5,6 +5,10 @@ import { withStyles, MuiThemeProvider, createMuiTheme } from 'material-ui/styles
 import Typography from 'material-ui/Typography'
 import Toolbar from 'material-ui/Toolbar'
 import ButtonBase from 'material-ui/ButtonBase'
+import classNames from 'classnames'
+import teal from 'material-ui/colors/teal'
+
+const drawerWidth = 250
 
 function theme (outerTheme) {
   return createMuiTheme({
@@ -19,7 +23,16 @@ function theme (outerTheme) {
 const styles = theme => ({
   root: {
     minHeight: 64,
-    justifyContent: 'left'
+    width: drawerWidth,
+    paddingRight: 16
+  },
+  imageSpace: {
+    marginBottom: 8,
+    marginRight: 12
+  },
+  brandHeader: {
+    height: 64,
+    backgroundColor: teal[800]
   },
   flex: {
     flex: 1
@@ -32,9 +45,9 @@ function Brand (props) {
     <MuiThemeProvider theme={theme}>
       <div className={classes.flex}>
         <Toolbar disableGutters>
-          <ButtonBase disableRipple className={classes.root} component={Link} to='/'>
-            <img src='/static/images/evitehub-icon.png' alt='EviteHub' width='50' />
-            <Typography type='title'>eviteHub</Typography>
+          <ButtonBase className={classNames(classes.root, classes.brandHeader)} component={Link} to='/'>
+            <img className={classes.imageSpace} src='/static/images/logo.png' alt='EviteHub' width='36' />
+            <Typography type='title'>EviteHub</Typography>
           </ButtonBase>
         </Toolbar>
       </div>
