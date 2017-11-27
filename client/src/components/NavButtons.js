@@ -23,13 +23,16 @@ const styles = theme => ({
     [theme.breakpoints.up('xs')]: {
       display: 'none'
     }
+  },
+  flex: {
+    flex: 1
   }
 })
 
 function IconLabelButtons (props) {
   const { classes } = props
   return (
-    <div>
+    <div className={classes.flex}>
       <CreateEvent />
       <Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' component={Link} to='/events'>
         <BorderVertical className={classes.leftIcon} />

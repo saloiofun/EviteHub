@@ -22,18 +22,18 @@ function theme (outerTheme) {
 
 const styles = theme => ({
   root: {
-    minHeight: brandHeight,
-    width: brandWidth,
-    justifyContent: 'left',
-    backgroundColor: teal[800]
+    marginRight: 16
   },
   imageSpace: {
     marginLeft: 16,
     marginBottom: 5,
     marginRight: 8
   },
-  flex: {
-    flex: 1
+  logo: {
+    minHeight: brandHeight,
+    width: brandWidth,
+    justifyContent: 'left',
+    backgroundColor: teal[800]
   }
 })
 
@@ -41,9 +41,9 @@ function Brand (props) {
   const { classes } = props
   return (
     <MuiThemeProvider theme={theme}>
-      <div className={classes.flex}>
+      <div className={classes.root}>
         <Toolbar disableGutters>
-          <ButtonBase className={classes.root} component={Link} to='/'>
+          <ButtonBase className={classes.logo} component={Link} to='/'>
             <img className={classes.imageSpace} src='/static/images/evitehub-icon.png' alt='EviteHub' width='50' />
             <Typography type='title'>EviteHub</Typography>
           </ButtonBase>

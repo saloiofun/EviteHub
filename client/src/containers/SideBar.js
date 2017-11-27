@@ -49,19 +49,23 @@ const theme = createMuiTheme({
 })
 
 const styles = theme => ({
+  root: {
+    backgroundColor: teal[500]
+  },
   bigAvatar: {
     width: 60,
     height: 60,
     margin: '5px auto'
   },
   drawerHeader: {
-    height: 64,
+    height: theme.mixins.toolbar,
     backgroundColor: teal[800]
   },
   drawerPaper: {
     width: 250,
     [theme.breakpoints.up('md')]: {
       width: drawerWidth,
+      position: 'relative',
       height: '100%'
     }
   }
@@ -88,33 +92,35 @@ class SideBar extends Component {
 
     return (
       <MuiThemeProvider theme={theme}>
-        <Hidden mdUp>
-          <Drawer
-            type='temporary'
-            anchor='left'
-            open={this.props.sideBar}
-            classes={{
-              paper: classes.drawerPaper
-            }}
-            onRequestClose={this.props.onToggleSidebar}
-            ModalProps={{
-              keepMounted: true // Better open performance on mobile.
-            }}
+        <div className={classes.root}>
+          <Hidden mdUp>
+            <Drawer
+              type='temporary'
+              anchor='left'
+              open={this.props.sideBar}
+              classes={{
+                paper: classes.drawerPaper
+              }}
+              onRequestClose={this.props.onToggleSidebar}
+              ModalProps={{
+                keepMounted: true // Better open performance on mobile.
+              }}
               >
-            {drawer}
-          </Drawer>
-        </Hidden>
-        <Hidden mdDown implementation='css'>
-          <Drawer
-            type='permanent'
-            open
-            classes={{
-              paper: classes.drawerPaper
-            }}
+              {drawer}
+            </Drawer>
+          </Hidden>
+          <Hidden mdDown implementation='css'>
+            <Drawer
+              type='permanent'
+              open
+              classes={{
+                paper: classes.drawerPaper
+              }}
               >
-            {drawer}
-          </Drawer>
-        </Hidden>
+              {drawer}
+            </Drawer>
+          </Hidden>
+        </div>
       </MuiThemeProvider>
     )
   }

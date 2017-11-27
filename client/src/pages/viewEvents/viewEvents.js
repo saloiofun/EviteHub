@@ -12,7 +12,6 @@ import Divider from 'material-ui/Divider'
 
 const styles = theme => ({
   root: {
-    flex: '1 1 100%',
     [theme.breakpoints.up('sm')]: {
       width: '80%'
     },

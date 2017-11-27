@@ -23,7 +23,6 @@ import Slide from 'material-ui/transitions/Slide'
 // const for style
 const styles = theme => ({
   root: {
-    flex: '1 1 100%',
     [theme.breakpoints.up('sm')]: {
       width: '80%'
     },

@@ -23,8 +23,6 @@ const handleAuthentication = (nextState, replace) => {
   }
 }
 
-const drawerWidth = 250
-
 const theme = createMuiTheme({
   palette: {
     primary: teal
@@ -44,15 +42,15 @@ const styles = theme => ({
     height: '100%'
   },
   content: {
-    flex: '1 1 100%',
-    width: `calc(100% - ${drawerWidth}px)`,
     padding: theme.spacing.unit * 2,
-    marginTop: 56,
+    paddingTop: 80,
+    margin: '0 auto',
     marginBottom: 100,
     [theme.breakpoints.up('md')]: {
-      marginLeft: drawerWidth,
-      marginTop: 64,
-      marginBottom: 100
+      paddingTop: 80,
+      margin: '0 auto',
+      marginBottom: 100,
+      width: '100%'
     }
   }
 })
@@ -67,7 +65,7 @@ class App extends React.Component {
           <div className={classes.root}>
             <div className={classes.appFrame}>
               <Route path='/' render={(props) => <NavBar auth={auth} {...props} />} />
-              <SideBar />
+              { (auth.isAuthenticated() ? <SideBar /> : '') }
               <main className={classes.content}>
                 <Switch>
                   <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
