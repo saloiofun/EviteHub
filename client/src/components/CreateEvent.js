@@ -16,6 +16,7 @@ import Dialog, {
   DialogTitle,
   DialogContentText
 } from 'material-ui/Dialog'
+import Slide from 'material-ui/transitions/Slide'
 import PagesIcon from 'material-ui-icons/Pages'
 
 const styles = theme => ({
@@ -80,6 +81,10 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit
   }
 })
+
+function Transition (props) {
+  return <Slide direction='up' {...props} />
+}
 
 class addEvent extends React.Component {
   state = {
@@ -173,11 +178,11 @@ class addEvent extends React.Component {
           <PagesIcon className={classes.leftIcon} />
           New Event
         </Button>
-        <Dialog open={this.state.open} onRequestClose={this.handleRequestClose}>
+        <Dialog open={this.state.open} onRequestClose={this.handleRequestClose} transition={Transition}>
           <DialogTitle>New Event</DialogTitle>
           <DialogContent>
             <DialogContentText className={classes.spaceBottom}>
-             Start a memorable Event!
+             Start a memorable event!
            </DialogContentText>
             <div>
               <form noValidate autoComplete='off'>

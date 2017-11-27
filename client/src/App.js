@@ -6,8 +6,8 @@ import Dashboard from './pages/dashboard'
 import viewEvents from './pages/viewEvents'
 import GuestList from './pages/guestList'
 import SendInvites from './pages/sendInvites'
-import NavBar from './components/NavBar'
-import SideBar from './components/SideBar'
+import NavBar from './containers/NavBar'
+import SideBar from './containers/SideBar'
 import Home from './pages/home'
 import Callback from './callback'
 import Auth from './auth'
@@ -22,8 +22,6 @@ const handleAuthentication = (nextState, replace) => {
     auth.handleAuthentication()
   }
 }
-
-const drawerWidth = 250
 
 const theme = createMuiTheme({
   palette: {
@@ -44,15 +42,15 @@ const styles = theme => ({
     height: '100%'
   },
   content: {
-    flex: '1 1 100%',
-    width: `calc(100% - ${drawerWidth}px)`,
     padding: theme.spacing.unit * 2,
-    marginTop: 56,
+    paddingTop: 80,
+    margin: '0 auto',
     marginBottom: 100,
     [theme.breakpoints.up('md')]: {
-      marginLeft: drawerWidth,
-      marginTop: 64,
-      marginBottom: 100
+      paddingTop: 80,
+      margin: '0 auto',
+      marginBottom: 100,
+      width: '100%'
     }
   }
 })
@@ -67,7 +65,7 @@ class App extends React.Component {
           <div className={classes.root}>
             <div className={classes.appFrame}>
               <Route path='/' render={(props) => <NavBar auth={auth} {...props} />} />
-              <SideBar />
+              { (auth.isAuthenticated() ? <SideBar /> : '') }
               <main className={classes.content}>
                 <Switch>
                   <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
