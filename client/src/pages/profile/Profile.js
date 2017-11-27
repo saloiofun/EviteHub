@@ -37,6 +37,11 @@ class Profile extends Component {
       AuthAPI.getEventsByEmail(res.data.token_type, res.data.access_token, 'marioamelchor@gmail.com')
       .then(res => console.log(res.data[0]))
       .catch(err => console.log(err))
+
+      // Use Token and call API to get User by ID
+      AuthAPI.getUserByID(res.data.token_type, res.data.access_token, 'google-oauth2|111176812360524449794')
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err))
     })
   }
 
