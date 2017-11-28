@@ -5,7 +5,7 @@ import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
 import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
-import Snackbar from 'material-ui/Snackbar';
+import Snackbar from 'material-ui/Snackbar'
 import API from '../../utils/Api'
 
 const styles = theme => ({
@@ -46,7 +46,7 @@ Please click on the link to let me know if you can make it!`,
   }
 
   handleRequestClose = () => {
-    this.setState({ error: false , emailsSent: false });
+    this.setState({ error: false, emailsSent: false })
   };
 
   handleChange = name => event => {
@@ -77,7 +77,7 @@ Please click on the link to let me know if you can make it!`,
       API.sendEmail(email)
       .then((data) => {
         this.setState({emailsSent: true})
-        API.saveGuest({ guestEmail: data.data.accepted[0] , emailed: true })
+        API.saveGuest({ guestEmail: data.data.accepted[0], emailed: true })
         .then((guest) => {
         })
         .catch((error) => {
@@ -141,21 +141,21 @@ Please click on the link to let me know if you can make it!`,
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           open={this.state.error}
           onRequestClose={this.handleRequestClose}
-          autoHideDuration= { 3000 }
+          autoHideDuration={3000}
           SnackbarContentProps={{
-            'aria-describedby': 'message-id',
+            'aria-describedby': 'message-id'
           }}
-          message={<span id="message-id">Error: Make sure all you entered all emails correctly</span>}
+          message={<span id='message-id'>Error: Make sure all you entered all emails correctly</span>}
         />
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           open={this.state.emailsSent}
           onRequestClose={this.handleRequestClose}
-          autoHideDuration= '3000'
+          autoHideDuration='3000'
           SnackbarContentProps={{
-            'aria-describedby': 'message-id2',
+            'aria-describedby': 'message-id2'
           }}
-          message={<span id="message-id">Invite(s) were sent!</span>}
+          message={<span id='message-id'>Invite(s) were sent!</span>}
         />
       </Paper>
     )
