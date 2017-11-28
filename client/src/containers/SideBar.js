@@ -78,7 +78,7 @@ class SideBar extends Component {
     const drawer = (
       <div>
         <div className={classes.drawerHeader}>
-          <Brand />
+          <Brand disableRipple />
         </div>
         <UserAvatar />
         <Divider />
