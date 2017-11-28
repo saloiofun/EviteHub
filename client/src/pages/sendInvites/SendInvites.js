@@ -5,7 +5,7 @@ import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
 import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
-import Typography from 'material-ui/Typography'
+import Snackbar from 'material-ui/Snackbar';
 import API from '../../utils/Api'
 
 const styles = theme => ({
@@ -45,6 +45,10 @@ Please click on the link to let me know if you can make it!`,
     }
   }
 
+  handleRequestClose = () => {
+    this.setState({ error: false , emailsSent: false });
+  };
+
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value
@@ -72,11 +76,9 @@ Please click on the link to let me know if you can make it!`,
       }
       API.sendEmail(email)
       .then((data) => {
-        console.log(data.data.accepted[0])
         this.setState({emailsSent: true})
         API.saveGuest({ guestEmail: data.data.accepted[0] , emailed: true })
         .then((guest) => {
-          console.log('Guest', guest)
         })
         .catch((error) => {
           if (error) throw error
@@ -94,13 +96,6 @@ Please click on the link to let me know if you can make it!`,
     return (
       <Paper className={classes.root}>
         <Grid container>
-          {this.state.error ? <Grid item xs={12} >
-            <Typography align='center' color='error' >Error: Make sure all you entered all emails correctly</Typography>
-          </Grid> : <Grid />}
-          {this.state.emailsSent ? <Grid item xs={12} >
-            <Typography align='center' color='primary' > Invite(s) were sent!</Typography>
-          </Grid> : <Grid />}
-
           <Grid item xs={11} className={classes.grids}>
             <TextField
               label='To'
@@ -142,6 +137,26 @@ Please click on the link to let me know if you can make it!`,
             </Button>
           </Grid>
         </Grid>
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          open={this.state.error}
+          onRequestClose={this.handleRequestClose}
+          autoHideDuration= { 3000 }
+          SnackbarContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Error: Make sure all you entered all emails correctly</span>}
+        />
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          open={this.state.emailsSent}
+          onRequestClose={this.handleRequestClose}
+          autoHideDuration= '3000'
+          SnackbarContentProps={{
+            'aria-describedby': 'message-id2',
+          }}
+          message={<span id="message-id">Invite(s) were sent!</span>}
+        />
       </Paper>
     )
   }
