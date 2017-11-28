@@ -65,7 +65,7 @@ class App extends React.Component {
           <div className={classes.root}>
             <div className={classes.appFrame}>
               <Route path='/' render={(props) => <NavBar auth={auth} {...props} />} />
-              { (auth.isAuthenticated() ? <SideBar /> : '') }
+              <Route path='/' render={(props) => <SideBar auth={auth} {...props} />} />
               <main className={classes.content}>
                 <Switch>
                   <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
