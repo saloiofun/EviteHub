@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
@@ -19,6 +20,10 @@ const drawerWidth = 250
 const styles = theme => ({
   navSpace: {
     padding: '0 16px'
+  },
+  brandCenter: {
+    width: '80%',
+    margin: '0 auto'
   },
   signinButton: {
     marginLeft: 'auto'
@@ -63,9 +68,10 @@ class NavBar extends Component {
       )
     } else {
       return (
-        <AppBar>
-          <Toolbar disableGutters className={classes.navSpace}>
+        <AppBar className={classes.navbarBgColor}>
+          <Toolbar disableGutters className={classNames(classes.navSpace, classes.brandCenter)}>
             <Brand disableRipple />
+
             <div className={classes.signinButton}>
               <RaisedButton onClick={this.login.bind(this)}>Sign In</RaisedButton>
             </div>

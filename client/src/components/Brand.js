@@ -20,14 +20,17 @@ function theme (outerTheme) {
 
 const styles = theme => ({
   imageSpace: {
-    marginLeft: 16,
     marginBottom: 5,
     marginRight: 8
   },
   logo: {
+    marginLeft: 16,
     minHeight: brandHeight,
     width: '100%',
-    justifyContent: 'left'
+    justifyContent: 'left',
+    [theme.breakpoints.down('md')]: {
+      marginLeft: 0
+    }
   }
 })
 
@@ -36,7 +39,7 @@ function Brand (props) {
   return (
     <MuiThemeProvider theme={theme}>
       <Toolbar disableGutters>
-        <ButtonBase className={classes.logo} {...props} component={Link} to='/'>
+        <ButtonBase className={classes.logo} disableRipple component={Link} to='/'>
           <img className={classes.imageSpace} src='/static/images/evitehub-icon.png' alt='EviteHub' width='50' />
           <Typography type='title'>EviteHub</Typography>
         </ButtonBase>

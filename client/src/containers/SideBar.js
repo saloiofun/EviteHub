@@ -72,8 +72,13 @@ const styles = theme => ({
 })
 
 class SideBar extends Component {
+  goTo (route) {
+    this.props.history.replace(`/${route}`)
+  }
+
   render () {
     const { classes } = this.props
+    const { isAuthenticated } = this.props.auth
 
     const drawer = (
       <div>
@@ -92,35 +97,37 @@ class SideBar extends Component {
 
     return (
       <MuiThemeProvider theme={theme}>
-        <div className={classes.root}>
-          <Hidden mdUp>
-            <Drawer
-              type='temporary'
-              anchor='left'
-              open={this.props.sideBar}
-              classes={{
-                paper: classes.drawerPaper
-              }}
-              onRequestClose={this.props.onToggleSidebar}
-              ModalProps={{
-                keepMounted: true // Better open performance on mobile.
-              }}
+        { isAuthenticated() && (
+          <div className={classes.root}>
+            <Hidden mdUp>
+              <Drawer
+                type='temporary'
+                anchor='left'
+                open={this.props.sideBar}
+                classes={{
+                  paper: classes.drawerPaper
+                }}
+                onRequestClose={this.props.onToggleSidebar}
+                ModalProps={{
+                  keepMounted: true // Better open performance on mobile.
+                }}
               >
-              {drawer}
-            </Drawer>
-          </Hidden>
-          <Hidden mdDown implementation='css'>
-            <Drawer
-              type='permanent'
-              open
-              classes={{
-                paper: classes.drawerPaper
-              }}
+                {drawer}
+              </Drawer>
+            </Hidden>
+            <Hidden mdDown implementation='css'>
+              <Drawer
+                type='permanent'
+                open
+                classes={{
+                  paper: classes.drawerPaper
+                }}
               >
-              {drawer}
-            </Drawer>
-          </Hidden>
-        </div>
+                {drawer}
+              </Drawer>
+            </Hidden>
+          </div>
+        )}
       </MuiThemeProvider>
     )
   }
