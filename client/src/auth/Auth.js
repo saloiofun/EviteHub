@@ -73,7 +73,7 @@ export default class Auth {
     localStorage.removeItem('expires_at')
     this.userProfile = null
     // navigate to the dashboard route
-    history.replace('/')
+    history.replace('/logout')
   }
 
   isAuthenticated () {
