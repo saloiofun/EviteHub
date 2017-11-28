@@ -32,5 +32,9 @@ export default {
   // Create Event
   saveEvent: function (data) {
     return axios.post('/api/events', data)
+  },
+  // Send Email
+  sendEmail: function (data) {
+    return axios.post('/api/email', data)
   }
 }

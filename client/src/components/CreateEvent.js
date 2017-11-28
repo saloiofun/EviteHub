@@ -16,6 +16,7 @@ import Dialog, {
   DialogTitle,
   DialogContentText
 } from 'material-ui/Dialog'
+import Slide from 'material-ui/transitions/Slide'
 import PagesIcon from 'material-ui-icons/Pages'
 
 const styles = theme => ({
@@ -81,13 +82,21 @@ const styles = theme => ({
   }
 })
 
+function Transition (props) {
+  return <Slide direction='up' {...props} />
+}
+
 class addEvent extends React.Component {
   state = {
     name: '',
     location: '',
     description: '',
     selectedDate: moment(),
-    open: false
+    open: false,
+    nameLimit: false,
+    descriptionLimit: false,
+    maxName: 20,
+    maxDescription: 280
   };
 
   handleClickOpen = () => {
@@ -102,9 +111,28 @@ class addEvent extends React.Component {
     this.setState({ selectedDate: date })
   }
 
+  nameWordCount = () => {
+    return `${this.state.maxName - this.state.name.length}`
+  }
+  descriptionWordCount = () => {
+    return `${this.state.maxDescription - this.state.description.length}`
+  }
+
   handleChange = name => event => {
+    var value = event.target.value
+    if (name === 'name') {
+      if (value.length >= this.state.maxName) {
+        value = value.slice(0, this.state.maxName)
+        this.setState.nameLimit = true
+      }
+    } else if (name === 'description') {
+      if (value.length >= this.state.maxDescription) {
+        value = value.slice(0, this.state.maxDescription)
+        this.setState.descriptionLimit = true
+      }
+    }
     this.setState({
-      [name]: event.target.value
+      [name]: value
     })
   }
 
@@ -150,11 +178,11 @@ class addEvent extends React.Component {
           <PagesIcon className={classes.leftIcon} />
           New Event
         </Button>
-        <Dialog open={this.state.open} onRequestClose={this.handleRequestClose}>
+        <Dialog open={this.state.open} onRequestClose={this.handleRequestClose} transition={Transition}>
           <DialogTitle>New Event</DialogTitle>
           <DialogContent>
             <DialogContentText className={classes.spaceBottom}>
-             Start a memorable Event!
+             Start a memorable event!
            </DialogContentText>
             <div>
               <form noValidate autoComplete='off'>
@@ -167,6 +195,8 @@ class addEvent extends React.Component {
                       value={this.state.name}
                       onChange={this.handleChange('name')}
                       fullWidth
+                      helperText={this.nameWordCount()}
+                      disabled={this.state.nameLimit}
                       margin='dense'
                     />
                   </Grid>
@@ -204,17 +234,18 @@ class addEvent extends React.Component {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      id='full-width'
+                      id='description'
                       label='Event Description'
                       InputLabelProps={{
                         shrink: true
                       }}
                       value={this.state.description}
                       multiline
-                      character='10'
                       onChange={this.handleChange('description')}
                       placeholder="What's the event about?"
                       fullWidth
+                      helperText={this.descriptionWordCount()}
+                      disabled={this.state.descriptionLimit}
                       margin='dense'
                     />
                   </Grid>

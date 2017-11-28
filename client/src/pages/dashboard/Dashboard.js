@@ -16,7 +16,6 @@ import ListIcon from 'material-ui-icons/List'
 
 const styles = theme => ({
   root: {
-    flex: '1 1 100%',
     [theme.breakpoints.up('sm')]: {
       width: '80%'
     },

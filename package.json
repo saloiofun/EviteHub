@@ -20,6 +20,8 @@
   "dependencies": {
     "babel-eslint": "^8.0.2",
     "body-parser": "^1.18.2",
+    "dotenv": "^4.0.0",
+    "envs": "^0.1.6",
     "express": "^4.16.2",
     "mongoose": "^4.13.1",
     "nodemailer": "^4.4.0",

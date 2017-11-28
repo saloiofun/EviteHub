@@ -1,13 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import classNames from 'classnames'
 import PropTypes from 'prop-types'
-import orange from 'material-ui/colors/orange'
 import { withStyles, MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import DeviceHub from 'material-ui-icons/DeviceHub'
 import Typography from 'material-ui/Typography'
 import Toolbar from 'material-ui/Toolbar'
 import ButtonBase from 'material-ui/ButtonBase'
+import teal from 'material-ui/colors/teal'
+
+const brandWidth = 250
+const brandHeight = 64
 
 function theme (outerTheme) {
   return createMuiTheme({
@@ -20,41 +21,34 @@ function theme (outerTheme) {
 }
 
 const styles = theme => ({
-  leftIcon: {
-    marginRight: theme.spacing.unit,
-    fill: orange[900]
-  },
-  brandHover: {
-    '&:hover': {
-      fill: orange[700]
-    }
-  },
   root: {
-    minHeight: 64,
-    width: '100%',
-    paddingLeft: 16,
-    justifyContent: 'left'
+    marginRight: 16
+  },
+  imageSpace: {
+    marginLeft: 16,
+    marginBottom: 5,
+    marginRight: 8
+  },
+  logo: {
+    minHeight: brandHeight,
+    width: brandWidth,
+    justifyContent: 'left',
+    backgroundColor: teal[800]
   }
-
 })
 
 function Brand (props) {
   const { classes } = props
   return (
     <MuiThemeProvider theme={theme}>
-      <span>
+      <div className={classes.root}>
         <Toolbar disableGutters>
-          <ButtonBase className={classes.root} component={Link} to='/dashboard'>
-            <DeviceHub
-              className={classNames(classes.leftIcon, classes.brandHover)}
-              style={{
-                width: 36,
-                height: 36
-              }} />
-            <Typography type='title'>eviteHub</Typography>
+          <ButtonBase className={classes.logo} component={Link} to='/'>
+            <img className={classes.imageSpace} src='/static/images/evitehub-icon.png' alt='EviteHub' width='50' />
+            <Typography type='title'>EviteHub</Typography>
           </ButtonBase>
         </Toolbar>
-      </span>
+      </div>
     </MuiThemeProvider>
   )
 }

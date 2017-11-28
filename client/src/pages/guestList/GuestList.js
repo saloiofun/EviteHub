@@ -18,11 +18,11 @@ import PropTypes from 'prop-types'
 import PageHeader from '../../components/PageHeader'
 import { FormControlLabel, FormGroup } from 'material-ui/Form'
 import Grid from 'material-ui/Grid'
+import Slide from 'material-ui/transitions/Slide'
 
 // const for style
 const styles = theme => ({
   root: {
-    flex: '1 1 100%',
     [theme.breakpoints.up('sm')]: {
       width: '80%'
     },
@@ -35,6 +35,10 @@ const styles = theme => ({
   Avatar: { backgroundColor: '#009688' },
   FaceIcon: { color: 'white' }
 })
+
+function Transition (props) {
+  return <Slide direction='up' {...props} />
+}
 
 class GuestList extends Component {
   // set initial state
@@ -196,7 +200,7 @@ class GuestList extends Component {
           </TableBody>
         </Table>
 
-        <Dialog open={this.state.newDialog} onRequestClose={this.newDialogClose}>
+        <Dialog open={this.state.newDialog} onRequestClose={this.newDialogClose} transition={Transition}>
           <DialogTitle>New Guest</DialogTitle>
           <DialogContent>
             <DialogContentText className={classes.spaceBottom}>
@@ -248,7 +252,7 @@ class GuestList extends Component {
           </DialogActions>
         </Dialog>
 
-        <Dialog open={this.state.editDialog} onRequestClose={this.editDialogClose}>
+        <Dialog open={this.state.editDialog} onRequestClose={this.editDialogClose} transition={Transition}>
           <DialogTitle>Edit Guest</DialogTitle>
           <DialogContent>
             <DialogContentText className={classes.spaceBottom}>

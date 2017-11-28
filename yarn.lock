@@ -442,6 +442,10 @@ debug@^3.0.1:
   dependencies:
     ms "2.0.0"
 
+debug@~0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-0.8.1.tgz#20ff4d26f5e422cb68a1bacbbb61039ad8c1c130"
+
 deep-extend@~0.4.0:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.4.2.tgz#48b699c27e334bf89f10892be432f6e4c7d34a7f"
@@ -472,6 +476,10 @@ dot-prop@^4.1.0:
   dependencies:
     is-obj "^1.0.0"
 
+dotenv@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
+
 duplexer3@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/duplexer3/-/duplexer3-0.1.4.tgz#ee01dd1cac0ed3cbc7fdbea37dc0a8f1ce002ce2"
@@ -493,6 +501,13 @@ ee-first@1.1.1:
 encodeurl@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.1.tgz#79e3d58655346909fe6f0f45a5de68103b294d20"
+
+envs@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/envs/-/envs-0.1.6.tgz#17e10bff3063001668f61d0afbe6435f62d7a160"
+  dependencies:
+    debug "~0.8.1"
+    require-component "~0.1.0"
 
 es6-promise@3.2.1:
   version "3.2.1"
@@ -1629,6 +1644,10 @@ request@2.81.0:
     tough-cookie "~2.3.0"
     tunnel-agent "^0.6.0"
     uuid "^3.0.0"
+
+require-component@~0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/require-component/-/require-component-0.1.1.tgz#993c6ce65ae2eed68155094d21fcc45ee61a0423"
 
 require_optional@~1.0.0:
   version "1.0.1"
