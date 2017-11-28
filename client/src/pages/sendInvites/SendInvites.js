@@ -53,30 +53,39 @@ Please click on the link to let me know if you can make it!`,
 
   onSend = () => {
     this.setState({emailsSent: false})
-    var email = {
-      to: this.state.to,
-      subject: this.state.subject,
-      message: this.state.message,
-      user: 'Test User',
-      url: this.state.emailURL
-    }
+    var emailArray = this.state.to.split(',')
 
-    var emailArray = email.to.split(',')
-
-    for (var i in emailArray) {
+    for (let i in emailArray) {
       if (!this.validateEmail(emailArray[i])) {
         this.setState({error: true})
         return
       }
     }
     this.setState({error: false})
-    API.sendEmail(email)
-    .then((data) => {
-      this.setState({emailsSent: true})
-    })
-    .catch((err) => {
-      if (err) throw err
-    })
+
+    for (let i in emailArray) {
+      let email = {
+        to: emailArray[i],
+        subject: this.state.subject,
+        message: this.state.message,
+        url: this.state.emailURL
+      }
+      API.sendEmail(email)
+      .then((data) => {
+        console.log(data.data.accepted[0])
+        this.setState({emailsSent: true})
+        API.saveGuest({ guestEmail: data.data.accepted[0] , emailed: true })
+        .then((guest) => {
+          console.log('Guest', guest)
+        })
+        .catch((error) => {
+          if (error) throw error
+        })
+      })
+      .catch((err) => {
+        if (err) throw err
+      })
+    }
   }
 
   render () {
