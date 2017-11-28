@@ -42,18 +42,17 @@ const styles = theme => ({
 })
 
 function UserAvatar (props) {
-  const { classes } = props
+  const { classes, profile } = props
   return (
     <MuiThemeProvider theme={theme}>
       <div className={classes.root}>
         <List>
           <ListItem className={classes.default}>
             <Avatar
-              alt='John Doe'
-              src='/static/images/johnDoe.png'
+              alt={profile.name}
+              src={profile.picture}
           />
-
-            <ListItemText primary='John Doe' secondary='johndoe@example.com' />
+            <ListItemText primary={profile.name} secondary={profile.email} />
           </ListItem>
         </List>
         <div className={classes.details}>

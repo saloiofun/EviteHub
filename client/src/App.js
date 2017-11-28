@@ -62,13 +62,15 @@ class App extends React.Component {
   render () {
     const { classes } = this.props
 
+    console.log(auth.isAuthenticated())
+
     return (
       <MuiThemeProvider theme={theme}>
         <Router history={history} component={Home}>
           <div className={classes.root}>
             <div className={classes.appFrame}>
               <Route path='/' render={(props) => <NavBar auth={auth} {...props} />} />
-              <SideBar />
+              {(auth.isAuthenticated() && <SideBar auth={auth} />)}
               <main className={classes.content}>
                 <Switch>
                   <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />

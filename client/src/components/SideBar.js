@@ -76,6 +76,18 @@ const styles = theme => ({
 })
 
 class SideBar extends Component {
+  componentWillMount () {
+    this.setState({ profile: {} })
+    const { userProfile, getProfile } = this.props.auth
+    if (!userProfile) {
+      getProfile((err, profile) => {
+        this.setState({ profile })
+      })
+    } else {
+      this.setState({ profile: userProfile })
+    }
+  }
+
   state = {
     mobileOpen: false
   }
@@ -86,13 +98,14 @@ class SideBar extends Component {
 
   render () {
     const { classes } = this.props
+    const { profile } = this.state
 
     const drawer = (
       <div>
         <div className={classes.drawerHeader}>
           <Brand />
         </div>
-        <UserAvatar />
+        <UserAvatar profile={profile} />
         <Divider />
         <EventsDropdown />
         <Divider />
