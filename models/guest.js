@@ -7,13 +7,12 @@ const guestSchema = new Schema({
   guestParty: { type: String },
   guestEmail: { type: String, required: true, unique: true },
   rsvp: { type: Boolean, default: false },
-  emailed: { type: Boolean, default: false},
+  emailed: { type: Boolean, default: false },
   comment: String
 })
 
-guestSchema.plugin(uniqueValidator);
+guestSchema.plugin(uniqueValidator)
 
 const Guest = mongoose.model('Guest', guestSchema)
-
 
 module.exports = Guest

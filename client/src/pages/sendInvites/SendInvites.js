@@ -5,7 +5,7 @@ import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
 import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
-import Snackbar from 'material-ui/Snackbar'
+import Alert from '../../components/Alert'
 import API from '../../utils/Api'
 
 const styles = theme => ({
@@ -22,6 +22,9 @@ const styles = theme => ({
   },
   grids: {
     padding: '15px'
+  },
+  alerts: {
+    top: 80
   }
 })
 
@@ -57,7 +60,7 @@ Please click on the link to let me know if you can make it!`,
 
   onSend = () => {
     this.setState({emailsSent: false})
-    var emailArray = this.state.to.split(',')
+    var emailArray = this.state.to.split(';')
 
     for (let i in emailArray) {
       if (!this.validateEmail(emailArray[i])) {
@@ -99,7 +102,7 @@ Please click on the link to let me know if you can make it!`,
           <Grid item xs={11} className={classes.grids}>
             <TextField
               label='To'
-              placeholder='Separate emails by commas'
+              placeholder='Separate emails by semicolons'
               value={this.state.to}
               className={classes.textField}
               fullWidth
@@ -137,25 +140,15 @@ Please click on the link to let me know if you can make it!`,
             </Button>
           </Grid>
         </Grid>
-        <Snackbar
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        <Alert
           open={this.state.error}
           onRequestClose={this.handleRequestClose}
-          autoHideDuration={3000}
-          SnackbarContentProps={{
-            'aria-describedby': 'message-id'
-          }}
-          message={<span id='message-id'>Error: Make sure all you entered all emails correctly</span>}
+          message='Error: Make sure all you entered all emails correctly'
         />
-        <Snackbar
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        <Alert
           open={this.state.emailsSent}
           onRequestClose={this.handleRequestClose}
-          autoHideDuration='3000'
-          SnackbarContentProps={{
-            'aria-describedby': 'message-id2'
-          }}
-          message={<span id='message-id'>Invite(s) were sent!</span>}
+          message='Invite(s) were sent!'
         />
       </Paper>
     )
