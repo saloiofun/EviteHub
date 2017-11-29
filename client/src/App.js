@@ -5,6 +5,7 @@ import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles
 import Dashboard from './pages/dashboard'
 import viewEvents from './pages/viewEvents'
 import GuestList from './pages/guestList'
+import Invitation from './pages/invitation'
 import SendInvites from './pages/sendInvites'
 import NavBar from './containers/NavBar'
 import SideBar from './containers/SideBar'
@@ -72,6 +73,7 @@ class App extends React.Component {
                   <Route exact path='/events' component={viewEvents} />
                   <Route exact path='/dashboard' component={Dashboard} />
                   <Route exact path='/guest-list' component={GuestList} />
+                  <Route exact path='/invitation' component={Invitation} />
                   <Route exact path='/send-invites' component={SendInvites} />
                   <Route path='/callback' render={(props) => {
                     handleAuthentication(props)
