@@ -53,3 +53,49 @@ const font = [
     { value: 'Times New Roman' },
     { value: 'Trebuchet MS' }
 ]
+
+class Invitation extends Component {
+    // set initial state
+    state = {
+      title: 'JOHAN & ERIKA',
+      day: 'SUNDAY',
+      date: '23',
+      month: 'MARCH',
+      time: '12 PM',
+      address1:'1234 Santa Margarita Blvd',
+      address2:'Lake Forest, CA 92555',
+      background: 'url("/static/images/invitation/paper01.jpg")',
+      titleFontSize: 40,
+      titleFontType: "Arial"
+    };
+  
+    // mount component
+    componentDidMount () {
+  
+    }
+  
+    // handle specify input changes
+    handleInputChange = name => event => {
+      this.setState({
+        [name]: event.target.value,
+      });
+    };
+  
+    // handle number input changes
+    handleNumberInputChange = key => event => {
+      this.setState({
+        [key]: parseInt(event.target.value, 10),
+      });
+    };
+  
+    // handle savearea div
+    handleSave = () => {
+      const input = document.getElementById('saveArea');
+      html2canvas(input)
+        .then((canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF();
+          pdf.addImage(imgData, 'JPEG', 28, 20);
+          pdf.save("invitation.pdf");
+        });
+    }
