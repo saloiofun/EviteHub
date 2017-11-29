@@ -99,7 +99,7 @@ class Invitation extends Component {
           pdf.save("invitation.pdf");
         });
     }
-    
+
     render () {
         const { classes } = this.props;
         return (
@@ -160,3 +160,50 @@ class Invitation extends Component {
                   />
                   </FormControl>
                 </Paper>
+                <Paper className={classes.paper} component="legend"> DETAIL
+              <TextField
+                label="Day"
+                helperText="ex: SUNDAY"
+                fullWidth
+                margin="normal"
+                onChange={this.handleInputChange('day')}
+              />
+              <TextField
+                label="Date"
+                helperText="ex: 13"
+                fullWidth
+                margin="normal"
+                onChange={this.handleInputChange('date')}
+              />
+              <TextField
+                label="Month"
+                helperText="ex: MARCH"
+                fullWidth
+                margin="normal"
+                onChange={this.handleInputChange('month')}
+              />
+              <Divider light />
+              <TextField
+                label="Time"
+                helperText="ex: 12 PM or 08.30 PM"
+                fullWidth
+                margin="normal"
+                onChange={this.handleInputChange('time')}
+              />
+              <Divider light />
+              <TextField
+                label="Address Line 1"
+                helperText="ex: 1234 Santa Margarita Blvd"
+                fullWidth
+                margin="normal"
+                onChange={this.handleInputChange('address1')}
+              />
+              <TextField
+                label="Address Line 2"
+                helperText="ex: Lake Forest, CA 92555"
+                fullWidth
+                margin="normal"
+                onChange={this.handleInputChange('address2')}
+              />
+            </Paper>           
+          </Grid>
