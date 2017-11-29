@@ -10,7 +10,7 @@ import Archive from 'material-ui-icons/Loupe'
 import Avatar from 'material-ui/Avatar'
 import Chip from 'material-ui/Chip'
 import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
+import JSPDF from 'jspdf'
 import Input, { InputLabel } from 'material-ui/Input'
 import {FormControl} from 'material-ui/Form'
 import MenuItem from 'material-ui/Menu/MenuItem'
@@ -56,154 +56,203 @@ const font = [
 
 class Invitation extends Component {
     // set initial state
-    state = {
-      title: 'JOHAN & ERIKA',
-      day: 'SUNDAY',
-      date: '23',
-      month: 'MARCH',
-      time: '12 PM',
-      address1:'1234 Santa Margarita Blvd',
-      address2:'Lake Forest, CA 92555',
-      background: 'url("/static/images/invitation/paper01.jpg")',
-      titleFontSize: 40,
-      titleFontType: "Arial"
-    };
-  
-    // mount component
-    componentDidMount () {
-  
-    }
-  
-    // handle specify input changes
-    handleInputChange = name => event => {
-      this.setState({
-        [name]: event.target.value,
-      });
-    };
-  
-    // handle number input changes
-    handleNumberInputChange = key => event => {
-      this.setState({
-        [key]: parseInt(event.target.value, 10),
-      });
-    };
-  
-    // handle savearea div
-    handleSave = () => {
-      const input = document.getElementById('saveArea');
-      html2canvas(input)
-        .then((canvas) => {
-          const imgData = canvas.toDataURL('image/png');
-          const pdf = new jsPDF();
-          pdf.addImage(imgData, 'JPEG', 28, 20);
-          pdf.save("invitation.pdf");
-        });
-    }
+  state = {
+    title: 'JOHAN & ERIKA',
+    day: 'SUNDAY',
+    date: '23',
+    month: 'MARCH',
+    time: '12 PM',
+    address1: '1234 Santa Margarita Blvd',
+    address2: 'Lake Forest, CA 92555',
+    background: 'url("/static/images/invitation/paper01.jpg")',
+    titleFontSize: 40,
+    titleFontType: 'Arial'
+  };
 
-    render () {
-        const { classes } = this.props;
-        return (
-          <div className={classes.root}> 
-            <Grid container spacing={24}>       
-              <Grid item xs={12} sm={12} md={4}>
-                <Typography type="title" className={classes.title}>
+    // mount component
+  componentDidMount () {
+
+  }
+
+    // handle specify input changes
+  handleInputChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    })
+  };
+
+    // handle number input changes
+  handleNumberInputChange = key => event => {
+    this.setState({
+      [key]: parseInt(event.target.value, 10)
+    })
+  };
+
+    // handle savearea div
+  handleSave = () => {
+    const input = document.getElementById('saveArea')
+    html2canvas(input)
+        .then((canvas) => {
+          const imgData = canvas.toDataURL('image/png')
+          const pdf = new JSPDF()
+          pdf.addImage(imgData, 'JPEG', 28, 20)
+          pdf.save('invitation.pdf')
+        })
+  }
+
+  render () {
+    const { classes } = this.props
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={24}>
+          <Grid item xs={12} sm={12} md={4}>
+            <Typography type='title' className={classes.title}>
                       BACKGROUND
                 </Typography>
-                <Paper className={classes.paper}component="legend">
-                  <TextField
-                    select
-                    label="Please select your background"
-                    value={this.state.background}
-                    onChange={this.handleInputChange('background')}
-                    fullWidth
-                    margin="normal"
+            <Paper className={classes.paper}component='legend'>
+              <TextField
+                select
+                label='Please select your background'
+                value={this.state.background}
+                onChange={this.handleInputChange('background')}
+                fullWidth
+                margin='normal'
                   >
-                    {bg.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
+                {bg.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
                     ))}
-                  </TextField>
-                </Paper>
-                <Typography type="title" className={classes.title}>
+              </TextField>
+            </Paper>
+            <Typography type='title' className={classes.title}>
                       INPUT
                 </Typography>
-                <Paper className={classes.paper}component="legend"> TITLE
+            <Paper className={classes.paper}component='legend'> TITLE
                   <TextField
-                    name="title"
-                    label="Title"
-                    helperText="ex: JOHAN & ERIKA"
+                    name='title'
+                    label='Title'
+                    helperText='ex: JOHAN & ERIKA'
                     fullWidth
-                    margin="normal"
+                    margin='normal'
                     onChange={this.handleInputChange('title')}
                   />
-                  <TextField
-                    select
-                    label="Font Type"
-                    value={this.state.titleFontType}
-                    onChange={this.handleInputChange('titleFontType')}
-                    fullWidth
-                    margin="normal"
-                  >
-                    {font.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.value}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                  <FormControl>
-                  <InputLabel>Font Size</InputLabel>
-                  <Input
-                    type="number"
-                    value={this.state.titleFontSize}
-                    onChange={this.handleNumberInputChange('titleFontSize')}
-                  />
-                  </FormControl>
-                </Paper>
-                <Paper className={classes.paper} component="legend"> DETAIL
               <TextField
-                label="Day"
-                helperText="ex: SUNDAY"
+                select
+                label='Font Type'
+                value={this.state.titleFontType}
+                onChange={this.handleInputChange('titleFontType')}
                 fullWidth
-                margin="normal"
+                margin='normal'
+                  >
+                {font.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.value}
+                  </MenuItem>
+                    ))}
+              </TextField>
+              <FormControl>
+                <InputLabel>Font Size</InputLabel>
+                <Input
+                  type='number'
+                  value={this.state.titleFontSize}
+                  onChange={this.handleNumberInputChange('titleFontSize')}
+                  />
+              </FormControl>
+            </Paper>
+            <Paper className={classes.paper} component='legend'> DETAIL
+              <TextField
+                label='Day'
+                helperText='ex: SUNDAY'
+                fullWidth
+                margin='normal'
                 onChange={this.handleInputChange('day')}
               />
               <TextField
-                label="Date"
-                helperText="ex: 13"
+                label='Date'
+                helperText='ex: 13'
                 fullWidth
-                margin="normal"
+                margin='normal'
                 onChange={this.handleInputChange('date')}
               />
               <TextField
-                label="Month"
-                helperText="ex: MARCH"
+                label='Month'
+                helperText='ex: MARCH'
                 fullWidth
-                margin="normal"
+                margin='normal'
                 onChange={this.handleInputChange('month')}
               />
               <Divider light />
               <TextField
-                label="Time"
-                helperText="ex: 12 PM or 08.30 PM"
+                label='Time'
+                helperText='ex: 12 PM or 08.30 PM'
                 fullWidth
-                margin="normal"
+                margin='normal'
                 onChange={this.handleInputChange('time')}
               />
               <Divider light />
               <TextField
-                label="Address Line 1"
-                helperText="ex: 1234 Santa Margarita Blvd"
+                label='Address Line 1'
+                helperText='ex: 1234 Santa Margarita Blvd'
                 fullWidth
-                margin="normal"
+                margin='normal'
                 onChange={this.handleInputChange('address1')}
               />
               <TextField
-                label="Address Line 2"
-                helperText="ex: Lake Forest, CA 92555"
+                label='Address Line 2'
+                helperText='ex: Lake Forest, CA 92555'
                 fullWidth
-                margin="normal"
+                margin='normal'
                 onChange={this.handleInputChange('address2')}
               />
-            </Paper>           
+            </Paper>
           </Grid>
+          <Grid item xs={12} sm={12} md={8}>
+            <Typography type='title' className={classes.title}>
+                  PREVIEW
+            </Typography>
+            <div id='saveArea' style={{ textAlign: 'center',
+              height: '750px',
+              fontFamily: this.state.titleFontType,
+              backgroundImage: this.state.background,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover'}}>
+              <p style={{ color: 'white', fontSize: this.state.titleFontSize, padding: '330px 0 45px 0' }}> {this.state.title} </p>
+              <Grid container justify='center'>
+                <Grid item xs={4}>
+                  <label style={{ color: 'white', fontSize: '30px' }}> {this.state.day} </label>
+                </Grid>
+                <Grid item xs={1}>
+                  <label style={{ color: 'white', fontSize: '40px' }}> {this.state.date} </label>
+                </Grid>
+                <Grid item xs={4}>
+                  <label style={{ color: 'white', fontSize: '30px' }}> {this.state.month} </label>
+                </Grid>
+              </Grid>
+              <p style={{ color: 'white', fontSize: '15px', padding: '20px 0 0 0' }}> {this.state.time} </p>
+              <p style={{ color: 'white', fontSize: '20px', padding: '15px 0 0 5px' }}> {this.state.address1} </p>
+              <p style={{ color: 'white', fontSize: '20px', margin: '-20px 0 0 0' }}> {this.state.address2} </p>
+            </div>
+            <hr /><center>
+              <Chip
+                avatar={
+                  <Avatar className={classes.Avatar}>
+                    <Archive className={classes.icon} />
+                  </Avatar>
+              }
+                label=' SAVE TO FILE ' style={{backgroundColor: '#009688', color: 'white'}}
+                onClick={this.handleSave}
+            />
+            </center>
+          </Grid>
+        </Grid>
+      </div>
+    )
+  }
+}
+
+Invitation.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
+export default withStyles(styles)(Invitation)
