@@ -99,3 +99,64 @@ class Invitation extends Component {
           pdf.save("invitation.pdf");
         });
     }
+    
+    render () {
+        const { classes } = this.props;
+        return (
+          <div className={classes.root}> 
+            <Grid container spacing={24}>       
+              <Grid item xs={12} sm={12} md={4}>
+                <Typography type="title" className={classes.title}>
+                      BACKGROUND
+                </Typography>
+                <Paper className={classes.paper}component="legend">
+                  <TextField
+                    select
+                    label="Please select your background"
+                    value={this.state.background}
+                    onChange={this.handleInputChange('background')}
+                    fullWidth
+                    margin="normal"
+                  >
+                    {bg.map(option => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Paper>
+                <Typography type="title" className={classes.title}>
+                      INPUT
+                </Typography>
+                <Paper className={classes.paper}component="legend"> TITLE
+                  <TextField
+                    name="title"
+                    label="Title"
+                    helperText="ex: JOHAN & ERIKA"
+                    fullWidth
+                    margin="normal"
+                    onChange={this.handleInputChange('title')}
+                  />
+                  <TextField
+                    select
+                    label="Font Type"
+                    value={this.state.titleFontType}
+                    onChange={this.handleInputChange('titleFontType')}
+                    fullWidth
+                    margin="normal"
+                  >
+                    {font.map(option => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.value}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <FormControl>
+                  <InputLabel>Font Size</InputLabel>
+                  <Input
+                    type="number"
+                    value={this.state.titleFontSize}
+                    onChange={this.handleNumberInputChange('titleFontSize')}
+                  />
+                  </FormControl>
+                </Paper>
