@@ -32,7 +32,7 @@ export default {
       },
       data: {
         'app_metadata': {
-          'event_id': [15, 25, 305]
+          'event_id': [15, 25, 305, 500]
         }
       }
     })

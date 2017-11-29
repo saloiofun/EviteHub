@@ -67,6 +67,8 @@ class Dashboard extends Component {
     } else {
       this.setState({ profile: userProfile })
     }
+
+    this.props.showSideBar()
   }
 
   render () {

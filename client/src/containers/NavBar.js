@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
@@ -14,12 +15,24 @@ import compose from 'recompose/compose'
 import { connect } from 'react-redux'
 import * as actionTypes from '../constants/ActionTypes'
 
+const drawerWidth = 250
+
 const styles = theme => ({
   navSpace: {
-    paddingRight: 16
+    padding: '0 16px'
+  },
+  brandCenter: {
+    width: '80%',
+    margin: '0 auto'
   },
   signinButton: {
     marginLeft: 'auto'
+  },
+  appBar: {
+    marginLeft: drawerWidth,
+    [theme.breakpoints.up('md')]: {
+      width: `calc(100% - ${drawerWidth}px)`
+    }
   }
 })
 
@@ -39,22 +52,33 @@ class NavBar extends Component {
   render () {
     const { classes } = this.props
     const { isAuthenticated } = this.props.auth
+    if (isAuthenticated()) {
+      return (
+        <AppBar className={classes.appBar}>
+          <Toolbar disableGutters className={classes.navSpace}>
+            <ToggleSidebar onClick={this.props.onToggleSidebar} />
+            <Hidden smDown>
+              <NavButtons />
+            </Hidden>
+            <div className={classes.signinButton}>
+              <RaisedButton onClick={this.logout.bind(this)}>Sign Out</RaisedButton>
+            </div>
+          </Toolbar>
+        </AppBar>
+      )
+    } else {
+      return (
+        <AppBar className={classes.navbarBgColor}>
+          <Toolbar disableGutters className={classNames(classes.navSpace, classes.brandCenter)}>
+            <Brand disableRipple />
 
-    return (
-      <AppBar>
-        <Toolbar disableGutters className={classes.navSpace}>
-          <ToggleSidebar onClick={this.props.onToggleSidebar} />
-          <Brand />
-          <Hidden smDown>
-            { isAuthenticated() && (<NavButtons />) }
-          </Hidden>
-          <div className={classes.signinButton}>
-            { !isAuthenticated() && (<RaisedButton onClick={this.login.bind(this)}>Sign In</RaisedButton>) }
-            { isAuthenticated() && (<RaisedButton onClick={this.logout.bind(this)}>Sign Out</RaisedButton>) }
-          </div>
-        </Toolbar>
-      </AppBar>
-    )
+            <div className={classes.signinButton}>
+              <RaisedButton onClick={this.login.bind(this)}>Sign In</RaisedButton>
+            </div>
+          </Toolbar>
+        </AppBar>
+      )
+    }
   }
 }
 

@@ -14,6 +14,7 @@ import Auth from './auth'
 import history from './history'
 import Profile from './pages/profile'
 import teal from 'material-ui/colors/teal'
+import LogOut from './pages/logout'
 
 // Authentication
 const auth = new Auth()
@@ -57,6 +58,22 @@ const styles = theme => ({
 })
 
 class App extends React.Component {
+  state = {
+    showSideBar: false
+  }
+
+  showSideBar = () => {
+    this.setState({
+      showSideBar: true
+    })
+  }
+
+  hideSideBar = () => {
+    this.setState({
+      showSideBar: false
+    })
+  }
+
   render () {
     const { classes } = this.props
 
@@ -66,15 +83,16 @@ class App extends React.Component {
           <div className={classes.root}>
             <div className={classes.appFrame}>
               <Route path='/' render={(props) => <NavBar auth={auth} {...props} />} />
-              { auth.isAuthenticated() && <SideBar auth={auth} />}
+              {this.state.showSideBar && <SideBar auth={auth} />}
               <main className={classes.content}>
                 <Switch>
                   <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
                   <Route exact path='/events' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <viewEvents auth={auth} {...props} />)} />
-                  <Route exact path='/dashboard' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Dashboard auth={auth} {...props} />)} />
+                  <Route exact path='/dashboard' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Dashboard auth={auth} {...props} showSideBar={this.showSideBar} />)} />
                   <Route exact path='/guest-list' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <GuestList auth={auth} {...props} />)} />
                   <Route exact path='/send-invites' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <SendInvites auth={auth} {...props} />)} />
                   <Route exact path='/profile' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Profile auth={auth} {...props} />)} />
+                  <Route exact path='/logout' render={(props) => <LogOut hideSideBar={this.hideSideBar} />} />
                   <Route path='/callback' render={(props) => {
                     handleAuthentication(props)
                     return <Callback {...props} />
