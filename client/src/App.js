@@ -3,7 +3,7 @@ import { Redirect, Router, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
 import Dashboard from './pages/dashboard'
-import viewEvents from './pages/viewEvents'
+import ViewEvents from './pages/viewEvents'
 import GuestList from './pages/guestList'
 import SendInvites from './pages/sendInvites'
 import NavBar from './containers/NavBar'
@@ -86,7 +86,7 @@ class App extends React.Component {
               <main className={classes.content}>
                 <Switch>
                   <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
-                  <Route exact path='/events' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <viewEvents auth={auth} {...props} />)} />
+                  <Route exact path='/events' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <ViewEvents auth={auth} {...props} />)} />
                   <Route exact path='/dashboard' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Dashboard auth={auth} {...props} showSideBar={this.showSideBar} />)} />
                   <Route exact path='/guest-list' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <GuestList auth={auth} {...props} />)} />
                   <Route exact path='/send-invites' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <SendInvites auth={auth} {...props} />)} />
