@@ -1,8 +1,8 @@
-var nodemailer = require('nodemailer')
+const nodemailer = require('nodemailer')
 
 module.exports = {
   deliverEmail: function (req, res) {
-    var smtpTransport = nodemailer.createTransport({
+    const smtpTransport = nodemailer.createTransport({
       service: 'gmail',
       host: 'smtp.gmail.com',
       auth: {

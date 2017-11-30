@@ -40,7 +40,7 @@ Please click on the link to let me know if you can make it!`,
   }
 
   validateEmail = (email) => {
-    var reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+    let reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     if (reg.test(email)) {
       return true
     } else {
@@ -60,7 +60,7 @@ Please click on the link to let me know if you can make it!`,
 
   onSend = () => {
     this.setState({emailsSent: false})
-    var emailArray = this.state.to.split(';')
+    let emailArray = this.state.to.split(';')
 
     for (let i in emailArray) {
       if (!this.validateEmail(emailArray[i])) {

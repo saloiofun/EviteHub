@@ -119,7 +119,7 @@ class addEvent extends React.Component {
   }
 
   handleChange = name => event => {
-    var value = event.target.value
+    let value = event.target.value
     if (name === 'name') {
       if (value.length >= this.state.maxName) {
         value = value.slice(0, this.state.maxName)
@@ -137,7 +137,7 @@ class addEvent extends React.Component {
   }
 
   onSubmit = () => {
-    var eventData = {
+    let eventData = {
       eventName: this.state.name,
       description: this.state.description,
       location: this.state.location,
