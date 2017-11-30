@@ -5,11 +5,12 @@ import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Hidden from 'material-ui/Hidden'
+import IconButton from 'material-ui/IconButton'
+import MenuIcon from 'material-ui-icons/Menu'
 
 import NavButtons from '../components/NavButtons'
 import RaisedButton from '../components/RaisedButton'
 import Brand from '../components/Brand'
-import ToggleSidebar from '../components/ToggleSidebar'
 
 import compose from 'recompose/compose'
 import { connect } from 'react-redux'
@@ -29,9 +30,13 @@ const styles = theme => ({
     marginLeft: 'auto'
   },
   appBar: {
-    marginLeft: drawerWidth,
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('lg')]: {
       width: `calc(100% - ${drawerWidth}px)`
+    }
+  },
+  navIconHide: {
+    [theme.breakpoints.up('lg')]: {
+      display: 'none'
     }
   }
 })
@@ -56,7 +61,14 @@ class NavBar extends Component {
       return (
         <AppBar className={classes.appBar}>
           <Toolbar disableGutters className={classes.navSpace}>
-            <ToggleSidebar onClick={this.props.onToggleSidebar} />
+            <IconButton
+              color='contrast'
+              aria-label='open drawer'
+              onClick={this.props.onToggleSidebar}
+              className={classes.navIconHide}
+            >
+              <MenuIcon />
+            </IconButton>
             <Hidden smDown>
               <NavButtons />
             </Hidden>
@@ -71,7 +83,6 @@ class NavBar extends Component {
         <AppBar className={classes.navbarBgColor}>
           <Toolbar disableGutters className={classNames(classes.navSpace, classes.brandCenter)}>
             <Brand disableRipple />
-
             <div className={classes.signinButton}>
               <RaisedButton onClick={this.login.bind(this)}>Sign In</RaisedButton>
             </div>
