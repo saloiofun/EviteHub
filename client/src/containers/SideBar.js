@@ -72,20 +72,35 @@ const styles = theme => ({
 })
 
 class SideBar extends Component {
+  componentWillMount () {
+    this.setState({ profile: {} })
+    const { userProfile, getProfile } = this.props.auth
+    if (!userProfile) {
+      getProfile((err, profile) => {
+        this.setState({ profile })
+      })
+    } else {
+      this.setState({ profile: userProfile })
+    }
+  }
+
   goTo (route) {
     this.props.history.replace(`/${route}`)
   }
 
   render () {
     const { classes } = this.props
+    const { profile } = this.state
     const { isAuthenticated } = this.props.auth
+
+    console.log(this.props.auth)
 
     const drawer = (
       <div>
         <div className={classes.drawerHeader}>
           <Brand disableRipple />
         </div>
-        <UserAvatar />
+        <UserAvatar profile={profile} />
         <Divider />
         <EventsDropdown />
         <Divider />
