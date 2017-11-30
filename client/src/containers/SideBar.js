@@ -41,7 +41,7 @@ const theme = createMuiTheme({
 const styles = theme => ({
   root: {
     [theme.breakpoints.up('lg')]: {
-      width: drawerWidth
+      minWidth: drawerWidth
     }
   },
   bigAvatar: {
