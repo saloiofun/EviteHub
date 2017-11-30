@@ -48,7 +48,7 @@ class SendInvites extends React.Component {
 Please click on the link to let me know if you can make it!`,
     error: false,
     emailsSent: false,
-    emailURL: 'https://www.google.com/'
+    emailURL: 'http://localhost:3000/rsvp/?id='
   }
 
   validateEmail = (email) => {
@@ -92,12 +92,7 @@ Please click on the link to let me know if you can make it!`,
       API.sendEmail(email)
       .then((data) => {
         this.setState({emailsSent: true})
-        API.saveGuest({ guestEmail: data.data.accepted[0], emailed: true })
-        .then((guest) => {
-        })
-        .catch((error) => {
-          if (error) throw error
-        })
+        console.log("Data:", data)
       })
       .catch((err) => {
         if (err) throw err

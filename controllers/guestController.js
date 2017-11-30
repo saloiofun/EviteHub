@@ -14,6 +14,12 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err))
   },
+  findGuestByHash: function (req,res) {
+    db.Guest
+      .findOne({emailHash: req.params.id})
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err))
+  },
   createGuest: function (req, res) {
     db.Guest
     .create(req.body)

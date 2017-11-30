@@ -11,6 +11,7 @@ import SideBar from './containers/SideBar'
 import Home from './pages/home'
 import Callback from './callback'
 import Auth from './auth'
+import Rsvp from './pages/rsvp'
 import history from './history'
 import teal from 'material-ui/colors/teal'
 
@@ -69,6 +70,7 @@ class App extends React.Component {
               <main className={classes.content}>
                 <Switch>
                   <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
+                  <Route path='/rsvp' component={Rsvp}/>
                   <Route exact path='/events' component={viewEvents} />
                   <Route exact path='/dashboard' component={Dashboard} />
                   <Route exact path='/guest-list' component={GuestList} />
