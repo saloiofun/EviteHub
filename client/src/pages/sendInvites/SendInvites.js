@@ -3,10 +3,12 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
-import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
 import Alert from '../../components/Alert'
 import API from '../../utils/Api'
+import PageHeader from '../../components/PageHeader'
+import SendIcon from 'material-ui-icons/Send'
+import RemoveRedEyeIcon from 'material-ui-icons/RemoveRedEye'
 
 const styles = theme => ({
   root: {
@@ -16,15 +18,25 @@ const styles = theme => ({
     },
     margin: '0 auto'
   },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    padding: theme.spacing.unit
+  },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
   },
-  grids: {
-    padding: '15px'
-  },
   alerts: {
     top: 80
+  },
+  button: {
+    margin: theme.spacing.unit,
+    marginLeft: 'auto',
+    marginRight: theme.spacing.unit
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
   }
 })
 
@@ -97,9 +109,10 @@ Please click on the link to let me know if you can make it!`,
     const { classes } = this.props
 
     return (
-      <Paper className={classes.root}>
-        <Grid container>
-          <Grid item xs={11} className={classes.grids}>
+      <div className={classes.root}>
+        <PageHeader title='Send Invites' body={`Send Invites!`} />
+        <Paper elevation={4}>
+          <form className={classes.container} noValidate autoComplete='off'>
             <TextField
               label='To'
               placeholder='Separate emails by semicolons'
@@ -108,9 +121,7 @@ Please click on the link to let me know if you can make it!`,
               fullWidth
               margin='normal'
               onChange={this.handleChange('to')}
-          />
-          </Grid>
-          <Grid item xs={11} className={classes.grids}>
+            />
             <TextField
               id='subject'
               label='Subject'
@@ -119,9 +130,7 @@ Please click on the link to let me know if you can make it!`,
               margin='normal'
               fullWidth
               onChange={this.handleChange('subject')}
-          />
-          </Grid>
-          <Grid item xs={11} className={classes.grids}>
+            />
             <TextField
               id='message'
               label='Message'
@@ -132,25 +141,30 @@ Please click on the link to let me know if you can make it!`,
               className={classes.textField}
               margin='normal'
               onChange={this.handleChange('message')}
-            />
-          </Grid>
-          <Grid item xs={2} align='center'>
-            <Button raised color='primary' onClick={this.onSend} >
+              />
+            <div className={classes.button}>
+              <Button className={classes.button} raised color='primary' >
+              Preview
+              <RemoveRedEyeIcon className={classes.rightIcon} />
+              </Button>
+              <Button raised color='primary' onClick={this.onSend} >
               Send
-            </Button>
-          </Grid>
-        </Grid>
-        <Alert
-          open={this.state.error}
-          onRequestClose={this.handleRequestClose}
-          message='Error: Make sure all you entered all emails correctly'
+              <SendIcon className={classes.rightIcon} />
+              </Button>
+            </div>
+          </form>
+          <Alert
+            open={this.state.error}
+            onRequestClose={this.handleRequestClose}
+            message='Error: Make sure all you entered all emails correctly'
         />
-        <Alert
-          open={this.state.emailsSent}
-          onRequestClose={this.handleRequestClose}
-          message='Invite(s) were sent!'
+          <Alert
+            open={this.state.emailsSent}
+            onRequestClose={this.handleRequestClose}
+            message='Invite(s) were sent!'
         />
-      </Paper>
+        </Paper>
+      </div>
     )
   }
 }
