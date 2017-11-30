@@ -49,10 +49,9 @@ const styles = theme => ({
     margin: '0 auto',
     marginBottom: 100,
     [theme.breakpoints.up('md')]: {
-      paddingTop: 80,
       margin: '0 auto',
       marginBottom: 100,
-      width: '100%'
+      width: '80%'
     }
   }
 })
