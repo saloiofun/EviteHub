@@ -14,14 +14,25 @@ import JSPDF from 'jspdf'
 import Input, { InputLabel } from 'material-ui/Input'
 import {FormControl} from 'material-ui/Form'
 import MenuItem from 'material-ui/Menu/MenuItem'
+import ExpansionPanel, {
+  ExpansionPanelDetails,
+  ExpansionPanelSummary
+} from 'material-ui/ExpansionPanel'
+import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
+import PageHeader from '../../components/PageHeader'
 
 const styles = theme => ({
   root: {
-    flex: '1 1 100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '80%'
-    },
-    margin: '0 auto'
+    padding: theme.spacing.unit * 2,
+    paddingTop: 80,
+    margin: '0 auto',
+    marginBottom: 30,
+    minHeight: '100vh',
+    [theme.breakpoints.up('md')]: {
+      width: '80%',
+      paddingLeft: theme.spacing.unit * 3,
+      paddingRight: theme.spacing.unit * 3
+    }
   },
   paper: {
     padding: 16,
@@ -66,13 +77,20 @@ class Invitation extends Component {
     address2: 'Lake Forest, CA 92555',
     background: 'url("/static/images/invitation/paper01.jpg")',
     titleFontSize: 40,
-    titleFontType: 'Arial'
+    titleFontType: 'Arial',
+    expanded: null
   };
 
     // mount component
   componentDidMount () {
 
   }
+
+  handleChange = panel => (event, expanded) => {
+    this.setState({
+      expanded: expanded ? panel : false
+    })
+  };
 
     // handle specify input changes
   handleInputChange = name => event => {
@@ -102,115 +120,129 @@ class Invitation extends Component {
 
   render () {
     const { classes } = this.props
+    const { expanded } = this.state
+
     return (
       <div className={classes.root}>
+        <PageHeader title='Invitation Maker' body='Invitation Maker' />
         <Grid container spacing={24}>
           <Grid item xs={12} sm={12} md={4}>
-            <Typography type='title' className={classes.title}>
+
+            <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography type='title' className={classes.title}>
                       BACKGROUND
                 </Typography>
-            <Paper className={classes.paper}component='legend'>
-              <TextField
-                select
-                label='Please select your background'
-                value={this.state.background}
-                onChange={this.handleInputChange('background')}
-                fullWidth
-                margin='normal'
+              </ExpansionPanelSummary>
+
+              <ExpansionPanelDetails>
+                <TextField
+                  select
+                  label='Please select your background'
+                  value={this.state.background}
+                  onChange={this.handleInputChange('background')}
+                  fullWidth
+                  margin='normal'
                   >
-                {bg.map(option => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
+                  {bg.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
                     ))}
-              </TextField>
-            </Paper>
-            <Typography type='title' className={classes.title}>
+                </TextField>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+
+            <ExpansionPanel expanded={expanded === 'panel2'} onChange={this.handleChange('panel2')}>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography type='title' className={classes.title}>
                       INPUT
-                </Typography>
-            <Paper className={classes.paper}component='legend'> TITLE
+            </Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <div>TITLE</div>
+                <TextField
+                  name='title'
+                  label='Title'
+                  helperText='ex: JOHAN &amp; ERIKA'
+                  fullWidth
+                  margin='normal'
+                  onChange={this.handleInputChange('title')}
+                  />
+                <TextField
+                  select
+                  label='Font Type'
+                  value={this.state.titleFontType}
+                  onChange={this.handleInputChange('titleFontType')}
+                  fullWidth
+                  margin='normal'
+                  >
+                  {font.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.value}
+                    </MenuItem>
+                    ))}
+                </TextField>
+                <FormControl>
+                  <InputLabel>Font Size</InputLabel>
+                  <Input
+                    type='number'
+                    value={this.state.titleFontSize}
+                    onChange={this.handleNumberInputChange('titleFontSize')}
+                  />
+                </FormControl>
+
+                <Paper className={classes.paper} component='legend'> DETAIL
                   <TextField
-                    name='title'
-                    label='Title'
-                    helperText='ex: JOHAN & ERIKA'
+                    label='Day'
+                    helperText='ex: SUNDAY'
                     fullWidth
                     margin='normal'
-                    onChange={this.handleInputChange('title')}
+                    onChange={this.handleInputChange('day')}
                   />
-              <TextField
-                select
-                label='Font Type'
-                value={this.state.titleFontType}
-                onChange={this.handleInputChange('titleFontType')}
-                fullWidth
-                margin='normal'
-                  >
-                {font.map(option => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.value}
-                  </MenuItem>
-                    ))}
-              </TextField>
-              <FormControl>
-                <InputLabel>Font Size</InputLabel>
-                <Input
-                  type='number'
-                  value={this.state.titleFontSize}
-                  onChange={this.handleNumberInputChange('titleFontSize')}
+                  <TextField
+                    label='Date'
+                    helperText='ex: 13'
+                    fullWidth
+                    margin='normal'
+                    onChange={this.handleInputChange('date')}
                   />
-              </FormControl>
-            </Paper>
-            <Paper className={classes.paper} component='legend'> DETAIL
-              <TextField
-                label='Day'
-                helperText='ex: SUNDAY'
-                fullWidth
-                margin='normal'
-                onChange={this.handleInputChange('day')}
-              />
-              <TextField
-                label='Date'
-                helperText='ex: 13'
-                fullWidth
-                margin='normal'
-                onChange={this.handleInputChange('date')}
-              />
-              <TextField
-                label='Month'
-                helperText='ex: MARCH'
-                fullWidth
-                margin='normal'
-                onChange={this.handleInputChange('month')}
-              />
-              <Divider light />
-              <TextField
-                label='Time'
-                helperText='ex: 12 PM or 08.30 PM'
-                fullWidth
-                margin='normal'
-                onChange={this.handleInputChange('time')}
-              />
-              <Divider light />
-              <TextField
-                label='Address Line 1'
-                helperText='ex: 1234 Santa Margarita Blvd'
-                fullWidth
-                margin='normal'
-                onChange={this.handleInputChange('address1')}
-              />
-              <TextField
-                label='Address Line 2'
-                helperText='ex: Lake Forest, CA 92555'
-                fullWidth
-                margin='normal'
-                onChange={this.handleInputChange('address2')}
-              />
-            </Paper>
+                  <TextField
+                    label='Month'
+                    helperText='ex: MARCH'
+                    fullWidth
+                    margin='normal'
+                    onChange={this.handleInputChange('month')}
+                  />
+                  <Divider light />
+                  <TextField
+                    label='Time'
+                    helperText='ex: 12 PM or 08.30 PM'
+                    fullWidth
+                    margin='normal'
+                    onChange={this.handleInputChange('time')}
+                  />
+                  <Divider light />
+                  <TextField
+                    label='Address Line 1'
+                    helperText='ex: 1234 Santa Margarita Blvd'
+                    fullWidth
+                    margin='normal'
+                    onChange={this.handleInputChange('address1')}
+                  />
+                  <TextField
+                    label='Address Line 2'
+                    helperText='ex: Lake Forest, CA 92555'
+                    fullWidth
+                    margin='normal'
+                    onChange={this.handleInputChange('address2')}
+                  />
+                </Paper>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
-            <Typography type='title' className={classes.title}>
-                  PREVIEW
-            </Typography>
+            <PageHeader title='PREVIEW' />
             <div id='saveArea' style={{ textAlign: 'center',
               height: '750px',
               fontFamily: this.state.titleFontType,
