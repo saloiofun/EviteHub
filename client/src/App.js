@@ -5,6 +5,7 @@ import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles
 import Dashboard from './pages/dashboard'
 import ViewEvents from './pages/viewEvents'
 import GuestList from './pages/guestList'
+import Invitation from './pages/invitation'
 import SendInvites from './pages/sendInvites'
 import NavBar from './containers/NavBar'
 import SideBar from './containers/SideBar'
@@ -89,6 +90,7 @@ class App extends React.Component {
                 <Route exact path='/events' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <ViewEvents auth={auth} {...props} />)} />
                 <Route exact path='/dashboard' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Dashboard auth={auth} {...props} showSideBar={this.showSideBar} />)} />
                 <Route exact path='/guest-list' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <GuestList auth={auth} {...props} />)} />
+                <Route exact path='/invitation' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Invitation auth={auth} {...props} />)} />
                 <Route exact path='/send-invites' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <SendInvites auth={auth} {...props} />)} />
                 <Route exact path='/profile' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Profile auth={auth} {...props} />)} />
                 <Route exact path='/logout' render={(props) => <LogOut hideSideBar={this.hideSideBar} />} />

@@ -29,7 +29,7 @@ function IconLabelButtons (props) {
   return (
     <div className={classes.flex}>
       <CreateEvent />
-      <Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' component={Link} to='/events'>
+      <Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' component={Link} to='/invitation'>
         <BorderVertical className={classes.leftIcon} />
         Invitation Maker
       </Button>
