@@ -53,7 +53,7 @@ class SendInvites extends React.Component {
 Please click on the link to let me know if you can make it!`,
     error: false,
     emailsSent: false,
-    emailURL: 'http://localhost:3000/rsvp/?id='
+    emailURL: 'http://localhost:3000/rsvp/?token='
   }
 
   validateEmail = (email) => {
@@ -94,6 +94,7 @@ Please click on the link to let me know if you can make it!`,
         message: this.state.message,
         url: this.state.emailURL
       }
+
       API.sendEmail(email)
       .then((data) => {
         this.setState({emailsSent: true})

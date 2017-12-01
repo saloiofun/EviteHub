@@ -17,7 +17,7 @@ const styles = theme => ({
 class Rsvp extends React.Component {
   componentDidMount () {
     var parsedURL = new URL(window.location.href)
-    var hash = parsedURL.searchParams.get('id')
+    var hash = parsedURL.searchParams.get('token')
     API.getGuestByHash(hash)
         .then((data) => {
           console.log(data)
