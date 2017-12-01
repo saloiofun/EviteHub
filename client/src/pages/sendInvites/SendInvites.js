@@ -3,25 +3,45 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
-import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
-import Typography from 'material-ui/Typography'
+import Alert from '../../components/Alert'
 import API from '../../utils/Api'
+import PageHeader from '../../components/PageHeader'
+import SendIcon from 'material-ui-icons/Send'
+import RemoveRedEyeIcon from 'material-ui-icons/RemoveRedEye'
 
 const styles = theme => ({
   root: {
-    flex: '1 1 100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '80%'
-    },
-    margin: '0 auto'
+    padding: theme.spacing.unit * 2,
+    paddingTop: 80,
+    margin: '0 auto',
+    marginBottom: 30,
+    minHeight: '100vh',
+    [theme.breakpoints.up('md')]: {
+      width: '80%',
+      paddingLeft: theme.spacing.unit * 3,
+      paddingRight: theme.spacing.unit * 3
+    }
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    padding: theme.spacing.unit
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
   },
-  grids: {
-    padding: '15px'
+  alerts: {
+    top: 80
+  },
+  button: {
+    margin: theme.spacing.unit,
+    marginLeft: 'auto',
+    marginRight: theme.spacing.unit
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
   }
 })
 
@@ -37,13 +57,17 @@ Please click on the link to let me know if you can make it!`,
   }
 
   validateEmail = (email) => {
-    var reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+    let reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     if (reg.test(email)) {
       return true
     } else {
       return false
     }
   }
+
+  handleRequestClose = () => {
+    this.setState({ error: false, emailsSent: false })
+  };
 
   handleChange = name => event => {
     this.setState({
@@ -53,57 +77,56 @@ Please click on the link to let me know if you can make it!`,
 
   onSend = () => {
     this.setState({emailsSent: false})
-    var email = {
-      to: this.state.to,
-      subject: this.state.subject,
-      message: this.state.message,
-      user: 'Test User',
-      url: this.state.emailURL
-    }
+    let emailArray = this.state.to.split(';')
 
-    var emailArray = email.to.split(',')
-
-    for (var i in emailArray) {
+    for (let i in emailArray) {
       if (!this.validateEmail(emailArray[i])) {
         this.setState({error: true})
         return
       }
     }
     this.setState({error: false})
-    API.sendEmail(email)
-    .then((data) => {
-      this.setState({emailsSent: true})
-    })
-    .catch((err) => {
-      if (err) throw err
-    })
+
+    for (let i in emailArray) {
+      let email = {
+        to: emailArray[i],
+        subject: this.state.subject,
+        message: this.state.message,
+        url: this.state.emailURL
+      }
+      API.sendEmail(email)
+      .then((data) => {
+        this.setState({emailsSent: true})
+        API.saveGuest({ guestEmail: data.data.accepted[0], emailed: true })
+        .then((guest) => {
+        })
+        .catch((error) => {
+          if (error) throw error
+        })
+      })
+      .catch((err) => {
+        if (err) throw err
+      })
+    }
   }
 
   render () {
     const { classes } = this.props
 
     return (
-      <Paper className={classes.root}>
-        <Grid container>
-          {this.state.error ? <Grid item xs={12} >
-            <Typography align='center' color='error' >Error: Make sure all you entered all emails correctly</Typography>
-          </Grid> : <Grid />}
-          {this.state.emailsSent ? <Grid item xs={12} >
-            <Typography align='center' color='primary' > Invite(s) were sent!</Typography>
-          </Grid> : <Grid />}
-
-          <Grid item xs={11} className={classes.grids}>
+      <div className={classes.root}>
+        <PageHeader title='Send Invites' body={`Send Invites!`} />
+        <Paper elevation={4}>
+          <form className={classes.container} noValidate autoComplete='off'>
             <TextField
               label='To'
-              placeholder='Separate emails by commas'
+              placeholder='Separate emails by semicolons'
               value={this.state.to}
               className={classes.textField}
               fullWidth
               margin='normal'
               onChange={this.handleChange('to')}
-          />
-          </Grid>
-          <Grid item xs={11} className={classes.grids}>
+            />
             <TextField
               id='subject'
               label='Subject'
@@ -112,9 +135,7 @@ Please click on the link to let me know if you can make it!`,
               margin='normal'
               fullWidth
               onChange={this.handleChange('subject')}
-          />
-          </Grid>
-          <Grid item xs={11} className={classes.grids}>
+            />
             <TextField
               id='message'
               label='Message'
@@ -125,15 +146,30 @@ Please click on the link to let me know if you can make it!`,
               className={classes.textField}
               margin='normal'
               onChange={this.handleChange('message')}
-            />
-          </Grid>
-          <Grid item xs={2} align='center'>
-            <Button raised color='primary' onClick={this.onSend} >
+              />
+            <div className={classes.button}>
+              <Button className={classes.button} raised color='primary' >
+              Preview
+              <RemoveRedEyeIcon className={classes.rightIcon} />
+              </Button>
+              <Button raised color='primary' onClick={this.onSend} >
               Send
-            </Button>
-          </Grid>
-        </Grid>
-      </Paper>
+              <SendIcon className={classes.rightIcon} />
+              </Button>
+            </div>
+          </form>
+          <Alert
+            open={this.state.error}
+            onRequestClose={this.handleRequestClose}
+            message='Error: Make sure all you entered all emails correctly'
+        />
+          <Alert
+            open={this.state.emailsSent}
+            onRequestClose={this.handleRequestClose}
+            message='Invite(s) were sent!'
+        />
+        </Paper>
+      </div>
     )
   }
 }

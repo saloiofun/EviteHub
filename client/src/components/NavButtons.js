@@ -19,11 +19,6 @@ const styles = theme => ({
   raisedAccent: {
     backgroundColor: orange[700]
   },
-  navButtonsHide: {
-    [theme.breakpoints.up('xs')]: {
-      display: 'none'
-    }
-  },
   flex: {
     flex: 1
   }
