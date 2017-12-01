@@ -92,7 +92,7 @@ Please click on the link to let me know if you can make it!`,
       API.sendEmail(email)
       .then((data) => {
         this.setState({emailsSent: true})
-        console.log("Data:", data)
+        console.log('Data:', data)
       })
       .catch((err) => {
         if (err) throw err

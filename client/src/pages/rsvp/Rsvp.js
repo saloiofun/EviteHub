@@ -14,30 +14,25 @@ const styles = theme => ({
   }
 })
 
-
 class Rsvp extends React.Component {
-    componentDidMount () {
-        var parsedURL = new URL(window.location.href)
-        var hash = parsedURL.searchParams.get('id')
-        API.getGuestByHash(hash)
-        .then((data)=>{
-            console.log(data)
+  componentDidMount () {
+    var parsedURL = new URL(window.location.href)
+    var hash = parsedURL.searchParams.get('id')
+    API.getGuestByHash(hash)
+        .then((data) => {
+          console.log(data)
         })
-        .catch((err)=>{
-            throw(err)
+        .catch((err) => {
+          throw (err)
         })
-        
-
-    }
-    render () {
-         const { classes } = this.props
+  }
+  render () {
+    const { classes } = this.props
 
     return (
-        <Grid container className={classes.root} style={{height: '100%'}}>
-    
-        </Grid>
-        )
-    }
+      <Grid container className={classes.root} style={{height: '100%'}} />
+    )
+  }
 }
 
 Rsvp.propTypes = {
