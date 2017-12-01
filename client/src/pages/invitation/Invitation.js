@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Typography from 'material-ui/Typography'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import Paper from 'material-ui/Paper'
 import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
 import Divider from 'material-ui/Divider'
@@ -11,8 +10,8 @@ import Avatar from 'material-ui/Avatar'
 import Chip from 'material-ui/Chip'
 import html2canvas from 'html2canvas'
 import JSPDF from 'jspdf'
-import Input, { InputLabel } from 'material-ui/Input'
-import {FormControl} from 'material-ui/Form'
+import { TimePicker, DatePicker } from 'material-ui-pickers'
+import moment from 'moment'
 import MenuItem from 'material-ui/Menu/MenuItem'
 import ExpansionPanel, {
   ExpansionPanelDetails,
@@ -34,14 +33,15 @@ const styles = theme => ({
       paddingRight: theme.spacing.unit * 3
     }
   },
-  paper: {
-    padding: 16,
-    textAlign: 'center',
-    color: '#009688'
-  },
-  title: { margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px`, color: '#009688' },
+  title: { margin: theme.spacing.unit, color: '#009688' },
   Avatar: { backgroundColor: '#009688' },
-  icon: { color: 'white' }
+  icon: { color: 'white' },
+  column: {
+    flexBasis: '33.3%'
+  },
+  displayBlock: {
+    display: 'block'
+  }
 })
 
 const bg = [
@@ -69,21 +69,35 @@ class Invitation extends Component {
     // set initial state
   state = {
     title: 'JOHAN & ERIKA',
-    day: 'SUNDAY',
-    date: '23',
-    month: 'MARCH',
-    time: '12 PM',
+    date: moment().format('dddd, MMMM Do YYYY'),
+    time: moment().format('hh:mm A'),
     address1: '1234 Santa Margarita Blvd',
     address2: 'Lake Forest, CA 92555',
     background: 'url("/static/images/invitation/paper01.jpg")',
     titleFontSize: 40,
     titleFontType: 'Arial',
-    expanded: null
+    selectedDate: new Date(),
+    selectedTime: new Date()
+
   };
 
     // mount component
   componentDidMount () {
 
+  }
+
+  handleDateChange = date => {
+    this.setState({
+      selectedDate: date,
+      date: moment(date).format('dddd, MMMM Do YYYY')
+    })
+  }
+
+  handleTimeChange = time => {
+    this.setState({
+      selectedTime: time,
+      time: moment(time).format('hh:mm A')
+    })
   }
 
   handleChange = panel => (event, expanded) => {
@@ -120,29 +134,26 @@ class Invitation extends Component {
 
   render () {
     const { classes } = this.props
-    const { expanded } = this.state
 
     return (
       <div className={classes.root}>
         <PageHeader title='Invitation Maker' body='Invitation Maker' />
         <Grid container spacing={24}>
-          <Grid item xs={12} sm={12} md={4}>
+          <Grid item sm={12} md={4}>
 
-            <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
+            <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography type='title' className={classes.title}>
-                      BACKGROUND
-                </Typography>
+                <Typography type='title' className={classes.title}>BACKGROUND</Typography>
               </ExpansionPanelSummary>
 
-              <ExpansionPanelDetails>
+              <ExpansionPanelDetails classes={{root: classes.displayBlock}}>
                 <TextField
                   select
                   label='Please select your background'
                   value={this.state.background}
                   onChange={this.handleInputChange('background')}
                   fullWidth
-                  margin='normal'
+                  margin='dense'
                   >
                   {bg.map(option => (
                     <MenuItem key={option.value} value={option.value}>
@@ -153,96 +164,104 @@ class Invitation extends Component {
               </ExpansionPanelDetails>
             </ExpansionPanel>
 
-            <ExpansionPanel expanded={expanded === 'panel2'} onChange={this.handleChange('panel2')}>
+            <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography type='title' className={classes.title}>
-                      INPUT
-            </Typography>
+                <Typography type='title' className={classes.title}>TITLE</Typography>
               </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <div>TITLE</div>
-                <TextField
-                  name='title'
-                  label='Title'
-                  helperText='ex: JOHAN &amp; ERIKA'
-                  fullWidth
-                  margin='normal'
-                  onChange={this.handleInputChange('title')}
-                  />
-                <TextField
-                  select
-                  label='Font Type'
-                  value={this.state.titleFontType}
-                  onChange={this.handleInputChange('titleFontType')}
-                  fullWidth
-                  margin='normal'
-                  >
-                  {font.map(option => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.value}
-                    </MenuItem>
-                    ))}
-                </TextField>
-                <FormControl>
-                  <InputLabel>Font Size</InputLabel>
-                  <Input
-                    type='number'
-                    value={this.state.titleFontSize}
-                    onChange={this.handleNumberInputChange('titleFontSize')}
-                  />
-                </FormControl>
 
-                <Paper className={classes.paper} component='legend'> DETAIL
-                  <TextField
-                    label='Day'
-                    helperText='ex: SUNDAY'
-                    fullWidth
-                    margin='normal'
-                    onChange={this.handleInputChange('day')}
+              <ExpansionPanelDetails classes={{root: classes.displayBlock}}>
+
+                <form noValidate autoComplete='off'>
+                  <Grid container spacing={24} alignItems='flex-end'>
+                    <Grid item sm={12} md={12}>
+                      <TextField
+                        name='title'
+                        label='Title'
+                        helperText='ex: JOHAN &amp; ERIKA'
+                        fullWidth
+                        margin='dense'
+                        onChange={this.handleInputChange('title')}
                   />
-                  <TextField
-                    label='Date'
-                    helperText='ex: 13'
-                    fullWidth
-                    margin='normal'
-                    onChange={this.handleInputChange('date')}
+                    </Grid>
+                    <Grid item sm={12} md={6}>
+                      <TextField
+                        select
+                        label='Font Type'
+                        fullWidth
+                        value={this.state.titleFontType}
+                        onChange={this.handleInputChange('titleFontType')}
+                        margin='dense'
+                      >
+                        {font.map(option => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.value}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+
+                    <Grid item sm={12} md={6}>
+                      <TextField
+                        margin='dense'
+                        type='number'
+                        inputProps={{min: 12}}
+                        label='Font Size'
+                        fullWidth
+                        value={this.state.titleFontSize}
+                        onChange={this.handleNumberInputChange('titleFontSize')}
+                      />
+                    </Grid>
+                  </Grid>
+                </form>
+
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+
+            <ExpansionPanel>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography type='title' className={classes.title}>DETAILS</Typography>
+              </ExpansionPanelSummary>
+
+              <ExpansionPanelDetails classes={{root: classes.displayBlock}}>
+                <DatePicker
+                  label='Date'
+                  format='dddd, MMMM Do YYYY'
+                  value={this.state.selectedDate}
+                  onChange={this.handleDateChange}
+                  animateYearScrolling={false}
+                  leftArrowIcon='<'
+                  rightArrowIcon='>'
+                  fullWidth
+                  margin='dense'
+                />
+                <Divider light />
+                <TimePicker
+                  label='Time'
+                  value={this.state.selectedTime}
+                  onChange={this.handleTimeChange}
+                  fullWidth
+                  margin='dense'
+                />
+                <Divider light />
+                <TextField
+                  label='Address Line 1'
+                  helperText='ex: 1234 Santa Margarita Blvd'
+                  fullWidth
+                  margin='normal'
+                  onChange={this.handleInputChange('address1')}
                   />
-                  <TextField
-                    label='Month'
-                    helperText='ex: MARCH'
-                    fullWidth
-                    margin='normal'
-                    onChange={this.handleInputChange('month')}
+                <TextField
+                  label='Address Line 2'
+                  helperText='ex: Lake Forest, CA 92555'
+                  fullWidth
+                  margin='normal'
+                  onChange={this.handleInputChange('address2')}
                   />
-                  <Divider light />
-                  <TextField
-                    label='Time'
-                    helperText='ex: 12 PM or 08.30 PM'
-                    fullWidth
-                    margin='normal'
-                    onChange={this.handleInputChange('time')}
-                  />
-                  <Divider light />
-                  <TextField
-                    label='Address Line 1'
-                    helperText='ex: 1234 Santa Margarita Blvd'
-                    fullWidth
-                    margin='normal'
-                    onChange={this.handleInputChange('address1')}
-                  />
-                  <TextField
-                    label='Address Line 2'
-                    helperText='ex: Lake Forest, CA 92555'
-                    fullWidth
-                    margin='normal'
-                    onChange={this.handleInputChange('address2')}
-                  />
-                </Paper>
               </ExpansionPanelDetails>
             </ExpansionPanel>
           </Grid>
+
           <Grid item xs={12} sm={12} md={8}>
-            <PageHeader title='PREVIEW' />
             <div id='saveArea' style={{ textAlign: 'center',
               height: '750px',
               fontFamily: this.state.titleFontType,
@@ -250,17 +269,7 @@ class Invitation extends Component {
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover'}}>
               <p style={{ color: 'white', fontSize: this.state.titleFontSize, padding: '330px 0 45px 0' }}> {this.state.title} </p>
-              <Grid container justify='center'>
-                <Grid item xs={4}>
-                  <label style={{ color: 'white', fontSize: '30px' }}> {this.state.day} </label>
-                </Grid>
-                <Grid item xs={1}>
-                  <label style={{ color: 'white', fontSize: '40px' }}> {this.state.date} </label>
-                </Grid>
-                <Grid item xs={4}>
-                  <label style={{ color: 'white', fontSize: '30px' }}> {this.state.month} </label>
-                </Grid>
-              </Grid>
+              <p style={{ color: 'white', fontSize: '40px', padding: '20px 0 0 0' }}> {this.state.date} </p>
               <p style={{ color: 'white', fontSize: '15px', padding: '20px 0 0 0' }}> {this.state.time} </p>
               <p style={{ color: 'white', fontSize: '20px', padding: '15px 0 0 5px' }}> {this.state.address1} </p>
               <p style={{ color: 'white', fontSize: '20px', margin: '-20px 0 0 0' }}> {this.state.address2} </p>
