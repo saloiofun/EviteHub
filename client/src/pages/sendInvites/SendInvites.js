@@ -12,11 +12,16 @@ import RemoveRedEyeIcon from 'material-ui-icons/RemoveRedEye'
 
 const styles = theme => ({
   root: {
-    flex: '1 1 100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '80%'
-    },
-    margin: '0 auto'
+    padding: theme.spacing.unit * 2,
+    paddingTop: 80,
+    margin: '0 auto',
+    marginBottom: 30,
+    minHeight: '100vh',
+    [theme.breakpoints.up('md')]: {
+      width: '80%',
+      paddingLeft: theme.spacing.unit * 3,
+      paddingRight: theme.spacing.unit * 3
+    }
   },
   container: {
     display: 'flex',
