@@ -139,7 +139,7 @@ class Invitation extends Component {
       <div className={classes.root}>
         <PageHeader title='Invitation Maker' body='Invitation Maker' />
         <Grid container spacing={24}>
-          <Grid item sm={12} md={4}>
+          <Grid item xs={12} sm={12} md={4}>
 
             <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -173,7 +173,7 @@ class Invitation extends Component {
 
                 <form noValidate autoComplete='off'>
                   <Grid container spacing={24} alignItems='flex-end'>
-                    <Grid item sm={12} md={12}>
+                    <Grid item xs={12} sm={12} md={12}>
                       <TextField
                         name='title'
                         label='Title'
@@ -183,7 +183,7 @@ class Invitation extends Component {
                         onChange={this.handleInputChange('title')}
                   />
                     </Grid>
-                    <Grid item sm={12} md={6}>
+                    <Grid item xs={6} sm={6} md={6}>
                       <TextField
                         select
                         label='Font Type'
@@ -200,7 +200,7 @@ class Invitation extends Component {
                       </TextField>
                     </Grid>
 
-                    <Grid item sm={12} md={6}>
+                    <Grid item xs={6} sm={6} md={6}>
                       <TextField
                         margin='dense'
                         type='number'
