@@ -108,10 +108,6 @@ function Dashboard (props) {
               </Typography>
               <CheckboxList />
             </CardContent>
-            <CardActions align='right'>
-              <Button dense color='primary'>Share</Button>
-              <Button dense color='primary'>View All</Button>
-            </CardActions>
           </Card>
         </Grid>
         <Grid item xs={6} sm={3}>
