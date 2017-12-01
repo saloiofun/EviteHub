@@ -21,6 +21,10 @@ export default {
   updateGuest: function (id, guestData) {
     return axios.put('/api/guests/' + id, guestData)
   },
+  // Get a guest from the database
+  getGuestByHash: function(hash){
+    return axios.get('/api/guests/rsvp/'+hash)
+  },
   // User Registration
   registerUser: function (userData) {
     return axios.post('/api/user', userData)
