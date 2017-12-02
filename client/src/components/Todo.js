@@ -72,22 +72,32 @@ class CheckboxList extends React.Component {
   }
 
   // Handles To Do Item Checkboxes
-  handleToggle = value => () => {
+  handleToggle = (id, value) => () => {
     const { todoItems, completedItems } = this.state
     const inCompletedItems = completedItems.indexOf(value)
     const inToDoItems = todoItems.indexOf(value)
 
     if (inCompletedItems === -1) {
-      completedItems.push(value)
-      todoItems.splice(inToDoItems, 1)
-      this.openSnack()
+      // Updated Todo item todoDone as true
+      API.updateTodo(id, {'todoDone': true})
+      .then(res => {
+        completedItems.push(res.data)
+        todoItems.splice(inToDoItems, 1)
+        this.openSnack()
+        this.setState({ todoItems, completedItems })
+      })
+      .catch(err => console.log(err))
     } else if (inToDoItems === -1) {
-      todoItems.push(value)
-      completedItems.splice(inCompletedItems, 1)
-      this.openSnack()
+      // Updated Todo item todoDone as false
+      API.updateTodo(id, {'todoDone': false})
+      .then(res => {
+        todoItems.push(res.data)
+        completedItems.splice(inCompletedItems, 1)
+        this.openSnack()
+        this.setState({ todoItems, completedItems })
+      })
+      .catch(err => console.log(err))
     }
-
-    this.setState({ todoItems, completedItems })
   }
 
   // Change Tabs
@@ -157,7 +167,7 @@ class CheckboxList extends React.Component {
                   id={todoItem._id}
                   dense
                   button
-                  onClick={this.handleToggle(todoItem.todoDesc)}
+                  onClick={this.handleToggle(todoItem._id, todoItem.todoDesc)}
                   className={classes.listItem}
                   disableGutters
                   divider
@@ -181,15 +191,16 @@ class CheckboxList extends React.Component {
                 <ListItem
                   key={todoItem._id}
                   id={todoItem._id}
+                  dense
                   button
-                  onClick={this.handleToggle(todoItem.todoDesc)}
+                  onClick={this.handleToggle(todoItem._id, todoItem.todoDesc)}
                   className={classes.listItem}
                   disableGutters
                   divider
                   style={{padding: 0}}
                 >
                   <Checkbox
-                    checked={this.state.completedItems.indexOf(todoItem.todoDesc) >= 0}
+                    checked={this.state.todoItems.indexOf(todoItem.todoDesc) !== -1}
                     tabIndex={-1}
                     disableRipple
                   />
