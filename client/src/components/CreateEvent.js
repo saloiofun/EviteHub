@@ -91,7 +91,10 @@ class addEvent extends React.Component {
     name: '',
     location: '',
     description: '',
-    selectedDate: moment(),
+    date: moment().format('dddd, MMMM Do YYYY'),
+    time: moment().format('hh:mm A'),
+    selectedDate: new Date(),
+    selectedTime: new Date(),
     open: false,
     nameLimit: false,
     descriptionLimit: false,
@@ -107,8 +110,18 @@ class addEvent extends React.Component {
     this.setState({ open: false })
   };
 
-  handleDateChange = (date) => {
-    this.setState({ selectedDate: date })
+  handleDateChange = date => {
+    this.setState({
+      selectedDate: date,
+      date: moment(date).format('dddd, MMMM Do YYYY')
+    })
+  }
+
+  handleTimeChange = time => {
+    this.setState({
+      selectedTime: time,
+      time: moment(time).format('hh:mm A')
+    })
   }
 
   nameWordCount = () => {
@@ -141,7 +154,8 @@ class addEvent extends React.Component {
       eventName: this.state.name,
       description: this.state.description,
       location: this.state.location,
-      date: this.state.selectedDate
+      date: this.state.date,
+      time: this.state.time
     }
     this.setState({
       name: '',
@@ -153,23 +167,8 @@ class addEvent extends React.Component {
     this.setState({ open: false })
   }
 
-  renderCustomDayForDateTime = (date, selectedDate, dayInCurrentMonth, dayComponent) => {
-    const { classes } = this.props
-
-    const dayClassName = [
-      (date.isSame(selectedDate, 'day')) && classes.customDayHighlight
-    ].join(' ')
-
-    return (
-      <div className={classes.dayWrapper}>
-        {dayComponent}
-        <div className={dayClassName} />
-      </div>
-    )
-  }
-
   render () {
-    const { selectedDate } = this.state
+    const { selectedDate, selectedTime } = this.state
     const { classes } = this.props
     return (
 
@@ -226,8 +225,8 @@ class addEvent extends React.Component {
                   <Grid item xs={6} md={6}>
                     <TimePicker
                       label='Time'
-                      value={this.state.selectedDate}
-                      onChange={this.handleDateChange}
+                      value={selectedTime}
+                      onChange={this.handleTimeChange}
                       fullWidth
                       margin='dense'
                     />
