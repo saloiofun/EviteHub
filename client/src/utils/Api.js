@@ -44,5 +44,9 @@ export default {
   // Save Todo
   saveTodo: function (data) {
     return axios.post('/api/todos', data)
+  },
+  // Update Todo
+  updateTodo: function (id, data) {
+    return axios.put('api/todos/listed/' + id, data)
   }
 }
