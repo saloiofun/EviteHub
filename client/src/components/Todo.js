@@ -72,31 +72,44 @@ class CheckboxList extends React.Component {
   }
 
   // Handles To Do Item Checkboxes
-  handleToggle = (id, value) => () => {
+  handleCompleted = (id, value) => () => {
+    const { todoItems, completedItems } = this.state
+    // const inCompletedItems = completedItems.indexOf(value)
+    const inToDoItems = todoItems.indexOf(value)
+
+    // if (inCompletedItems === -1) {
+      // Updated Todo item todoDone as true
+    API.updateTodo(id, {'todoDone': true})
+      .then(res => {
+        const newTodo = todoItems
+        const newCompleted = completedItems
+
+        newCompleted.push(res.data)
+        // newTodo.splice(inToDoItems, 1)
+
+        this.setState({ todoItems: newTodo, completedItems: newCompleted })
+        this.openSnack()
+      })
+      .catch(err => console.log(err))
+    // }
+  }
+
+  // Handles To Do Item Checkboxes
+  handleNotCompleted = (id, value) => () => {
     const { todoItems, completedItems } = this.state
     const inCompletedItems = completedItems.indexOf(value)
     const inToDoItems = todoItems.indexOf(value)
 
-    if (inCompletedItems === -1) {
-      // Updated Todo item todoDone as true
-      API.updateTodo(id, {'todoDone': true})
-      .then(res => {
-        completedItems.push(res.data)
-        todoItems.splice(inToDoItems, 1)
-        this.openSnack()
-        this.setState({ todoItems, completedItems })
-      })
-      .catch(err => console.log(err))
-    } else if (inToDoItems === -1) {
-      // Updated Todo item todoDone as false
+    if (inToDoItems === -1) {
+        // Updated Todo item todoDone as true
       API.updateTodo(id, {'todoDone': false})
-      .then(res => {
-        todoItems.push(res.data)
-        completedItems.splice(inCompletedItems, 1)
-        this.openSnack()
-        this.setState({ todoItems, completedItems })
-      })
-      .catch(err => console.log(err))
+        .then(res => {
+          todoItems.push(res.data)
+          completedItems.splice(inCompletedItems, 1)
+          this.openSnack()
+          this.setState({ todoItems, completedItems })
+        })
+        .catch(err => console.log(err))
     }
   }
 
@@ -167,7 +180,7 @@ class CheckboxList extends React.Component {
                   id={todoItem._id}
                   dense
                   button
-                  onClick={this.handleToggle(todoItem._id, todoItem.todoDesc)}
+                  onClick={this.handleCompleted(todoItem._id, todoItem.todoDesc)}
                   className={classes.listItem}
                   disableGutters
                   divider
@@ -193,14 +206,14 @@ class CheckboxList extends React.Component {
                   id={todoItem._id}
                   dense
                   button
-                  onClick={this.handleToggle(todoItem._id, todoItem.todoDesc)}
+                  onClick={this.handleNotCompleted(todoItem._id, todoItem.todoDesc)}
                   className={classes.listItem}
                   disableGutters
                   divider
                   style={{padding: 0}}
                 >
                   <Checkbox
-                    checked={this.state.todoItems.indexOf(todoItem.todoDesc) !== -1}
+                    checked={this.state.todoItems.indexOf(todoItem.todoDesc) >= 0}
                     tabIndex={-1}
                     disableRipple
                   />
