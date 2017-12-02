@@ -13,6 +13,7 @@ import AppBar from 'material-ui/AppBar'
 import Snackbar from 'material-ui/Snackbar'
 import IconButton from 'material-ui/IconButton'
 import CloseIcon from 'material-ui-icons/Close'
+import API from '../utils/Api'
 
 function TabContainer ({ children, dir }) {
   return (
@@ -32,11 +33,20 @@ const styles = theme => ({
 class CheckboxList extends React.Component {
   state = {
     modal: false,
-    todoItems: ['Get Plates', 'Reserver Location', 'Assign Tables', 'Check GuestList'],
+    todoItems: [],
     completedItems: ['Hire Party Planner', 'Check RSPV List', 'Hire Catering Co.'],
     value: 0,
     addTodo: '',
     snack: false
+  }
+
+  componentDidMount () {
+    // Get Todo from DB
+    API.getTodo()
+    .then(res => {
+      this.setState({ todoItems: res.data })
+    })
+    .catch(err => console.log(err))
   }
 
   // Open Modal
@@ -84,8 +94,13 @@ class CheckboxList extends React.Component {
     event.preventDefault()
     const addTodo = this.state.addTodo
 
-    this.state.todoItems.push(addTodo)
-    this.closeModal()
+    // Save Todo in DB
+    API.saveTodo({ todoDesc: addTodo })
+    .then(res => {
+      this.state.todoItems.push(res.data)
+      this.closeModal()
+    })
+    .catch(err => console.log(err))
   }
 
   // Opens Snackbar
@@ -124,23 +139,24 @@ class CheckboxList extends React.Component {
         { value === 0 &&
           <TabContainer dir=''>
             <List dense disablePadding>
-              {this.state.todoItems.map(value => (
+              {this.state.todoItems.map(todoItem => (
                 <ListItem
-                  key={value}
+                  key={todoItem._id}
+                  id={todoItem._id}
                   dense
                   button
-                  onClick={this.handleToggle(value)}
+                  onClick={this.handleToggle(todoItem.todoDesc)}
                   className={classes.listItem}
                   disableGutters
                   divider
                   style={{padding: 0}}
                 >
                   <Checkbox
-                    checked={this.state.completedItems.indexOf(value) !== -1}
+                    checked={this.state.completedItems.indexOf(todoItem.todoDesc) !== -1}
                     tabIndex={-1}
                     disableRipple
                   />
-                  <ListItemText primary={value} />
+                  <ListItemText primary={todoItem.todoDesc} />
                 </ListItem>
               ))}
             </List>

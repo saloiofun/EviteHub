@@ -36,5 +36,13 @@ export default {
   // Send Email
   sendEmail: function (data) {
     return axios.post('/api/email', data)
+  },
+  // Get Todo
+  getTodo: function () {
+    return axios.get('/api/todos')
+  },
+  // Save Todo
+  saveTodo: function (data) {
+    return axios.post('/api/todos', data)
   }
 }
