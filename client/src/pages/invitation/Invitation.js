@@ -71,7 +71,7 @@ class Invitation extends Component {
     address1: '1234 Santa Margarita Blvd',
     address2: 'Lake Forest, CA 92555',
     background: 'url("/static/images/invitation/paper01.jpg")',
-    titleFontSize: 40,
+    titleFontSize: 35,
     titleFontType: 'Arial',
     selectedDate: new Date(),
     selectedTime: new Date()
@@ -137,7 +137,7 @@ class Invitation extends Component {
       <main className={classes.root}>
         <PageHeader title='Invitation Maker' body='Invitation Maker' />
         <Grid container spacing={24}>
-          <Grid item xs={12} sm={12} md={4}>
+          <Grid item xs={12} sm={12} md={7}>
 
             <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -257,18 +257,18 @@ class Invitation extends Component {
             </ExpansionPanel>
           </Grid>
 
-          <Grid item xs={12} sm={12} md={8}>
+          <Grid item xs={12} sm={12} md={5}>
             <div id='saveArea' style={{ textAlign: 'center',
-              height: '750px',
+              height: '650px',
               fontFamily: titleFontType,
               backgroundImage: background,
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover'}}>
-              <p style={{ color: 'white', fontSize: this.state.titleFontSize, padding: '330px 0 45px 0' }}> {title} </p>
-              <p style={{ color: 'white', fontSize: '40px', padding: '20px 0 0 0' }}> {date} </p>
+              <p style={{ color: 'white', fontSize: this.state.titleFontSize, padding: '280px 0 0 0' }}> {title} </p>
+              <p style={{ color: 'white', fontSize: '22px' }}> {date} </p>
               <p style={{ color: 'white', fontSize: '15px', padding: '20px 0 0 0' }}> {time} </p>
-              <p style={{ color: 'white', fontSize: '20px', padding: '15px 0 0 5px' }}> {address1} </p>
-              <p style={{ color: 'white', fontSize: '20px', margin: '-20px 0 0 0' }}> {address2} </p>
+              <p style={{ color: 'white', fontSize: '18px', padding: '13px 0 0 0' }}> {address1} </p>
+              <p style={{ color: 'white', fontSize: '18px', margin: '-20px 0 0 0' }}> {address2} </p>
             </div>
             <hr />
             <center>
