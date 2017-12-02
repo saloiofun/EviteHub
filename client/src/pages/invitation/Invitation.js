@@ -137,7 +137,7 @@ class Invitation extends Component {
       <main className={classes.root}>
         <PageHeader title='Invitation Maker' body='Invitation Maker' />
         <Grid container spacing={24}>
-          <Grid item xs={12} sm={12} md={7}>
+          <Grid item xs={12} sm={12} md={4}>
 
             <ExpansionPanel>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -257,7 +257,7 @@ class Invitation extends Component {
             </ExpansionPanel>
           </Grid>
 
-          <Grid item xs={12} sm={12} md={5}>
+          <Grid item xs={12} sm={12} md={8}>
             <div id='saveArea' style={{ textAlign: 'center',
               height: '425px',
               fontFamily: titleFontType,
