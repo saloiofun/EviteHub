@@ -137,9 +137,9 @@ class Invitation extends Component {
       <main className={classes.root}>
         <PageHeader title='Invitation Maker' body='Invitation Maker' />
         <Grid container spacing={24}>
-          <Grid item xs={12} sm={12} md={7}>
+          <Grid item xs={12} sm={12} md={4}>
 
-            <ExpansionPanel>
+            <ExpansionPanel defaultExpanded>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography type='title' className={classes.title}>BACKGROUND</Typography>
               </ExpansionPanelSummary>
@@ -257,18 +257,19 @@ class Invitation extends Component {
             </ExpansionPanel>
           </Grid>
 
-          <Grid item xs={12} sm={12} md={5}>
+          <Grid item xs={12} sm={12} md={8}>
             <div id='saveArea' style={{ textAlign: 'center',
-              height: '650px',
+              height: '425px',
+              width: '710px',
               fontFamily: titleFontType,
               backgroundImage: background,
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover'}}>
-              <p style={{ color: 'white', fontSize: this.state.titleFontSize, padding: '280px 0 0 0' }}> {title} </p>
+              <p style={{ color: 'white', fontSize: this.state.titleFontSize, padding: '14% 0 0 0' }}> {title} </p>
               <p style={{ color: 'white', fontSize: '22px' }}> {date} </p>
-              <p style={{ color: 'white', fontSize: '15px', padding: '20px 0 0 0' }}> {time} </p>
-              <p style={{ color: 'white', fontSize: '18px', padding: '13px 0 0 0' }}> {address1} </p>
-              <p style={{ color: 'white', fontSize: '18px', margin: '-20px 0 0 0' }}> {address2} </p>
+              <p style={{ color: 'white', fontSize: '15px' }}> {time} </p>
+              <p style={{ color: 'white', fontSize: '18px' }}> {address1} </p>
+              <p style={{ color: 'white', fontSize: '18px' }}> {address2} </p>
             </div>
             <hr />
             <center>
