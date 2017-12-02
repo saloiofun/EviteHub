@@ -41,22 +41,24 @@ class CheckboxList extends React.Component {
   }
 
   componentDidMount () {
+    this.loadCompletedItems()
+    this.loadTodoItems()
+  }
+
+  loadCompletedItems () {
     // Get Todo from DB
-    API.getTodo()
+    API.doneTodo()
     .then(res => {
-      const todoItems = []
-      const completedItems = []
+      this.setState({ completedItems: res.data })
+    })
+    .catch(err => console.log(err))
+  }
 
-      // Filter Todo items if done
-      res.data.forEach(function (todoItem) {
-        if (todoItem.todoDone === false) {
-          todoItems.push(todoItem)
-        } else {
-          completedItems.push(todoItem)
-        }
-      })
-
-      this.setState({ todoItems, completedItems })
+  loadTodoItems () {
+    // Get Completed Todo from DB
+    API.unDoneTodo()
+    .then(res => {
+      this.setState({ todoItems: res.data })
     })
     .catch(err => console.log(err))
   }
@@ -73,44 +75,26 @@ class CheckboxList extends React.Component {
 
   // Handles To Do Item Checkboxes
   handleCompleted = (id, value) => () => {
-    const { todoItems, completedItems } = this.state
-    // const inCompletedItems = completedItems.indexOf(value)
-    const inToDoItems = todoItems.indexOf(value)
-
-    // if (inCompletedItems === -1) {
-      // Updated Todo item todoDone as true
+     // Updated Todo item todoDone as true
     API.updateTodo(id, {'todoDone': true})
       .then(res => {
-        const newTodo = todoItems
-        const newCompleted = completedItems
-
-        newCompleted.push(res.data)
-        // newTodo.splice(inToDoItems, 1)
-
-        this.setState({ todoItems: newTodo, completedItems: newCompleted })
+        this.loadCompletedItems()
+        this.loadTodoItems()
         this.openSnack()
       })
-      .catch(err => console.log(err))
-    // }
+    .catch(err => console.log(err))
   }
 
   // Handles To Do Item Checkboxes
   handleNotCompleted = (id, value) => () => {
-    const { todoItems, completedItems } = this.state
-    const inCompletedItems = completedItems.indexOf(value)
-    const inToDoItems = todoItems.indexOf(value)
-
-    if (inToDoItems === -1) {
-        // Updated Todo item todoDone as true
-      API.updateTodo(id, {'todoDone': false})
-        .then(res => {
-          todoItems.push(res.data)
-          completedItems.splice(inCompletedItems, 1)
-          this.openSnack()
-          this.setState({ todoItems, completedItems })
-        })
-        .catch(err => console.log(err))
-    }
+     // Updated Todo item todoDone as true
+    API.updateTodo(id, {'todoDone': false})
+      .then(res => {
+        this.loadCompletedItems()
+        this.loadTodoItems()
+        this.openSnack()
+      })
+    .catch(err => console.log(err))
   }
 
   // Change Tabs
