@@ -48,5 +48,13 @@ export default {
   // Update Todo
   updateTodo: function (id, data) {
     return axios.put('api/todos/listed/' + id, data)
+  },
+  // Done Todo
+  doneTodo: function () {
+    return axios.get('/api/todos/done')
+  },
+  // UnDone Todo
+  unDoneTodo: function () {
+    return axios.get('/api/todos/undone')
   }
 }
