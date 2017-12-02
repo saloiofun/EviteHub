@@ -5,12 +5,14 @@ import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles
 import Dashboard from './pages/dashboard'
 import ViewEvents from './pages/viewEvents'
 import GuestList from './pages/guestList'
+import Invitation from './pages/invitation'
 import SendInvites from './pages/sendInvites'
 import NavBar from './containers/NavBar'
 import SideBar from './containers/SideBar'
 import Home from './pages/home'
 import Callback from './callback'
 import Auth from './auth'
+import Rsvp from './pages/rsvp'
 import history from './history'
 import Profile from './pages/profile'
 import teal from 'material-ui/colors/teal'
@@ -82,13 +84,16 @@ class App extends React.Component {
           <div className={classes.root}>
             <div className={classes.appFrame}>
               <Route path='/' render={(props) => <NavBar auth={auth} {...props} />} />
+
               {this.state.showSideBar && <SideBar auth={auth} />}
               {/* <main className={classes.content}> */}
               <Switch>
                 <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
                 <Route exact path='/events' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <ViewEvents auth={auth} {...props} />)} />
+                <Route path='/rsvp' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Rsvp auth={auth} {...props} />)} />
                 <Route exact path='/dashboard' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Dashboard auth={auth} {...props} showSideBar={this.showSideBar} />)} />
                 <Route exact path='/guest-list' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <GuestList auth={auth} {...props} />)} />
+                <Route exact path='/invitation' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Invitation auth={auth} {...props} />)} />
                 <Route exact path='/send-invites' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <SendInvites auth={auth} {...props} />)} />
                 <Route exact path='/profile' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Profile auth={auth} {...props} />)} />
                 <Route exact path='/logout' render={(props) => <LogOut hideSideBar={this.hideSideBar} />} />
@@ -98,6 +103,7 @@ class App extends React.Component {
                 }} />
               </Switch>
               {/* </main> */}
+
             </div>
           </div>
         </Router>
