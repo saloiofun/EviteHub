@@ -36,9 +36,6 @@ const styles = theme => ({
   title: { margin: theme.spacing.unit, color: '#009688' },
   Avatar: { backgroundColor: '#009688' },
   icon: { color: 'white' },
-  column: {
-    flexBasis: '33.3%'
-  },
   displayBlock: {
     display: 'block'
   }
@@ -133,10 +130,11 @@ class Invitation extends Component {
   }
 
   render () {
+    const { background, titleFontType, selectedDate, selectedTime, title, date, time, address1, address2 } = this.state
     const { classes } = this.props
 
     return (
-      <div className={classes.root}>
+      <main className={classes.root}>
         <PageHeader title='Invitation Maker' body='Invitation Maker' />
         <Grid container spacing={24}>
           <Grid item xs={12} sm={12} md={4}>
@@ -150,7 +148,7 @@ class Invitation extends Component {
                 <TextField
                   select
                   label='Please select your background'
-                  value={this.state.background}
+                  value={background}
                   onChange={this.handleInputChange('background')}
                   fullWidth
                   margin='dense'
@@ -170,49 +168,47 @@ class Invitation extends Component {
               </ExpansionPanelSummary>
 
               <ExpansionPanelDetails classes={{root: classes.displayBlock}}>
-
-                <form noValidate autoComplete='off'>
-                  <Grid container spacing={24} alignItems='flex-end'>
-                    <Grid item xs={12} sm={12} md={12}>
-                      <TextField
-                        name='title'
-                        label='Title'
-                        helperText='ex: JOHAN &amp; ERIKA'
-                        fullWidth
-                        margin='dense'
-                        onChange={this.handleInputChange('title')}
-                  />
-                    </Grid>
-                    <Grid item xs={6} sm={6} md={6}>
-                      <TextField
-                        select
-                        label='Font Type'
-                        fullWidth
-                        value={this.state.titleFontType}
-                        onChange={this.handleInputChange('titleFontType')}
-                        margin='dense'
-                      >
-                        {font.map(option => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {option.value}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </Grid>
-
-                    <Grid item xs={6} sm={6} md={6}>
-                      <TextField
-                        margin='dense'
-                        type='number'
-                        inputProps={{min: 12}}
-                        label='Font Size'
-                        fullWidth
-                        value={this.state.titleFontSize}
-                        onChange={this.handleNumberInputChange('titleFontSize')}
+                <Grid container spacing={24} alignItems='flex-end'>
+                  <Grid item xs={12} sm={12} md={12}>
+                    <TextField
+                      name='title'
+                      label='Title'
+                      helperText='ex: JOHAN &amp; ERIKA'
+                      fullWidth
+                      margin='dense'
+                      onChange={this.handleInputChange('title')}
                       />
-                    </Grid>
                   </Grid>
-                </form>
+
+                  <Grid item xs={6} sm={6} md={6}>
+                    <TextField
+                      select
+                      label='Font Type'
+                      fullWidth
+                      value={titleFontType}
+                      onChange={this.handleInputChange('titleFontType')}
+                      margin='dense'
+                      >
+                      {font.map(option => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.value}
+                        </MenuItem>
+                        ))}
+                    </TextField>
+                  </Grid>
+
+                  <Grid item xs={6} sm={6} md={6}>
+                    <TextField
+                      margin='dense'
+                      type='number'
+                      inputProps={{min: 12}}
+                      label='Font Size'
+                      fullWidth
+                      value={this.state.titleFontSize}
+                      onChange={this.handleNumberInputChange('titleFontSize')}
+                      />
+                  </Grid>
+                </Grid>
 
               </ExpansionPanelDetails>
             </ExpansionPanel>
@@ -226,7 +222,7 @@ class Invitation extends Component {
                 <DatePicker
                   label='Date'
                   format='dddd, MMMM Do YYYY'
-                  value={this.state.selectedDate}
+                  value={selectedDate}
                   onChange={this.handleDateChange}
                   animateYearScrolling={false}
                   leftArrowIcon='<'
@@ -237,7 +233,7 @@ class Invitation extends Component {
                 <Divider light />
                 <TimePicker
                   label='Time'
-                  value={this.state.selectedTime}
+                  value={selectedTime}
                   onChange={this.handleTimeChange}
                   fullWidth
                   margin='dense'
@@ -264,30 +260,31 @@ class Invitation extends Component {
           <Grid item xs={12} sm={12} md={8}>
             <div id='saveArea' style={{ textAlign: 'center',
               height: '750px',
-              fontFamily: this.state.titleFontType,
-              backgroundImage: this.state.background,
+              fontFamily: titleFontType,
+              backgroundImage: background,
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover'}}>
-              <p style={{ color: 'white', fontSize: this.state.titleFontSize, padding: '330px 0 45px 0' }}> {this.state.title} </p>
-              <p style={{ color: 'white', fontSize: '40px', padding: '20px 0 0 0' }}> {this.state.date} </p>
-              <p style={{ color: 'white', fontSize: '15px', padding: '20px 0 0 0' }}> {this.state.time} </p>
-              <p style={{ color: 'white', fontSize: '20px', padding: '15px 0 0 5px' }}> {this.state.address1} </p>
-              <p style={{ color: 'white', fontSize: '20px', margin: '-20px 0 0 0' }}> {this.state.address2} </p>
+              <p style={{ color: 'white', fontSize: this.state.titleFontSize, padding: '330px 0 45px 0' }}> {title} </p>
+              <p style={{ color: 'white', fontSize: '40px', padding: '20px 0 0 0' }}> {date} </p>
+              <p style={{ color: 'white', fontSize: '15px', padding: '20px 0 0 0' }}> {time} </p>
+              <p style={{ color: 'white', fontSize: '20px', padding: '15px 0 0 5px' }}> {address1} </p>
+              <p style={{ color: 'white', fontSize: '20px', margin: '-20px 0 0 0' }}> {address2} </p>
             </div>
-            <hr /><center>
+            <hr />
+            <center>
               <Chip
                 avatar={
                   <Avatar className={classes.Avatar}>
                     <Archive className={classes.icon} />
                   </Avatar>
-              }
+                }
                 label=' SAVE TO FILE ' style={{backgroundColor: '#009688', color: 'white'}}
                 onClick={this.handleSave}
-            />
+              />
             </center>
           </Grid>
         </Grid>
-      </div>
+      </main>
     )
   }
 }
