@@ -90,7 +90,7 @@ class App extends React.Component {
               <Switch>
                 <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
                 <Route exact path='/events' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <ViewEvents auth={auth} {...props} />)} />
-                <Route path='/rsvp' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Rsvp auth={auth} {...props} />)} />
+                <Route path='/rsvp' render={(props) => <Rsvp auth={auth} {...props} />} />
                 <Route exact path='/dashboard' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Dashboard auth={auth} {...props} showSideBar={this.showSideBar} />)} />
                 <Route exact path='/guest-list' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <GuestList auth={auth} {...props} />)} />
                 <Route exact path='/invitation' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Invitation auth={auth} {...props} />)} />

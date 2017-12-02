@@ -1,16 +1,21 @@
 import React from 'react'
-import Grid from 'material-ui/Grid'
+import Paper from 'material-ui/Paper'
+import Typography from 'material-ui/Typography'
 import API from '../../utils/Api'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 
 const styles = theme => ({
   root: {
-    marginTop: theme.spacing.unit * 4,
+    marginTop: theme.spacing.unit * 9,
     display: 'flex',
     flexWrap: 'wrap',
     minWidth: 300,
-    width: '100%'
+    paddingTop: 16,
+    paddingBottom: 16,
+    width: '50%',
+    margin: '0 auto',
+    height: '80%'
   }
 })
 
@@ -30,7 +35,9 @@ class Rsvp extends React.Component {
     const { classes } = this.props
 
     return (
-      <Grid container className={classes.root} style={{height: '100%'}} />
+      <Paper className={classes.root} elevation={8}>
+        <Typography type='headline' align='center' style={{width: '100%'}}> Test </Typography>
+      </Paper>
     )
   }
 }
