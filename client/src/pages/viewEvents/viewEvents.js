@@ -9,6 +9,7 @@ import API from '../../utils/Api'
 import Button from 'material-ui/Button'
 import PageHeader from '../../components/PageHeader'
 import Divider from 'material-ui/Divider'
+import moment from 'moment'
 
 const styles = theme => ({
   root: {
@@ -40,11 +41,24 @@ class viewEvents extends React.Component {
   }
 
   componentDidMount () {
+    this.loadEvents()
+  }
+
+  loadEvents = () => {
     API.getEvents()
     .then(res => {
       this.setState({ events: res.data })
     })
     .catch(err => this.setState({ error: err.message }))
+  }
+
+  deleteEvent = (id) => {
+    API.deleteEvent(id)
+    .then(data => {
+      this.loadEvents()
+      console.log(data)
+    })
+    .catch(err => console.log(err))
   }
 
   render () {
@@ -67,8 +81,8 @@ class viewEvents extends React.Component {
                   </Typography>
                   <Typography className={classes.info} component='p'>
                     Location: {event.location} <br />
-                    Date: {event.date.slice(0, 10)} <br />
-                    Time: {event.time}
+                    Date: {moment(event.date).format('MMMM Do YYYY')} <br />
+                    Time: {moment(event.time).format('hh:mm A')}
                   </Typography>
                   <Typography component='p'>
                     Description: {event.description}
@@ -79,7 +93,7 @@ class viewEvents extends React.Component {
                   <Button dense component={Link} to='/' >
                     View
                   </Button>
-                  <Button dense component={Link} to='/' >
+                  <Button dense onClick={() => this.deleteEvent(event._id)} >
                     Delete
                   </Button>
                 </CardActions>
@@ -95,5 +109,4 @@ class viewEvents extends React.Component {
 viewEvents.propTypes = {
   classes: PropTypes.object.isRequired
 }
-
 export default withStyles(styles)(viewEvents)
