@@ -34,7 +34,7 @@ class CheckboxList extends React.Component {
   state = {
     modal: false,
     todoItems: [],
-    completedItems: ['Hire Party Planner', 'Check RSPV List', 'Hire Catering Co.'],
+    completedItems: [],
     value: 0,
     addTodo: '',
     snack: false
@@ -44,7 +44,19 @@ class CheckboxList extends React.Component {
     // Get Todo from DB
     API.getTodo()
     .then(res => {
-      this.setState({ todoItems: res.data })
+      const todoItems = []
+      const completedItems = []
+
+      // Filter Todo items if done
+      res.data.forEach(function (todoItem) {
+        if (todoItem.todoDone === false) {
+          todoItems.push(todoItem)
+        } else {
+          completedItems.push(todoItem)
+        }
+      })
+
+      this.setState({ todoItems, completedItems })
     })
     .catch(err => console.log(err))
   }
@@ -165,23 +177,23 @@ class CheckboxList extends React.Component {
         { value === 1 &&
           <TabContainer dir=''>
             <List dense disablePadding>
-              {this.state.completedItems.map(value => (
+              {this.state.completedItems.map(todoItem => (
                 <ListItem
-                  key={value}
-                  dense
+                  key={todoItem._id}
+                  id={todoItem._id}
                   button
-                  onClick={this.handleToggle(value)}
+                  onClick={this.handleToggle(todoItem.todoDesc)}
                   className={classes.listItem}
                   disableGutters
                   divider
                   style={{padding: 0}}
                 >
                   <Checkbox
-                    checked={this.state.completedItems.indexOf(value) >= 0}
+                    checked={this.state.completedItems.indexOf(todoItem.todoDesc) >= 0}
                     tabIndex={-1}
                     disableRipple
                   />
-                  <ListItemText primary={value} />
+                  <ListItemText primary={todoItem.todoDesc} />
                 </ListItem>
               ))}
             </List>
