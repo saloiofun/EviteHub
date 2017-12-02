@@ -15,6 +15,7 @@ module.exports = {
     let hash = crypto.createHash('md5').update(req.body.to).digest('hex')
     var guest = { guestEmail: req.body.to, emailed: true, emailHash: hash }
     req.body.message = req.body.message.replace(/\n/ig, '<br>')
+    console.log(req.body.url)
     const mailOptions = {
       to: req.body.to,
       subject: req.body.subject,
