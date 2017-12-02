@@ -31,7 +31,6 @@ const styles = theme => ({
 
 class CheckboxList extends React.Component {
   state = {
-    // checked: [],
     modal: false,
     todoItems: ['Get Plates', 'Reserver Location', 'Assign Tables', 'Check GuestList'],
     completedItems: ['Hire Party Planner', 'Check RSPV List', 'Hire Catering Co.'],
@@ -50,35 +49,31 @@ class CheckboxList extends React.Component {
     this.setState({ modal: false })
   }
 
+  // Handles To Do Item Checkboxes
   handleToggle = value => () => {
     const { todoItems, completedItems } = this.state
+    const inCompletedItems = completedItems.indexOf(value)
+    const inToDoItems = todoItems.indexOf(value)
 
-    const onCompleted = completedItems.indexOf(value)
-    const onTodo = todoItems.indexOf(value)
-
-    const newItems = [...completedItems]
-    const currentItems = [...todoItems]
-
-    if (onCompleted === -1) {
-      newItems.push(value)
-      currentItems.splice(onTodo, 1)
+    if (inCompletedItems === -1) {
+      completedItems.push(value)
+      todoItems.splice(inToDoItems, 1)
       this.openSnack()
-    } else if (onTodo === -1) {
-      currentItems.push(value)
-      newItems.splice(onCompleted, 1)
+    } else if (inToDoItems === -1) {
+      todoItems.push(value)
+      completedItems.splice(inCompletedItems, 1)
       this.openSnack()
     }
 
-    this.setState({
-      todoItems: currentItems,
-      completedItems: newItems
-    })
+    this.setState({ todoItems, completedItems })
   }
 
+  // Change Tabs
   handleChange = (event, value) => {
     this.setState({ value })
   }
 
+   // Closes Snackbar
   handleInputChange = event => {
     const { name, value } = event.target
     this.setState({ [name]: value })
