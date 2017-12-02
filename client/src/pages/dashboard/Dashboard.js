@@ -103,9 +103,6 @@ function Dashboard (props) {
         <Grid item xs={12} sm={4}>
           <Card className={classes.card}>
             <CardContent>
-              <Typography type='headline' component='h2'>
-                To Do List
-              </Typography>
               <CheckboxList />
             </CardContent>
           </Card>

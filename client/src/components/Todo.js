@@ -22,14 +22,13 @@ function TabContainer ({ children, dir }) {
 const styles = theme => ({
   root: {
     width: '100%',
-    maxWidth: 360,
     background: theme.palette.background.paper
   }
 })
 
 class CheckboxList extends React.Component {
   state = {
-    checked: [0],
+    // checked: [],
     open: false,
     todoItems: ['Get Plates', 'Reserver Location', 'Assign Tables', 'Check GuestList'],
     completedItems: ['Hire Party Planner', 'Check RSPV List', 'Hire Catering Co.'],
@@ -46,18 +45,25 @@ class CheckboxList extends React.Component {
   }
 
   handleToggle = value => () => {
-    const { checked } = this.state
-    const currentIndex = checked.indexOf(value)
-    const newChecked = [...checked]
+    const { todoItems, completedItems } = this.state
 
-    if (currentIndex === -1) {
-      newChecked.push(value)
-    } else {
-      newChecked.splice(currentIndex, 1)
+    const onCompleted = completedItems.indexOf(value)
+    const onTodo = todoItems.indexOf(value)
+
+    const newItems = [...completedItems]
+    const currentItems = [...todoItems]
+
+    if (onCompleted === -1) {
+      newItems.push(value)
+      currentItems.splice(onTodo, 1)
+    } else if (onTodo === -1) {
+      currentItems.push(value)
+      newItems.splice(onCompleted, 1)
     }
 
     this.setState({
-      checked: newChecked
+      todoItems: currentItems,
+      completedItems: newItems
     })
   }
 
@@ -83,12 +89,12 @@ class CheckboxList extends React.Component {
   }
 
   render () {
-    const { classes, theme } = this.props
+    const { classes } = this.props
     const { value } = this.state
 
     return (
       <div className={classes.root}>
-        <AppBar position='static' color='#fff' style={{boxShadow: 'none'}}>
+        <AppBar position='static' color='default' style={{boxShadow: 'none'}}>
           <Tabs
             value={value}
             onChange={this.handleChange}
@@ -96,13 +102,13 @@ class CheckboxList extends React.Component {
             indicatorColor='primary'
             textColor='accent'
           >
-            <Tab icon={<PhoneIcon color='primary' />} label='Need To Do' />
+            <Tab icon={<PhoneIcon color='primary' />} label='To Do' />
             <Tab icon={<FavoriteIcon color='primary' />} label='Completed' />
           </Tabs>
         </AppBar>
 
         { value === 0 &&
-          <TabContainer>
+          <TabContainer dir=''>
             <List dense disablePadding>
               {this.state.todoItems.map(value => (
                 <ListItem
@@ -116,7 +122,7 @@ class CheckboxList extends React.Component {
                   style={{padding: 0}}
                 >
                   <Checkbox
-                    checked={this.state.checked.indexOf(value) !== -1}
+                    checked={this.state.completedItems.indexOf(value) !== -1}
                     tabIndex={-1}
                     disableRipple
                   />
@@ -127,7 +133,7 @@ class CheckboxList extends React.Component {
           </TabContainer>
         }
         { value === 1 &&
-          <TabContainer>
+          <TabContainer dir=''>
             <List dense disablePadding>
               {this.state.completedItems.map(value => (
                 <ListItem
@@ -141,7 +147,7 @@ class CheckboxList extends React.Component {
                   style={{padding: 0}}
                 >
                   <Checkbox
-                    checked={this.state.checked.indexOf(value) !== -1}
+                    checked={this.state.completedItems.indexOf(value) >= 0}
                     tabIndex={-1}
                     disableRipple
                   />
