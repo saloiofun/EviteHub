@@ -139,7 +139,7 @@ class Invitation extends Component {
         <Grid container spacing={24}>
           <Grid item xs={12} sm={12} md={4}>
 
-            <ExpansionPanel>
+            <ExpansionPanel defaultExpanded>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography type='title' className={classes.title}>BACKGROUND</Typography>
               </ExpansionPanelSummary>
@@ -260,6 +260,7 @@ class Invitation extends Component {
           <Grid item xs={12} sm={12} md={8}>
             <div id='saveArea' style={{ textAlign: 'center',
               height: '425px',
+              width: '710px',
               fontFamily: titleFontType,
               backgroundImage: background,
               backgroundRepeat: 'no-repeat',
