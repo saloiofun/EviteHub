@@ -8,6 +8,23 @@ import Alert from '../../components/Alert'
 import API from '../../utils/Api'
 import PageHeader from '../../components/PageHeader'
 import SendIcon from 'material-ui-icons/Send'
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogTitle
+} from 'material-ui/Dialog'
+import {
+  FormLabel,
+  FormControl,
+  FormGroup,
+  FormControlLabel
+} from 'material-ui/Form'
+import Checkbox from 'material-ui/Checkbox'
+import Chip from 'material-ui/Chip'
+import AddIcon from 'material-ui-icons/Add'
+import FaceIcon from 'material-ui-icons/Face'
+import Avatar from 'material-ui/Avatar'
+import Slide from 'material-ui/transitions/Slide'
 import RemoveRedEyeIcon from 'material-ui-icons/RemoveRedEye'
 
 const styles = theme => ({
@@ -45,6 +62,10 @@ const styles = theme => ({
   }
 })
 
+function Transition (props) {
+  return <Slide direction='up' {...props} />
+}
+
 class SendInvites extends React.Component {
   state = {
     to: '',
@@ -53,7 +74,8 @@ class SendInvites extends React.Component {
 Please click on the link to let me know if you can make it!`,
     error: false,
     emailsSent: false,
-    emailURL: 'http://localhost:3000/rsvp/?token='
+    emailURL: 'http://localhost:3000/rsvp/?token=',
+    guests: []
   }
 
   validateEmail = (email) => {
@@ -74,6 +96,44 @@ Please click on the link to let me know if you can make it!`,
       [name]: event.target.value
     })
   };
+
+  handleCheckChange = name => (event, checked) => {
+    this.setState({ [name]: checked })
+  };
+
+  importOpen = () => {
+    API.getGuests()
+    .then((data) => {
+      this.setState({ guests: data.data })
+      for (let i in data.data) {
+        this.setState({ [data.data[i]._id]: false })
+      }
+    })
+    this.setState({ open: true })
+  }
+
+  importClose = () => {
+    this.setState({
+      open: false
+    })
+  }
+
+  onImport = () => {
+    var newTo = this.state.to
+    for (let i in this.state.guests) {
+      if (this.state[this.state.guests[i]._id]) {
+        if (newTo === '') {
+          newTo += this.state.guests[i].guestEmail
+        } else {
+          newTo += ';' + this.state.guests[i].guestEmail
+        }
+      }
+    }
+    this.setState({
+      to: newTo
+    })
+    this.importClose()
+  }
 
   onSend = () => {
     this.setState({emailsSent: false})
@@ -112,6 +172,56 @@ Please click on the link to let me know if you can make it!`,
     return (
       <div className={classes.root}>
         <PageHeader title='Send Invites' body={`Send Invites!`} />
+        <Chip
+          avatar={
+            <Avatar className={classes.Avatar}>
+              <FaceIcon className={classes.FaceIcon} />
+            </Avatar>
+            }
+          label=' Import Guests ' style={{backgroundColor: '#009688', color: 'white'}}
+          onClick={this.importOpen}
+          onRequestDelete={this.importOpen}
+          deleteIcon={<AddIcon style={{color: 'white'}} />}
+        />
+        <Dialog open={this.state.open} onRequestClose={this.importClose} transition={Transition}>
+          <DialogTitle>Import Guests</DialogTitle>
+          <DialogContent>
+            <div>
+              <FormControl component='fieldset'>
+                <FormLabel component='legend'>Select Guests</FormLabel>
+                <FormGroup>
+                  {
+                      this.state.guests.map(guestObject => {
+                        return (
+                          <FormControlLabel
+                            key={guestObject._id}
+                            control={
+                              <Checkbox
+                                checked={this.state[[guestObject._id]]}
+                                onChange={this.handleCheckChange(guestObject._id)}
+                                name={guestObject._id}
+                                value={guestObject._id}
+                              />
+                              }
+                            label={guestObject.guestName
+                            ? guestObject.guestEmail + ' (' + guestObject.guestName + ')' : guestObject.guestEmail}
+                          />
+                        )
+                      })
+                  }
+                </FormGroup>
+              </FormControl>
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.importClose} color='primary'>
+              Cancel
+            </Button>
+            <Button onClick={this.onImport} color='primary'>
+              Import
+            </Button>
+          </DialogActions>
+        </Dialog>
         <Paper elevation={4}>
           <form className={classes.container} noValidate autoComplete='off'>
             <TextField
