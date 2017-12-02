@@ -9,6 +9,7 @@ import API from '../../utils/Api'
 import Button from 'material-ui/Button'
 import PageHeader from '../../components/PageHeader'
 import Divider from 'material-ui/Divider'
+import moment from 'moment'
 
 const styles = theme => ({
   root: {
@@ -80,8 +81,8 @@ class viewEvents extends React.Component {
                   </Typography>
                   <Typography className={classes.info} component='p'>
                     Location: {event.location} <br />
-                    Date: {event.date} <br />
-                    Time: {event.time}
+                    Date: {moment(event.date).format('MMMM Do YYYY')} <br />
+                    Time: {moment(event.time).format('hh:mm A')}
                   </Typography>
                   <Typography component='p'>
                     Description: {event.description}
@@ -108,5 +109,4 @@ class viewEvents extends React.Component {
 viewEvents.propTypes = {
   classes: PropTypes.object.isRequired
 }
-
 export default withStyles(styles)(viewEvents)

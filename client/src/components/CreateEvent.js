@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
-import moment from 'moment'
-// import { DateTimePicker } from 'material-ui-pickers'
 import { TimePicker, DatePicker } from 'material-ui-pickers'
 import Button from 'material-ui/Button'
 import API from '../utils/Api'
@@ -91,8 +89,6 @@ class addEvent extends React.Component {
     name: '',
     location: '',
     description: '',
-    date: moment().format('dddd, MMMM Do YYYY'),
-    time: moment().format('hh:mm A'),
     selectedDate: new Date(),
     selectedTime: new Date(),
     open: false,
@@ -112,15 +108,13 @@ class addEvent extends React.Component {
 
   handleDateChange = date => {
     this.setState({
-      selectedDate: date,
-      date: moment(date).format('dddd, MMMM Do YYYY')
+      selectedDate: date
     })
   }
 
   handleTimeChange = time => {
     this.setState({
-      selectedTime: time,
-      time: moment(time).format('hh:mm A')
+      selectedTime: time
     })
   }
 
@@ -154,8 +148,8 @@ class addEvent extends React.Component {
       eventName: this.state.name,
       description: this.state.description,
       location: this.state.location,
-      date: this.state.date,
-      time: this.state.time
+      date: this.state.selectedDate,
+      time: this.state.selectedTime
     }
     this.setState({
       name: '',
