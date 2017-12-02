@@ -10,6 +10,9 @@ import Tabs, { Tab } from 'material-ui/Tabs'
 import PhoneIcon from 'material-ui-icons/Phone'
 import FavoriteIcon from 'material-ui-icons/Favorite'
 import AppBar from 'material-ui/AppBar'
+import Snackbar from 'material-ui/Snackbar'
+import IconButton from 'material-ui/IconButton'
+import CloseIcon from 'material-ui-icons/Close'
 
 function TabContainer ({ children, dir }) {
   return (
@@ -29,19 +32,22 @@ const styles = theme => ({
 class CheckboxList extends React.Component {
   state = {
     // checked: [],
-    open: false,
+    modal: false,
     todoItems: ['Get Plates', 'Reserver Location', 'Assign Tables', 'Check GuestList'],
     completedItems: ['Hire Party Planner', 'Check RSPV List', 'Hire Catering Co.'],
     value: 0,
-    addTodo: ''
+    addTodo: '',
+    snack: false
   }
 
-  handleClickOpen = () => {
-    this.setState({ open: true })
+  // Open Modal
+  openModal = () => {
+    this.setState({ modal: true })
   }
 
-  handleRequestClose = () => {
-    this.setState({ open: false })
+  // Close Modal
+  closeModal = () => {
+    this.setState({ modal: false })
   }
 
   handleToggle = value => () => {
@@ -56,9 +62,11 @@ class CheckboxList extends React.Component {
     if (onCompleted === -1) {
       newItems.push(value)
       currentItems.splice(onTodo, 1)
+      this.openSnack()
     } else if (onTodo === -1) {
       currentItems.push(value)
       newItems.splice(onCompleted, 1)
+      this.openSnack()
     }
 
     this.setState({
@@ -76,16 +84,27 @@ class CheckboxList extends React.Component {
     this.setState({ [name]: value })
   }
 
-  handleRequestClose = () => {
-    this.setState({ open: false })
-  }
-
+  // Opens Snackbar
   handleSaveTodo = event => {
     event.preventDefault()
     const addTodo = this.state.addTodo
 
     this.state.todoItems.push(addTodo)
-    this.handleRequestClose()
+    this.closeModal()
+  }
+
+  // Opens Snackbar
+  openSnack = () => {
+    this.setState({ snack: true })
+  }
+
+  // Closes Snackbar
+  closeSnack = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    this.setState({ snack: false })
   }
 
   render () {
@@ -158,7 +177,9 @@ class CheckboxList extends React.Component {
           </TabContainer>
         }
 
-        <Dialog open={this.state.open} onRequestClose={this.handleRequestClose}>
+        <Button onClick={this.openModal} color='primary' raised>Add Todo</Button>
+
+        <Dialog open={this.state.modal} onRequestClose={this.closeModal}>
           <DialogTitle>Add To Do</DialogTitle>
           <DialogContent>
             <TextField
@@ -173,12 +194,36 @@ class CheckboxList extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleRequestClose} color='primary'>Cancel</Button>
+            <Button onClick={this.closeModal} color='primary'>Cancel</Button>
             <Button onClick={this.handleSaveTodo} color='primary'>Save</Button>
           </DialogActions>
         </Dialog>
 
-        <Button onClick={this.handleClickOpen} color='primary' raised>Add Todo</Button>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          open={this.state.snack}
+          autoHideDuration={3000}
+          onRequestClose={this.closeSnack}
+          SnackbarContentProps={{
+            'aria-describedby': 'message-id'
+          }}
+          message={<span id='message-id'>Saved</span>}
+          action={[
+            <IconButton
+              key='close'
+              aria-label='Close'
+              color='inherit'
+              className={classes.close}
+              onClick={this.closeSnack}
+            >
+              <CloseIcon />
+            </IconButton>
+          ]}
+        />
+
       </div>
     )
   }
