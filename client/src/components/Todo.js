@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import List, { ListItem, ListItemText } from 'material-ui/List'
+import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
 import Checkbox from 'material-ui/Checkbox'
 import TextField from 'material-ui/TextField'
 import Dialog, { DialogActions, DialogContent, DialogTitle} from 'material-ui/Dialog'
 import Button from 'material-ui/Button'
 import Tabs, { Tab } from 'material-ui/Tabs'
-import {PlaylistAddCheck, ViewList, PlaylistAdd} from 'material-ui-icons'
+import {PlaylistAddCheck, ViewList, PlaylistAdd, Delete} from 'material-ui-icons'
 import AppBar from 'material-ui/AppBar'
 import Snackbar from 'material-ui/Snackbar'
 import IconButton from 'material-ui/IconButton'
@@ -152,6 +152,16 @@ class CheckboxList extends React.Component {
     this.setState({ snack: false })
   }
 
+  // Delete Todo item
+  handleDeleteTodo = (id) => {
+    API.deleteTodo(id)
+    .then(res => {
+      this.loadCompletedItems()
+      this.loadTodoItems()
+    })
+    .catch(err => console.log(err))
+  }
+
   render () {
     const { classes } = this.props
     const { value } = this.state
@@ -192,6 +202,11 @@ class CheckboxList extends React.Component {
                     disableRipple
                   />
                   <ListItemText primary={todoItem.todoDesc} />
+                  <ListItemSecondaryAction>
+                    <IconButton aria-label='Delete' onClick={() => this.handleDeleteTodo(todoItem._id)}>
+                      <Delete />
+                    </IconButton>
+                  </ListItemSecondaryAction>
                 </ListItem>
               ))}
             </List>
@@ -218,6 +233,11 @@ class CheckboxList extends React.Component {
                     disableRipple
                   />
                   <ListItemText primary={todoItem.todoDesc} />
+                  <ListItemSecondaryAction>
+                    <IconButton aria-label='Delete' onClick={() => this.handleDeleteTodo(todoItem._id)}>
+                      <Delete />
+                    </IconButton>
+                  </ListItemSecondaryAction>
                 </ListItem>
               ))}
             </List>

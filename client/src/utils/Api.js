@@ -56,5 +56,9 @@ export default {
   // UnDone Todo
   unDoneTodo: function () {
     return axios.get('/api/todos/undone')
+  },
+  // Delete Todo
+  deleteTodo: function (id) {
+    return axios.delete('/api/todos/listed/' + id)
   }
 }
