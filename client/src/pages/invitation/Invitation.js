@@ -135,7 +135,7 @@ class Invitation extends Component {
         .then((canvas) => {
           const imgData = canvas.toDataURL('image/png')
           const pdf = new JSPDF()
-          pdf.addImage(imgData, 'JPEG', 28, 20)
+          pdf.addImage(imgData, 'JPEG', 13, 20)
           pdf.save('invitation.pdf')
         })
   }
@@ -182,7 +182,7 @@ class Invitation extends Component {
   };
 
   render () {
-    const { background, titleFontType, selectedDate, selectedTime, title, date, time, address1, address2 } = this.state
+    const { background, titleFontType, selectedDate, selectedTime } = this.state
     const { classes } = this.props
 
     return (
