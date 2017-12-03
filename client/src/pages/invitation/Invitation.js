@@ -56,6 +56,14 @@ const bg = [
   {
     value: 'url("/static/images/invitation/paper03.jpg")',
     label: 'paper03'
+  },
+  {
+    value: 'url("/static/images/invitation/paper04.jpg")',
+    label: 'paper04'
+  },
+  {
+    value: 'url("/static/images/invitation/paper05.jpg")',
+    label: 'paper05'
   }
 ]
 
