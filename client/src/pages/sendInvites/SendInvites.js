@@ -3,27 +3,68 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
-import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
-import Typography from 'material-ui/Typography'
+import Alert from '../../components/Alert'
 import API from '../../utils/Api'
+import PageHeader from '../../components/PageHeader'
+import SendIcon from 'material-ui-icons/Send'
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogTitle
+} from 'material-ui/Dialog'
+import {
+  FormLabel,
+  FormControl,
+  FormGroup,
+  FormControlLabel
+} from 'material-ui/Form'
+import Checkbox from 'material-ui/Checkbox'
+import Chip from 'material-ui/Chip'
+import AddIcon from 'material-ui-icons/Add'
+import FaceIcon from 'material-ui-icons/Face'
+import Avatar from 'material-ui/Avatar'
+import Slide from 'material-ui/transitions/Slide'
+import RemoveRedEyeIcon from 'material-ui-icons/RemoveRedEye'
 
 const styles = theme => ({
   root: {
-    flex: '1 1 100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '80%'
-    },
-    margin: '0 auto'
+    padding: theme.spacing.unit * 2,
+    paddingTop: 80,
+    margin: '0 auto',
+    marginBottom: 30,
+    minHeight: '100vh',
+    [theme.breakpoints.up('md')]: {
+      width: '80%',
+      paddingLeft: theme.spacing.unit * 3,
+      paddingRight: theme.spacing.unit * 3
+    }
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    padding: theme.spacing.unit
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
   },
-  grids: {
-    padding: '15px'
+  alerts: {
+    top: 80
+  },
+  button: {
+    margin: theme.spacing.unit,
+    marginLeft: 'auto',
+    marginRight: theme.spacing.unit
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
   }
 })
+
+function Transition (props) {
+  return <Slide direction='up' {...props} />
+}
 
 class SendInvites extends React.Component {
   state = {
@@ -33,11 +74,12 @@ class SendInvites extends React.Component {
 Please click on the link to let me know if you can make it!`,
     error: false,
     emailsSent: false,
-    emailURL: 'https://www.google.com/'
+    emailURL: 'http://localhost:3000/rsvp/?token=',
+    guests: []
   }
 
   validateEmail = (email) => {
-    var reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+    let reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     if (reg.test(email)) {
       return true
     } else {
@@ -45,65 +87,152 @@ Please click on the link to let me know if you can make it!`,
     }
   }
 
+  handleRequestClose = () => {
+    this.setState({ error: false, emailsSent: false })
+  };
+
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value
     })
   };
 
+  handleCheckChange = name => (event, checked) => {
+    this.setState({ [name]: checked })
+  };
+
+  importOpen = () => {
+    API.getGuests()
+    .then((data) => {
+      this.setState({ guests: data.data })
+      for (let i in data.data) {
+        this.setState({ [data.data[i]._id]: false })
+      }
+    })
+    this.setState({ open: true })
+  }
+
+  importClose = () => {
+    this.setState({
+      open: false
+    })
+  }
+
+  onImport = () => {
+    var newTo = this.state.to
+    for (let i in this.state.guests) {
+      if (this.state[this.state.guests[i]._id]) {
+        if (newTo === '') {
+          newTo += this.state.guests[i].guestEmail
+        } else {
+          newTo += ';' + this.state.guests[i].guestEmail
+        }
+      }
+    }
+    this.setState({
+      to: newTo
+    })
+    this.importClose()
+  }
+
   onSend = () => {
     this.setState({emailsSent: false})
-    var email = {
-      to: this.state.to,
-      subject: this.state.subject,
-      message: this.state.message,
-      user: 'Test User',
-      url: this.state.emailURL
-    }
+    let emailArray = this.state.to.split(';')
 
-    var emailArray = email.to.split(',')
-
-    for (var i in emailArray) {
+    for (let i in emailArray) {
       if (!this.validateEmail(emailArray[i])) {
         this.setState({error: true})
         return
       }
     }
     this.setState({error: false})
-    API.sendEmail(email)
-    .then((data) => {
-      this.setState({emailsSent: true})
-    })
-    .catch((err) => {
-      if (err) throw err
-    })
+
+    for (let i in emailArray) {
+      let email = {
+        to: emailArray[i],
+        subject: this.state.subject,
+        message: this.state.message,
+        url: this.state.emailURL
+      }
+
+      API.sendEmail(email)
+      .then((data) => {
+        this.setState({emailsSent: true})
+        console.log('Data:', data)
+      })
+      .catch((err) => {
+        if (err) throw err
+      })
+    }
   }
 
   render () {
     const { classes } = this.props
 
     return (
-      <Paper className={classes.root}>
-        <Grid container>
-          {this.state.error ? <Grid item xs={12} >
-            <Typography align='center' color='error' >Error: Make sure all you entered all emails correctly</Typography>
-          </Grid> : <Grid />}
-          {this.state.emailsSent ? <Grid item xs={12} >
-            <Typography align='center' color='primary' > Invite(s) were sent!</Typography>
-          </Grid> : <Grid />}
-
-          <Grid item xs={11} className={classes.grids}>
+      <div className={classes.root}>
+        <PageHeader title='Send Invites' body={`Send Invites!`} />
+        <Chip
+          avatar={
+            <Avatar className={classes.Avatar}>
+              <FaceIcon className={classes.FaceIcon} />
+            </Avatar>
+            }
+          label=' Import Guests ' style={{backgroundColor: '#009688', color: 'white'}}
+          onClick={this.importOpen}
+          onRequestDelete={this.importOpen}
+          deleteIcon={<AddIcon style={{color: 'white'}} />}
+        />
+        <Dialog open={this.state.open} onRequestClose={this.importClose} transition={Transition}>
+          <DialogTitle>Import Guests</DialogTitle>
+          <DialogContent>
+            <div>
+              <FormControl component='fieldset'>
+                <FormLabel component='legend'>Select Guests</FormLabel>
+                <FormGroup>
+                  {
+                      this.state.guests.map(guestObject => {
+                        return (
+                          <FormControlLabel
+                            key={guestObject._id}
+                            control={
+                              <Checkbox
+                                checked={this.state[[guestObject._id]]}
+                                onChange={this.handleCheckChange(guestObject._id)}
+                                name={guestObject._id}
+                                value={guestObject._id}
+                              />
+                              }
+                            label={guestObject.guestName
+                            ? guestObject.guestEmail + ' (' + guestObject.guestName + ')' : guestObject.guestEmail}
+                          />
+                        )
+                      })
+                  }
+                </FormGroup>
+              </FormControl>
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.importClose} color='primary'>
+              Cancel
+            </Button>
+            <Button onClick={this.onImport} color='primary'>
+              Import
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Paper elevation={4}>
+          <form className={classes.container} noValidate autoComplete='off'>
             <TextField
               label='To'
-              placeholder='Separate emails by commas'
+              placeholder='Separate emails by semicolons'
               value={this.state.to}
               className={classes.textField}
               fullWidth
               margin='normal'
               onChange={this.handleChange('to')}
-          />
-          </Grid>
-          <Grid item xs={11} className={classes.grids}>
+            />
             <TextField
               id='subject'
               label='Subject'
@@ -112,9 +241,7 @@ Please click on the link to let me know if you can make it!`,
               margin='normal'
               fullWidth
               onChange={this.handleChange('subject')}
-          />
-          </Grid>
-          <Grid item xs={11} className={classes.grids}>
+            />
             <TextField
               id='message'
               label='Message'
@@ -125,15 +252,30 @@ Please click on the link to let me know if you can make it!`,
               className={classes.textField}
               margin='normal'
               onChange={this.handleChange('message')}
-            />
-          </Grid>
-          <Grid item xs={2} align='center'>
-            <Button raised color='primary' onClick={this.onSend} >
+              />
+            <div className={classes.button}>
+              <Button className={classes.button} raised color='primary' >
+              Preview
+              <RemoveRedEyeIcon className={classes.rightIcon} />
+              </Button>
+              <Button raised color='primary' onClick={this.onSend} >
               Send
-            </Button>
-          </Grid>
-        </Grid>
-      </Paper>
+              <SendIcon className={classes.rightIcon} />
+              </Button>
+            </div>
+          </form>
+          <Alert
+            open={this.state.error}
+            onRequestClose={this.handleRequestClose}
+            message='Error: Make sure all you entered all emails correctly'
+        />
+          <Alert
+            open={this.state.emailsSent}
+            onRequestClose={this.handleRequestClose}
+            message='Invite(s) were sent!'
+        />
+        </Paper>
+      </div>
     )
   }
 }

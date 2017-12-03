@@ -19,11 +19,6 @@ const styles = theme => ({
   raisedAccent: {
     backgroundColor: orange[700]
   },
-  navButtonsHide: {
-    [theme.breakpoints.up('xs')]: {
-      display: 'none'
-    }
-  },
   flex: {
     flex: 1
   }
@@ -34,7 +29,7 @@ function IconLabelButtons (props) {
   return (
     <div className={classes.flex}>
       <CreateEvent />
-      <Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' component={Link} to='/events'>
+      <Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' component={Link} to='/invitation'>
         <BorderVertical className={classes.leftIcon} />
         Invitation Maker
       </Button>

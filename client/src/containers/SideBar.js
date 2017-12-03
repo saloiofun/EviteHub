@@ -21,16 +21,6 @@ const drawerWidth = 250
 
 const theme = createMuiTheme({
   overrides: {
-    MuiPaper: {
-      root: {
-        backgroundColor: teal[500]
-      }
-    },
-    MuiDrawer: {
-      paperAnchorDockedLeft: {
-        borderRight: 'none'
-      }
-    },
     MuiTypography: {
       subheading: {
         color: 'white'
@@ -50,7 +40,9 @@ const theme = createMuiTheme({
 
 const styles = theme => ({
   root: {
-    backgroundColor: teal[500]
+    [theme.breakpoints.up('lg')]: {
+      minWidth: drawerWidth
+    }
   },
   bigAvatar: {
     width: 60,
@@ -62,30 +54,44 @@ const styles = theme => ({
     backgroundColor: teal[800]
   },
   drawerPaper: {
-    width: 250,
-    [theme.breakpoints.up('md')]: {
-      width: drawerWidth,
-      position: 'relative',
-      height: '100%'
-    }
+    backgroundColor: teal[500],
+    width: drawerWidth
+  },
+  noBorderRight: {
+    borderRight: 'none'
   }
 })
 
 class SideBar extends Component {
+  componentWillMount () {
+    this.setState({ profile: {} })
+    const { userProfile, getProfile } = this.props.auth
+    if (!userProfile) {
+      getProfile((err, profile) => {
+        this.setState({ profile })
+      })
+    } else {
+      this.setState({ profile: userProfile })
+    }
+  }
+
   goTo (route) {
     this.props.history.replace(`/${route}`)
   }
 
   render () {
     const { classes } = this.props
+    const { profile } = this.state
     const { isAuthenticated } = this.props.auth
+
+    console.log(this.props.auth)
 
     const drawer = (
       <div>
         <div className={classes.drawerHeader}>
           <Brand disableRipple />
         </div>
-        <UserAvatar />
+        <UserAvatar profile={profile} />
         <Divider />
         <EventsDropdown />
         <Divider />
@@ -99,13 +105,14 @@ class SideBar extends Component {
       <MuiThemeProvider theme={theme}>
         { isAuthenticated() && (
           <div className={classes.root}>
-            <Hidden mdUp>
+            <Hidden lgUp>
               <Drawer
                 type='temporary'
                 anchor='left'
                 open={this.props.sideBar}
                 classes={{
-                  paper: classes.drawerPaper
+                  paper: classes.drawerPaper,
+                  paperAnchorDockedLeft: classes.noBorderRight
                 }}
                 onRequestClose={this.props.onToggleSidebar}
                 ModalProps={{
@@ -115,12 +122,13 @@ class SideBar extends Component {
                 {drawer}
               </Drawer>
             </Hidden>
-            <Hidden mdDown implementation='css'>
+            <Hidden lgDown implementation='css'>
               <Drawer
                 type='permanent'
                 open
                 classes={{
-                  paper: classes.drawerPaper
+                  paper: classes.drawerPaper,
+                  paperAnchorDockedLeft: classes.noBorderRight
                 }}
               >
                 {drawer}

@@ -21,6 +21,10 @@ export default {
   updateGuest: function (id, guestData) {
     return axios.put('/api/guests/' + id, guestData)
   },
+  // Get a guest from the database
+  getGuestByHash: function (hash) {
+    return axios.get('/api/guests/rsvp/' + hash)
+  },
   // User Registration
   registerUser: function (userData) {
     return axios.post('/api/user', userData)
@@ -32,6 +36,10 @@ export default {
   // Create Event
   saveEvent: function (data) {
     return axios.post('/api/events', data)
+  },
+  // Delete Event
+  deleteEvent: function (id) {
+    return axios.delete('/api/events/' + id)
   },
   // Send Email
   sendEmail: function (data) {

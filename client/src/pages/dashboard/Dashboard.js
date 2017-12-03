@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import teal from 'material-ui/colors/teal'
 import { withStyles } from 'material-ui/styles'
@@ -16,10 +16,16 @@ import ListIcon from 'material-ui-icons/List'
 
 const styles = theme => ({
   root: {
-    [theme.breakpoints.up('sm')]: {
-      width: '80%'
-    },
-    margin: '0 auto'
+    padding: theme.spacing.unit * 2,
+    paddingTop: 80,
+    margin: '0 auto',
+    marginBottom: 30,
+    minHeight: '100vh',
+    [theme.breakpoints.up('md')]: {
+      width: '80%',
+      paddingLeft: theme.spacing.unit * 3,
+      paddingRight: theme.spacing.unit * 3
+    }
   },
   paper: {
     padding: 16,
@@ -56,72 +62,89 @@ const styles = theme => ({
   }
 })
 
-function Dashboard (props) {
-  const { classes } = props
+class Dashboard extends Component {
+  componentWillMount () {
+    this.setState({ profile: {} })
+    const { userProfile, getProfile } = this.props.auth
+    if (!userProfile) {
+      getProfile((err, profile) => {
+        this.setState({ profile })
+      })
+    } else {
+      this.setState({ profile: userProfile })
+    }
 
-  return (
-    <div className={classes.root}>
-      <PageHeader title='Dashboard' body={`Welcome back, John Doe!`} />
-      <Grid container spacing={24}>
-        <Grid item xs={12} sm={4}>
-          <ProgressCard title='Days Left' info='3'>
-            <TodayIcon className={classes.progressIcon} />
-          </ProgressCard>
+    this.props.showSideBar()
+  }
+
+  render () {
+    const { classes } = this.props
+    const { profile } = this.state
+
+    return (
+      <div className={classes.root}>
+        <PageHeader title='Dashboard' body={`Welcome Back! ${profile.name}`} />
+        <Grid container spacing={24}>
+          <Grid item xs={12} sm={4}>
+            <ProgressCard title='Days Left' info='3'>
+              <TodayIcon className={classes.progressIcon} />
+            </ProgressCard>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <ProgressCard title='RSVP' info='25/150'>
+              <GroupIcon className={classes.progressIcon} />
+            </ProgressCard>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <ProgressCard title='To Do' info='15/50'>
+              <ListIcon className={classes.progressIcon} />
+            </ProgressCard>
+          </Grid>
+          <Grid item xs={12} sm={8}>
+            <Card className={classes.card}>
+              <CardMedia
+                className={classes.media}
+                image='/static/images/cards/contemplative-reptile.jpg'
+                title='Website'
+              />
+              <CardContent>
+                <Typography type='headline' component='h2'>
+                  Title
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button dense color='primary'>
+                  Share
+                </Button>
+                <Button dense color='primary'>
+                  View Website
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <Card className={classes.card}>
+              <CardContent>
+                <CheckboxList />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Paper className={classes.paper}>xs=6 sm=3</Paper>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Paper className={classes.paper}>xs=6 sm=3</Paper>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Paper className={classes.paper}>xs=6 sm=3</Paper>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Paper className={classes.paper}>xs=6 sm=3</Paper>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={4}>
-          <ProgressCard title='RSVP' info='25/150'>
-            <GroupIcon className={classes.progressIcon} />
-          </ProgressCard>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <ProgressCard title='To Do' info='15/50'>
-            <ListIcon className={classes.progressIcon} />
-          </ProgressCard>
-        </Grid>
-        <Grid item xs={12} sm={8}>
-          <Card className={classes.card}>
-            <CardMedia
-              className={classes.media}
-              image='/static/images/cards/contemplative-reptile.jpg'
-              title='Website'
-            />
-            <CardContent>
-              <Typography type='headline' component='h2'>
-                Title
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button dense color='primary'>
-                Share
-              </Button>
-              <Button dense color='primary'>
-                View Website
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Card className={classes.card}>
-            <CardContent>
-              <CheckboxList />
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>xs=6 sm=3</Paper>
-        </Grid>
-        <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>xs=6 sm=3</Paper>
-        </Grid>
-        <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>xs=6 sm=3</Paper>
-        </Grid>
-        <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>xs=6 sm=3</Paper>
-        </Grid>
-      </Grid>
-    </div>
-  )
+      </div>
+    )
+  }
 }
 
 Dashboard.propTypes = {

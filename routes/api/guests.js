@@ -12,4 +12,8 @@ router.route('/:id')
   .put(controller.updateGuest)
   .delete(controller.removeGuest)
 
+// Matches with "/api/guests/rsvp/:id"
+router.route('/rsvp/:id')
+  .get(controller.findGuestByHash)
+
 module.exports = router
