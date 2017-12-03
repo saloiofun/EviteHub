@@ -310,19 +310,7 @@ class Invitation extends Component {
           </Grid>
 
           <Grid item xs={12} sm={12} md={8}>
-            <div id='saveArea' style={{ textAlign: 'center',
-              height: '425px',
-              width: '710px',
-              fontFamily: titleFontType,
-              backgroundImage: background,
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover'}}>
-              <p style={{ color: 'white', fontSize: this.state.titleFontSize, padding: '14% 0 0 0' }}> {title} </p>
-              <p style={{ color: 'white', fontSize: '22px' }}> {date} </p>
-              <p style={{ color: 'white', fontSize: '15px' }}> {time} </p>
-              <p style={{ color: 'white', fontSize: '18px' }}> {address1} </p>
-              <p style={{ color: 'white', fontSize: '18px' }}> {address2} </p>
-            </div>
+            {this.Card()}
             <hr />
             <center>
               <Chip
