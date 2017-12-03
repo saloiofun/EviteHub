@@ -19,6 +19,9 @@ import ExpansionPanel, {
 } from 'material-ui/ExpansionPanel'
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
 import PageHeader from '../../components/PageHeader'
+import Card01 from '../../components/invitationCard/Card01'
+import Card02 from '../../components/invitationCard/Card02'
+import Card03 from '../../components/invitationCard/Card03'
 
 const styles = theme => ({
   root: {
@@ -131,10 +134,9 @@ class Invitation extends Component {
 
     // handle background change
   Card = () => {
-      if (this.state.background === 'url("/static/images/invitation/paper02.jpg")')
-        {
-        return (
-          <Card02
+    if (this.state.background === 'url("/static/images/invitation/paper02.jpg")') {
+      return (
+        <Card02
           titleFontType={this.state.titleFontType}
           background={this.state.background}
           titleFontSize={this.state.titleFontSize}
@@ -144,10 +146,9 @@ class Invitation extends Component {
           address1={this.state.address1}
           address2={this.state.address2}
         />)
-      }      else if (this.state.background === 'url("/static/images/invitation/paper03.jpg")')
-        {
-        return (
-          <Card03
+    } else if (this.state.background === 'url("/static/images/invitation/paper03.jpg")') {
+      return (
+        <Card03
           titleFontType={this.state.titleFontType}
           background={this.state.background}
           titleFontSize={this.state.titleFontSize}
@@ -157,9 +158,9 @@ class Invitation extends Component {
           address1={this.state.address1}
           address2={this.state.address2}
         />)
-      }      else {
-        return (
-          <Card01
+    } else {
+      return (
+        <Card01
           titleFontType={this.state.titleFontType}
           background={this.state.background}
           titleFontSize={this.state.titleFontSize}
@@ -169,8 +170,8 @@ class Invitation extends Component {
           address1={this.state.address1}
           address2={this.state.address2}
         />)
-      }
-    };
+    }
+  };
 
   render () {
     const { background, titleFontType, selectedDate, selectedTime, title, date, time, address1, address2 } = this.state
