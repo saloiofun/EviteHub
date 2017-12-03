@@ -129,6 +129,49 @@ class Invitation extends Component {
         })
   }
 
+    // handle background change
+  Card = () => {
+      if (this.state.background === 'url("/static/images/invitation/paper02.jpg")')
+        {
+        return (
+          <Card02
+          titleFontType={this.state.titleFontType}
+          background={this.state.background}
+          titleFontSize={this.state.titleFontSize}
+          title={this.state.title}
+          date={this.state.date}
+          time={this.state.time}
+          address1={this.state.address1}
+          address2={this.state.address2}
+        />)
+      }      else if (this.state.background === 'url("/static/images/invitation/paper03.jpg")')
+        {
+        return (
+          <Card03
+          titleFontType={this.state.titleFontType}
+          background={this.state.background}
+          titleFontSize={this.state.titleFontSize}
+          title={this.state.title}
+          date={this.state.date}
+          time={this.state.time}
+          address1={this.state.address1}
+          address2={this.state.address2}
+        />)
+      }      else {
+        return (
+          <Card01
+          titleFontType={this.state.titleFontType}
+          background={this.state.background}
+          titleFontSize={this.state.titleFontSize}
+          title={this.state.title}
+          date={this.state.date}
+          time={this.state.time}
+          address1={this.state.address1}
+          address2={this.state.address2}
+        />)
+      }
+    };
+
   render () {
     const { background, titleFontType, selectedDate, selectedTime, title, date, time, address1, address2 } = this.state
     const { classes } = this.props
