@@ -33,6 +33,10 @@ export default {
   getEvents: function () {
     return axios.get('/api/events/')
   },
+  // Get Event by ID
+  getEvent: function (id) {
+    return axios.get('/api/events/' + id)
+  },
   // Create Event
   saveEvent: function (data) {
     return axios.post('/api/events', data)

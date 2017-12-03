@@ -4,6 +4,8 @@ import Typography from 'material-ui/Typography'
 import API from '../../utils/Api'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import Card, { CardContent, CardMedia } from 'material-ui/Card'
+import moment from 'moment'
 
 const styles = theme => ({
   root: {
@@ -20,23 +22,63 @@ const styles = theme => ({
 })
 
 class Rsvp extends React.Component {
+  state = {
+    event: {
+      eventName: 'Title of Event',
+      description: 'This is the description of the event which was given by the creater of the event',
+      location: 'Irvine, CA',
+      Date: 'March 8, 2018',
+      Time: '3:15 PM'
+    }
+  }
   componentDidMount () {
     var parsedURL = new URL(window.location.href)
     var hash = parsedURL.searchParams.get('token')
-    API.getGuestByHash(hash)
-        .then((data) => {
-          console.log(data)
-        })
-        .catch((err) => {
-          throw (err)
-        })
+    this.getGuest(hash)
   }
+
+  getGuest = (hash) => {
+    API.getGuestByHash(hash)
+    .then((data) => {
+      console.log('Guest:', data)
+    })
+    .catch((err) => {
+      throw (err)
+    })
+  }
+
+  getEventInfo = (id) => {
+    API.getEvent(id)
+    .then((data) => {
+      console.log('Event:', data)
+    })
+  }
+
   render () {
     const { classes } = this.props
 
     return (
       <Paper className={classes.root} elevation={8}>
-        <Typography type='headline' align='center' style={{width: '100%'}}> Test </Typography>
+        <Card>
+          <CardMedia
+            className={classes.media}
+            image='/static/images/events/event.jpg'
+            title='Event'
+              />
+          <CardContent>
+            <Typography type='headline' component='h2'>
+              {this.state.event.eventName}
+            </Typography>
+            <Typography className={classes.info} component='p'>
+                    Location: {this.state.event.location} <br />
+                    Date: {moment(this.state.event.date).format('MMMM Do YYYY')} <br />
+                    Time: {moment(this.state.event.time).format('hh:mm A')}
+            </Typography>
+            <Typography component='p'>
+                    Description: {this.state.event.description}
+            </Typography>
+          </CardContent>
+        </Card>
       </Paper>
     )
   }
