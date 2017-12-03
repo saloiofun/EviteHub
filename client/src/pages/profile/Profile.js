@@ -2,13 +2,39 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import AuthAPI from '../../utils/AuthAPI'
+import PageHeader from '../../components/PageHeader'
+import Card, {CardContent } from 'material-ui/Card'
+import List, { ListItem, ListItemText } from 'material-ui/List'
+import AccountCircle from 'material-ui-icons/AccountCircle'
+import Mail from 'material-ui-icons/Mail'
+import Avatar from 'material-ui/Avatar'
+import teal from 'material-ui/colors/teal'
+import Grid from 'material-ui/Grid'
 
 const styles = theme => ({
   root: {
-    [theme.breakpoints.up('sm')]: {
-      width: '80%'
-    },
-    margin: '0 auto'
+    padding: theme.spacing.unit * 2,
+    paddingTop: 80,
+    margin: '0 auto',
+    marginBottom: 30,
+    minHeight: '100vh',
+    [theme.breakpoints.up('md')]: {
+      width: '80%',
+      paddingLeft: theme.spacing.unit * 3,
+      paddingRight: theme.spacing.unit * 3
+    }
+  },
+  title: {
+    marginBottom: 16,
+    fontSize: 14
+  },
+  profileImage: {
+    width: '100%'
+  },
+  iconAvatar: {
+    margin: 10,
+    color: '#fff',
+    backgroundColor: teal[500]
   }
 })
 
@@ -62,14 +88,40 @@ class Profile extends Component {
 
     return (
       <div className={classes.root}>
+        <PageHeader title='Profile' body='User Profile' />
         <div className='profile-area'>
-          <h1>{profile.name}</h1>
-          <div header='Profile'>
-            <img src={profile.picture} alt='profile' />
-            <div>Nickname</div>
-            <h3>{profile.nickname}</h3>
-            <pre>{JSON.stringify(profile, null, 2)}</pre>
-          </div>
+          <Card>
+            <CardContent>
+              <Grid container spacing={24}>
+
+                <Grid item xs={12} sm={3}>
+                  <img src={profile.picture} alt='profile' className={classes.profileImage} />
+                </Grid>
+
+                <Grid item xs={12} sm={9}>
+                  <List>
+                    <ListItem divider>
+                      <ListItemText primary={(<h1>{profile.name}</h1>)} />
+                    </ListItem>
+                    <ListItem divider>
+                      <Avatar className={classes.iconAvatar}>
+                        <AccountCircle />
+                      </Avatar>
+                      <ListItemText primary={profile.sub} secondary='User ID' />
+                    </ListItem>
+                    { (profile.email) &&
+                      <ListItem divider>
+                        <Avatar className={classes.iconAvatar}>
+                          <Mail />
+                        </Avatar>
+                        <ListItemText primary={profile.email} secondary='Email' />
+                      </ListItem>
+                    }
+                  </List>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
         </div>
       </div>
     )
