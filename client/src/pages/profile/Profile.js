@@ -94,11 +94,11 @@ class Profile extends Component {
             <CardContent>
               <Grid container spacing={24}>
 
-                <Grid item xs={12} sm={3}>
+                <Grid item xs={12} sm={1}>
                   <img src={profile.picture} alt='profile' className={classes.profileImage} />
                 </Grid>
 
-                <Grid item xs={12} sm={9}>
+                <Grid item xs={12} sm={11}>
                   <List>
                     <ListItem divider>
                       <ListItemText primary={(<h1>{profile.name}</h1>)} />
