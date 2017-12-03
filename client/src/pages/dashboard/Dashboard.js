@@ -13,6 +13,7 @@ import ProgressCard from '../../components/progressCard'
 import TodayIcon from 'material-ui-icons/Today'
 import GroupIcon from 'material-ui-icons/Group'
 import ListIcon from 'material-ui-icons/List'
+import API from '../../utils/Api'
 
 const styles = theme => ({
   root: {
@@ -64,7 +65,12 @@ const styles = theme => ({
 
 class Dashboard extends Component {
   componentWillMount () {
-    this.setState({ profile: {} })
+    this.setState({
+      profile: {},
+      toDoCount: 0,
+      toDoCompleted: 0
+    })
+
     const { userProfile, getProfile } = this.props.auth
     if (!userProfile) {
       getProfile((err, profile) => {
@@ -75,6 +81,18 @@ class Dashboard extends Component {
     }
 
     this.props.showSideBar()
+  }
+
+  componentDidMount () {
+    // Get Todo Count
+    API.getTodo()
+    .then(res => this.setState({ toDoCount: res.data.length }))
+    .catch(err => console.log(err))
+
+    // Get Todo Completed Count
+    API.doneTodo()
+    .then(res => this.setState({ toDoCompleted: res.data.length }))
+    .catch(err => console.log(err))
   }
 
   render () {
@@ -96,7 +114,7 @@ class Dashboard extends Component {
             </ProgressCard>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <ProgressCard title='To Do' info='15/50'>
+            <ProgressCard title='To Do' info={`${this.state.toDoCompleted} / ${this.state.toDoCount}`}>
               <ListIcon className={classes.progressIcon} />
             </ProgressCard>
           </Grid>
