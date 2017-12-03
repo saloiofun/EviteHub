@@ -6,7 +6,7 @@ import IconButton from 'material-ui/IconButton'
 import Avatar from 'material-ui/Avatar'
 import PowerSettingsNewIcon from 'material-ui-icons/PowerSettingsNew'
 import EmailIcon from 'material-ui-icons/Email'
-import SettingsIcon from 'material-ui-icons/Settings'
+import AccountCircle from 'material-ui-icons/AccountCircle'
 import { Link } from 'react-router-dom'
 
 const theme = createMuiTheme({
@@ -67,7 +67,7 @@ function UserAvatar (props) {
             <IconButton
               className={classes.button}
               aria-label='Settings'>
-              <SettingsIcon />
+              <AccountCircle />
             </IconButton>
           </Link>
         </div>
