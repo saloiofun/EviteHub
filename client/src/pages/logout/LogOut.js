@@ -5,6 +5,7 @@ import history from '../../history'
 class Logout extends Component {
   componentWillMount () {
     this.props.hideSideBar()
+    this.props.auth.logout()
   }
 
   render () {

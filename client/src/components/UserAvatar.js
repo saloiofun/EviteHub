@@ -57,9 +57,11 @@ function UserAvatar (props) {
           </ListItem>
         </List>
         <div className={classes.details}>
-          <IconButton className={classes.button} aria-label='Logout'>
-            <PowerSettingsNewIcon />
-          </IconButton>
+          <Link to='/logout'>
+            <IconButton className={classes.button} aria-label='Logout'>
+              <PowerSettingsNewIcon />
+            </IconButton>
+          </Link>
           <IconButton className={classes.button} aria-label='Inbox'>
             <EmailIcon />
           </IconButton>
