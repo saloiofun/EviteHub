@@ -7,8 +7,7 @@ import TextField from 'material-ui/TextField'
 import Dialog, { DialogActions, DialogContent, DialogTitle} from 'material-ui/Dialog'
 import Button from 'material-ui/Button'
 import Tabs, { Tab } from 'material-ui/Tabs'
-import PhoneIcon from 'material-ui-icons/Phone'
-import FavoriteIcon from 'material-ui-icons/Favorite'
+import {PlaylistAddCheck, ViewList, PlaylistAdd} from 'material-ui-icons'
 import AppBar from 'material-ui/AppBar'
 import Snackbar from 'material-ui/Snackbar'
 import IconButton from 'material-ui/IconButton'
@@ -27,11 +26,15 @@ const styles = theme => ({
   root: {
     width: '100%',
     background: theme.palette.background.paper
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
   }
 })
 
 class CheckboxList extends React.Component {
   state = {
+    checked: [],
     modal: false,
     todoItems: [],
     completedItems: [],
@@ -49,7 +52,8 @@ class CheckboxList extends React.Component {
     // Get Todo from DB
     API.doneTodo()
     .then(res => {
-      this.setState({ completedItems: res.data })
+      const checked = res.data.map(item => item.todoDesc)
+      this.setState({ completedItems: res.data, checked })
     })
     .catch(err => console.log(err))
   }
@@ -78,6 +82,12 @@ class CheckboxList extends React.Component {
      // Updated Todo item todoDone as true
     API.updateTodo(id, {'todoDone': true})
       .then(res => {
+        // Add to checked array
+        const checked = this.state.checked
+        checked.push(value)
+        this.setState({checked})
+
+        // load todo items from DB
         this.loadCompletedItems()
         this.loadTodoItems()
         this.openSnack()
@@ -87,9 +97,16 @@ class CheckboxList extends React.Component {
 
   // Handles To Do Item Checkboxes
   handleNotCompleted = (id, value) => () => {
-     // Updated Todo item todoDone as true
+     // Updated Todo item todoDone as false
     API.updateTodo(id, {'todoDone': false})
       .then(res => {
+        // Remove from checked array
+        const checked = this.state.checked
+        const valueIndex = checked.indexOf(value)
+        checked.splice(valueIndex, 1)
+        this.setState({checked})
+
+        // load todo items from DB
         this.loadCompletedItems()
         this.loadTodoItems()
         this.openSnack()
@@ -110,13 +127,12 @@ class CheckboxList extends React.Component {
 
   // Opens Snackbar
   handleSaveTodo = event => {
-    event.preventDefault()
     const addTodo = this.state.addTodo
 
     // Save Todo in DB
     API.saveTodo({ todoDesc: addTodo })
     .then(res => {
-      this.state.todoItems.push(res.data)
+      this.loadTodoItems()
       this.closeModal()
     })
     .catch(err => console.log(err))
@@ -148,10 +164,10 @@ class CheckboxList extends React.Component {
             onChange={this.handleChange}
             fullWidth
             indicatorColor='primary'
-            textColor='accent'
+            textColor='primary'
           >
-            <Tab icon={<PhoneIcon color='primary' />} label='To Do' />
-            <Tab icon={<FavoriteIcon color='primary' />} label='Completed' />
+            <Tab icon={<ViewList />} label='To Do' />
+            <Tab icon={<PlaylistAddCheck />} label='Completed' />
           </Tabs>
         </AppBar>
 
@@ -171,7 +187,7 @@ class CheckboxList extends React.Component {
                   style={{padding: 0}}
                 >
                   <Checkbox
-                    checked={this.state.completedItems.indexOf(todoItem.todoDesc) !== -1}
+                    checked={this.state.checked.indexOf(todoItem.todoDesc) !== -1}
                     tabIndex={-1}
                     disableRipple
                   />
@@ -197,7 +213,7 @@ class CheckboxList extends React.Component {
                   style={{padding: 0}}
                 >
                   <Checkbox
-                    checked={this.state.todoItems.indexOf(todoItem.todoDesc) >= 0}
+                    checked={this.state.checked.indexOf(todoItem.todoDesc) >= 0}
                     tabIndex={-1}
                     disableRipple
                   />
@@ -208,7 +224,7 @@ class CheckboxList extends React.Component {
           </TabContainer>
         }
 
-        <Button onClick={this.openModal} color='primary' raised>Add Todo</Button>
+        <Button onClick={this.openModal} color='primary' raised>Add Todo <PlaylistAdd className={classes.rightIcon} /></Button>
 
         <Dialog open={this.state.modal} onRequestClose={this.closeModal}>
           <DialogTitle>Add To Do</DialogTitle>
