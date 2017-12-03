@@ -17,6 +17,7 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     minWidth: 300,
+    maxHeight: 400,
     paddingTop: 16,
     paddingBottom: 16,
     width: '50%',
@@ -25,6 +26,11 @@ const styles = theme => ({
   },
   media: {
     height: 150
+  },
+  button: {
+    margin: theme.spacing.unit,
+    marginLeft: 'auto',
+    marginRight: theme.spacing.unit
   }
 })
 
@@ -111,7 +117,7 @@ class Rsvp extends React.Component {
             </FormControl>
           </Grid>
         </Grid>
-        <Button onClick={this.onSubmit} color='primary'>
+        <Button className={classes.button} onClick={this.onSubmit} color='primary'>
               Submit
         </Button>
       </Paper>
