@@ -8,9 +8,9 @@ import Hidden from 'material-ui/Hidden'
 import IconButton from 'material-ui/IconButton'
 import MenuIcon from 'material-ui-icons/Menu'
 
-import NavButtons from '../components/NavButtons'
-import RaisedButton from '../components/RaisedButton'
-import Brand from '../components/Brand'
+import NavButtons from '../../components/NavButtons'
+import RaisedButton from '../../components/RaisedButton'
+import Brand from '../../components/Brand'
 
 import AuthService from '../../auth'
 
