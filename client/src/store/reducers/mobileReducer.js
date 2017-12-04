@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/ActionsTypes'
+import * as actionTypes from '../actions/ActionTypes'
 
 const initialState = {
   mobileOpen: false

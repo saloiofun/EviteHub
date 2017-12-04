@@ -56,6 +56,17 @@ export default class Auth {
     return accessToken
   }
 
+  getProfileR () {
+    let accessToken = this.getAccessToken()
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
+      if (profile) {
+        this.userProfile = profile
+      } else {
+        console.log(err)
+      }
+    })
+  }
+
   getProfile (cb) {
     let accessToken = this.getAccessToken()
     this.auth0.client.userInfo(accessToken, (err, profile) => {

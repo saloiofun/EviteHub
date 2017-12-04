@@ -85,7 +85,7 @@ const NavBarView = ({ authService, auth, loginRequest, logoutSuccess, onToggleSi
 
 NavBarView.propTypes = {
   classes: PropTypes.object.isRequired,
-  authService: PropTypes.object.isRequired, // eslint-disable-line
+  authService: PropTypes.object.isRequired,
   auth: PropTypes.shape({
     isAuthenticated: PropTypes.bool.isRequired,
     profile: PropTypes.object,

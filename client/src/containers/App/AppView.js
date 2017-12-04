@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect, Router, Route, Switch } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
 import teal from 'material-ui/colors/teal'
@@ -18,7 +18,6 @@ import LogOut from '../../pages/logout'
 
 import Callback from '../../callback'
 import Auth from '../../auth'
-import history from '../../history'
 
 // Authentication
 const auth = new Auth()
@@ -73,29 +72,27 @@ class App extends React.Component {
 
     return (
       <MuiThemeProvider theme={theme}>
-        {/* <Router history={history} component={Home}> */}
         <div className={classes.root}>
-            <div className={classes.appFrame}>
-              <NavBar auth={auth} />
-              <SideBar auth={auth} />
-              <Switch>
-                <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
-                <Route exact path='/events' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <ViewEvents auth={auth} {...props} />)} />
-                <Route path='/rsvp' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Rsvp auth={auth} {...props} />)} />
-                <Route exact path='/dashboard' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Dashboard auth={auth} {...props} />)} />
-                <Route exact path='/guest-list' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <GuestList auth={auth} {...props} />)} />
-                <Route exact path='/invitation' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Invitation auth={auth} {...props} />)} />
-                <Route exact path='/send-invites' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <SendInvites auth={auth} {...props} />)} />
-                <Route exact path='/profile' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Profile auth={auth} {...props} />)} />
-                <Route exact path='/logout' render={(props) => <LogOut hideSideBar={this.hideSideBar} />} />
-                <Route path='/callback' render={(props) => {
-                  handleAuthentication(props)
-                  return <Callback {...props} />
-                }} />
-              </Switch>
-            </div>
+          <div className={classes.appFrame}>
+            <NavBar authService={auth} />
+            <SideBar auth={auth} />
+            <Switch>
+              <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
+              <Route exact path='/events' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <ViewEvents auth={auth} {...props} />)} />
+              <Route path='/rsvp' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Rsvp auth={auth} {...props} />)} />
+              <Route exact path='/dashboard' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Dashboard auth={auth} {...props} />)} />
+              <Route exact path='/guest-list' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <GuestList auth={auth} {...props} />)} />
+              <Route exact path='/invitation' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Invitation auth={auth} {...props} />)} />
+              <Route exact path='/send-invites' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <SendInvites auth={auth} {...props} />)} />
+              <Route exact path='/profile' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Profile auth={auth} {...props} />)} />
+              <Route exact path='/logout' render={(props) => <LogOut hideSideBar={this.hideSideBar} />} />
+              <Route path='/callback' render={(props) => {
+                handleAuthentication(props)
+                return <Callback {...props} />
+              }} />
+            </Switch>
           </div>
-        {/* </Router> */}
+        </div>
       </MuiThemeProvider>
     )
   }
