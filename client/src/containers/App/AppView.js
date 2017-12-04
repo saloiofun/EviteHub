@@ -51,7 +51,7 @@ const styles = theme => ({
   }
 })
 
-const authService = new Auth()
+const auth = new Auth()
 
 class App extends React.Component {
   render () {
@@ -61,25 +61,25 @@ class App extends React.Component {
       <MuiThemeProvider theme={theme}>
         <div className={classes.root}>
           <div className={classes.appFrame}>
-            <NavBar authService={authService} />
-            <SideBar authService={authService} />
+            <NavBar authService={auth} />
+            <SideBar authService={auth} />
             <Switch>
-              <Route exact path='/' render={(props) => (!authService.isAuthenticated() ? <Home /> : <Dashboard authService={authService} {...props} />)} />
-              <Route exact path='/events' render={(props) => (!authService.isAuthenticated() ? <Redirect to='/' /> : <ViewEvents authService={authService} {...props} />)} />
-              <Route path='/rsvp' render={(props) => (!authService.isAuthenticated() ? <Redirect to='/' /> : <Rsvp authService={authService} {...props} />)} />
-              <Route exact path='/dashboard' render={(props) => (!authService.isAuthenticated() ? <Redirect to='/' /> : <Dashboard authService={authService} {...props} />)} />
-              <Route exact path='/guest-list' render={(props) => (!authService.isAuthenticated() ? <Redirect to='/' /> : <GuestList authService={authService} {...props} />)} />
-              <Route exact path='/invitation' render={(props) => (!authService.isAuthenticated() ? <Redirect to='/' /> : <Invitation authService={authService} {...props} />)} />
-              <Route exact path='/send-invites' render={(props) => (!authService.isAuthenticated() ? <Redirect to='/' /> : <SendInvites authService={authService} {...props} />)} />
-              <Route exact path='/profile' render={(props) => (!authService.isAuthenticated() ? <Redirect to='/' /> : <Profile authService={authService} {...props} />)} />
+              <Route exact path='/' render={(props) => (!auth.isAuthenticated() ? <Home /> : <Dashboard authService={auth} {...props} />)} />
+              <Route exact path='/events' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <ViewEvents authService={auth} {...props} />)} />
+              <Route path='/rsvp' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Rsvp authService={auth} {...props} />)} />
+              <Route exact path='/dashboard' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Dashboard authService={auth} {...props} />)} />
+              <Route exact path='/guest-list' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <GuestList authService={auth} {...props} />)} />
+              <Route exact path='/invitation' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Invitation authService={auth} {...props} />)} />
+              <Route exact path='/send-invites' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <SendInvites authService={auth} {...props} />)} />
+              <Route exact path='/profile' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Profile authService={auth} {...props} />)} />
               <Route exact path='/logout' render={(props) => <LogOut hideSideBar={this.hideSideBar} />} />
               <Route path='/callback' render={(props) => {
-                authService.auth0.parseHash((err, authResult) => {
+                auth.auth0.parseHash((err, authResult) => {
                   if (authResult && authResult.accessToken && authResult.idToken) {
-                    authService.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
+                    auth.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
                       if (err) { return this.props.loginError(err) }
-                      authService.setSession(authResult)
-                      authService.setProfile(authResult.accessToken)
+                      auth.setSession(authResult)
+                      auth.setProfile(authResult.accessToken)
                       this.props.loginSuccess(profile)
                       history.replace('/dashboard')
                     })
