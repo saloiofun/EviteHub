@@ -1,10 +1,10 @@
-import * as actionTypes from '../constants/ActionTypes'
+import * as actionTypes from '../actions/ActionTypes'
 
 const initialState = {
   mobileOpen: false
 }
 
-const reducer = (state = initialState, action) => {
+const mobileReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.TOGGLE_SIDEBAR:
       return {
@@ -16,4 +16,4 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-export default reducer
+export default mobileReducer
