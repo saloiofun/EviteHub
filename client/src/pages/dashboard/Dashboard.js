@@ -8,12 +8,15 @@ import Grid from 'material-ui/Grid'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import CheckboxList from '../../components/Todo'
-// import PageHeader from '../../components/PageHeader'
+import PageHeader from '../../components/PageHeader'
 import ProgressCard from '../../components/progressCard'
 import TodayIcon from 'material-ui-icons/Today'
 import GroupIcon from 'material-ui-icons/Group'
 import ListIcon from 'material-ui-icons/List'
 import API from '../../utils/Api'
+
+import compose from 'recompose/compose'
+import { connect } from 'react-redux'
 
 const styles = theme => ({
   root: {
@@ -83,35 +86,12 @@ class Dashboard extends Component {
     .catch(err => console.log(err))
   }
 
-    // const { userProfile, getProfile } = this.props.auth
-    // if (!userProfile) {
-    //   getProfile((err, profile) => {
-    //     this.setState({ profile })
-    //   })
-    // } else {
-    //   this.setState({ profile: userProfile })
-    // }
-  // componentWillMount () {
-  //   this.setState({ profile: {} })
-  //   const { userProfile, getProfile } = this.props.auth
-  //   if (!userProfile) {
-  //     getProfile((err, profile) => {
-  //       this.setState({ profile })
-  //     })
-  //   } else {
-  //     this.setState({ profile: userProfile })
-  //   }
-
-  //   this.props.showSideBar()
-  // }
-
   render () {
-    const { classes } = this.props
-    // const { profile } = this.state
+    const { classes, auth } = this.props
 
     return (
       <div className={classes.root}>
-        {/* <PageHeader title='Dashboard' body={`Welcome Back! ${auth.profile.name}`} /> */}
+        <PageHeader title='Dashboard' body={`Welcome Back! ${auth.profile.name}`} />
         <Grid container spacing={24}>
           <Grid item xs={12} sm={4}>
             <ProgressCard title='Days Left' info='3'>
@@ -179,4 +159,14 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Dashboard)
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  }
+}
+
+export default compose(
+  withStyles(styles, {
+    name: 'Dashboard'
+  }), connect(mapStateToProps)
+)(Dashboard)
