@@ -23,10 +23,16 @@ import Slide from 'material-ui/transitions/Slide'
 // const for style
 const styles = theme => ({
   root: {
-    [theme.breakpoints.up('sm')]: {
-      width: '80%'
-    },
-    margin: '0 auto'
+    padding: theme.spacing.unit * 2,
+    paddingTop: 80,
+    margin: '0 auto',
+    marginBottom: 30,
+    minHeight: '100vh',
+    [theme.breakpoints.up('md')]: {
+      width: '80%',
+      paddingLeft: theme.spacing.unit * 3,
+      paddingRight: theme.spacing.unit * 3
+    }
   },
   spaceBottom: {
     marginBottom: theme.spacing.unit
@@ -137,6 +143,13 @@ class GuestList extends Component {
       .catch(err => console.log(err))
   }
 
+  // handle EMAIL toggle
+  emailToggle = (id, emailed) => (event, checked) => {
+    API.updateGuest(id, {'emailed': !emailed})
+    .then(res => this.loadGuest())
+      .catch(err => console.log(err))
+  }
+
   render () {
     const { classes } = this.props
     return (
@@ -159,6 +172,7 @@ class GuestList extends Component {
               <TableCell>NAME</TableCell>
               <TableCell>PARTY</TableCell>
               <TableCell>RSVP</TableCell>
+              <TableCell>EMAILED</TableCell>
               <TableCell>CONTACT</TableCell>
               <TableCell>EDIT</TableCell>
             </TableRow>
@@ -178,6 +192,18 @@ class GuestList extends Component {
                             onChange={this.rsvpToggle(n._id, n.rsvp)} />
                           }
                         label={n.rsvp ? 'Yes' : 'No'}
+                      />
+                    </FormGroup>
+                  </TableCell>
+                  <TableCell>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={n.emailed}
+                            onChange={this.emailToggle(n._id, n.emailed)} />
+                          }
+                        label={n.emailed ? 'Yes' : 'No'}
                       />
                     </FormGroup>
                   </TableCell>

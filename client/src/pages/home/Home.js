@@ -11,6 +11,17 @@ import { Face, Print, ViewList, Assignment } from 'material-ui-icons'
 
 const styles = theme => ({
   root: {
+    padding: theme.spacing.unit * 2,
+    paddingTop: 80,
+    margin: '0 auto',
+    marginBottom: 30,
+    minHeight: '100vh',
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: theme.spacing.unit * 3,
+      paddingRight: theme.spacing.unit * 3
+    }
+  },
+  cards: {
     flexGrow: 1,
     marginTop: 30
   },
@@ -41,7 +52,7 @@ class Home extends Component {
     const { classes } = this.props
 
     return (
-      <div>
+      <div className={classes.root}>
         <div className='featured-image'>
           <div className='featured-content'>
             <div className='featured-content-gradient'>
@@ -56,7 +67,7 @@ class Home extends Component {
             </div>
           </div>
         </div>
-        <div className={classes.root}>
+        <div className={classes.cards}>
           <Grid container spacing={24}>
             <Grid item xs={6} lg={3}>
               <Card className={classNames(classes.card, classes.cardItem)}>

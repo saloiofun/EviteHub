@@ -1,18 +1,22 @@
 import React from 'react'
-import { Router, Route, Switch } from 'react-router-dom'
+import { Redirect, Router, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
 import Dashboard from './pages/dashboard'
-import viewEvents from './pages/viewEvents'
+import ViewEvents from './pages/viewEvents'
 import GuestList from './pages/guestList'
+import Invitation from './pages/invitation'
 import SendInvites from './pages/sendInvites'
 import NavBar from './containers/NavBar'
 import SideBar from './containers/SideBar'
 import Home from './pages/home'
 import Callback from './callback'
 import Auth from './auth'
+import Rsvp from './pages/rsvp'
 import history from './history'
+import Profile from './pages/profile'
 import teal from 'material-ui/colors/teal'
+import LogOut from './pages/logout'
 
 // Authentication
 const auth = new Auth()
@@ -47,15 +51,30 @@ const styles = theme => ({
     margin: '0 auto',
     marginBottom: 100,
     [theme.breakpoints.up('md')]: {
-      paddingTop: 80,
       margin: '0 auto',
       marginBottom: 100,
-      width: '100%'
+      width: '80%'
     }
   }
 })
 
 class App extends React.Component {
+  state = {
+    showSideBar: false
+  }
+
+  showSideBar = () => {
+    this.setState({
+      showSideBar: true
+    })
+  }
+
+  hideSideBar = () => {
+    this.setState({
+      showSideBar: false
+    })
+  }
+
   render () {
     const { classes } = this.props
 
@@ -65,20 +84,26 @@ class App extends React.Component {
           <div className={classes.root}>
             <div className={classes.appFrame}>
               <Route path='/' render={(props) => <NavBar auth={auth} {...props} />} />
-              { (auth.isAuthenticated() ? <SideBar /> : '') }
-              <main className={classes.content}>
-                <Switch>
-                  <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
-                  <Route exact path='/events' component={viewEvents} />
-                  <Route exact path='/dashboard' component={Dashboard} />
-                  <Route exact path='/guest-list' component={GuestList} />
-                  <Route exact path='/send-invites' component={SendInvites} />
-                  <Route path='/callback' render={(props) => {
-                    handleAuthentication(props)
-                    return <Callback {...props} />
-                  }} />
-                </Switch>
-              </main>
+
+              {this.state.showSideBar && <SideBar auth={auth} />}
+              {/* <main className={classes.content}> */}
+              <Switch>
+                <Route exact path='/' render={(props) => <Home auth={auth} {...props} />} />
+                <Route exact path='/events' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <ViewEvents auth={auth} {...props} />)} />
+                <Route path='/rsvp' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Rsvp auth={auth} {...props} />)} />
+                <Route exact path='/dashboard' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Dashboard auth={auth} {...props} showSideBar={this.showSideBar} />)} />
+                <Route exact path='/guest-list' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <GuestList auth={auth} {...props} />)} />
+                <Route exact path='/invitation' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Invitation auth={auth} {...props} />)} />
+                <Route exact path='/send-invites' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <SendInvites auth={auth} {...props} />)} />
+                <Route exact path='/profile' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Profile auth={auth} {...props} />)} />
+                <Route exact path='/logout' render={(props) => <LogOut hideSideBar={this.hideSideBar} />} />
+                <Route path='/callback' render={(props) => {
+                  handleAuthentication(props)
+                  return <Callback {...props} />
+                }} />
+              </Switch>
+              {/* </main> */}
+
             </div>
           </div>
         </Router>
