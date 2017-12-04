@@ -58,7 +58,7 @@ const styles = theme => ({
   }
 })
 
-const SideBarView = ({ auth, onToggleSidebar, mobileOpen, classes }) => (
+const SideBarView = ({ auth, onToggleSidebar, mobile, classes }) => (
   <MuiThemeProvider theme={theme}>
     { auth.isAuthenticated && (
       <div className={classes.root}>
@@ -66,7 +66,7 @@ const SideBarView = ({ auth, onToggleSidebar, mobileOpen, classes }) => (
           <Drawer
             type='temporary'
             anchor='left'
-            open={mobileOpen}
+            open={mobile.mobileOpen}
             classes={{
               paper: classes.drawerPaper,
               paperAnchorDockedLeft: classes.noBorderRight
@@ -125,7 +125,7 @@ SideBarView.propTypes = {
     profile: PropTypes.object,
     error: PropTypes.string
   }).isRequired,
-  mobileOpen: PropTypes.bool.isRequired,
+  mobile: PropTypes.object.isRequired,
   onToggleSidebar: PropTypes.func.isRequired
 }
 

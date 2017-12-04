@@ -7,7 +7,7 @@ import SideBarView from './SideBarView'
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  mobileOpen: state.mobileOpen
+  mobile: state.mobile
 })
 
 const mapDispatchToProps = dispatch => ({
