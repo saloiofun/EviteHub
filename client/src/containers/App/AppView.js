@@ -17,6 +17,7 @@ import Profile from '../../pages/profile'
 import LogOut from '../../pages/logout'
 
 import Callback from '../../callback'
+import history from '../../history'
 import Auth from '../../auth'
 
 const theme = createMuiTheme({
@@ -52,22 +53,7 @@ const styles = theme => ({
 
 const authService = new Auth()
 
-const handleAuthentication = (nextState, replace) => {
-  if (/access_token|id_token|error/.test(nextState.location.hash)) {
-    authService.handleAuthentication()
-    // this.props.loginSuccess(authService.getProfileFromLS())
-  }
-}
-
 class App extends React.Component {
-  componentWillMount () {
-    if (authService.isAuthenticated()) {
-      let accessToken = authService.getAccessToken()
-      authService.setProfile(accessToken)
-      this.props.loginSuccess(authService.getProfileFromLS())
-    }
-  }
-
   render () {
     const { classes } = this.props
 
@@ -78,8 +64,7 @@ class App extends React.Component {
             <NavBar authService={authService} />
             <SideBar authService={authService} />
             <Switch>
-              {/* <Route exact path='/' render={(props) => <Home authService={authService} {...props} />} /> */}
-              <Route exact path='/' render={(props) => <Home authService={authService} {...props} />} />
+              <Route exact path='/' render={(props) => (!authService.isAuthenticated() ? <Home /> : <Dashboard authService={authService} {...props} />)} />
               <Route exact path='/events' render={(props) => (!authService.isAuthenticated() ? <Redirect to='/' /> : <ViewEvents authService={authService} {...props} />)} />
               <Route path='/rsvp' render={(props) => (!authService.isAuthenticated() ? <Redirect to='/' /> : <Rsvp authService={authService} {...props} />)} />
               <Route exact path='/dashboard' render={(props) => (!authService.isAuthenticated() ? <Redirect to='/' /> : <Dashboard authService={authService} {...props} />)} />
@@ -89,9 +74,23 @@ class App extends React.Component {
               <Route exact path='/profile' render={(props) => (!authService.isAuthenticated() ? <Redirect to='/' /> : <Profile authService={authService} {...props} />)} />
               <Route exact path='/logout' render={(props) => <LogOut hideSideBar={this.hideSideBar} />} />
               <Route path='/callback' render={(props) => {
-                handleAuthentication(props)
+                authService.auth0.parseHash((err, authResult) => {
+                  if (authResult && authResult.accessToken && authResult.idToken) {
+                    authService.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
+                      if (err) { return this.props.loginError(err) }
+                      authService.setSession(authResult)
+                      authService.setProfile(authResult.accessToken)
+                      this.props.loginSuccess(profile)
+                      history.replace('/dashboard')
+                    })
+                  } else if (err) {
+                    this.props.loginError(err)
+                    history.replace('/')
+                  }
+                })
                 return <Callback {...props} />
-              }} />
+              }
+              } />
             </Switch>
           </div>
         </div>
@@ -102,7 +101,8 @@ class App extends React.Component {
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
-  loginSuccess: PropTypes.func.isRequired
+  loginSuccess: PropTypes.func.isRequired,
+  loginError: PropTypes.func.isRequired
 }
 
 export default withStyles(styles, { withTheme: true })(App)
