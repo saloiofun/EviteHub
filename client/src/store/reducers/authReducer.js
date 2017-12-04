@@ -6,7 +6,7 @@ const auth = new AuthService()
 const initialState = {
   isAuthenticated: auth.isAuthenticated(),
   isFetching: false,
-  profile: auth.getProfileR(),
+  profile: auth.getProfileFromLS(),
   error: null
 }
 

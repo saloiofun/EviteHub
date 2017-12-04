@@ -58,22 +58,7 @@ const styles = theme => ({
   }
 })
 
-const drawer = ({ auth, classes }) => (
-  <div>
-    <div className={classes.drawerHeader}>
-      <Brand disableRipple />
-    </div>
-    <UserAvatar profile={auth.profile} />
-    <Divider />
-    <EventsDropdown />
-    <Divider />
-    <List><DashboardListItems /></List>
-    <List><GuestListItems /></List>
-    <List><SendInvitesListItems /></List>
-  </div>
-)
-
-const SideBarView = ({ auth, onToggleSidebar, mobile, classes }) => (
+const SideBarView = ({ auth, onToggleSidebar, mobileOpen, classes }) => (
   <MuiThemeProvider theme={theme}>
     { auth.isAuthenticated && (
       <div className={classes.root}>
@@ -81,7 +66,7 @@ const SideBarView = ({ auth, onToggleSidebar, mobile, classes }) => (
           <Drawer
             type='temporary'
             anchor='left'
-            open={mobile.mobileOpen}
+            open={mobileOpen}
             classes={{
               paper: classes.drawerPaper,
               paperAnchorDockedLeft: classes.noBorderRight
@@ -92,7 +77,18 @@ const SideBarView = ({ auth, onToggleSidebar, mobile, classes }) => (
             ModalProps={{
               keepMounted: true // Better open performance on mobile.
             }} >
-            {drawer}
+            <div>
+              <div className={classes.drawerHeader}>
+                <Brand disableRipple />
+              </div>
+              <UserAvatar profile={auth.profile} />
+              <Divider />
+              <EventsDropdown />
+              <Divider />
+              <List><DashboardListItems /></List>
+              <List><GuestListItems /></List>
+              <List><SendInvitesListItems /></List>
+            </div>
           </Drawer>
         </Hidden>
         <Hidden lgDown implementation='css'>
@@ -103,7 +99,18 @@ const SideBarView = ({ auth, onToggleSidebar, mobile, classes }) => (
               paper: classes.drawerPaper,
               paperAnchorDockedLeft: classes.noBorderRight
             }} >
-            {drawer}
+            <div>
+              <div className={classes.drawerHeader}>
+                <Brand disableRipple />
+              </div>
+              <UserAvatar profile={auth.profile} />
+              <Divider />
+              <EventsDropdown />
+              <Divider />
+              <List><DashboardListItems /></List>
+              <List><GuestListItems /></List>
+              <List><SendInvitesListItems /></List>
+            </div>
           </Drawer>
         </Hidden>
       </div>
@@ -118,9 +125,7 @@ SideBarView.propTypes = {
     profile: PropTypes.object,
     error: PropTypes.string
   }).isRequired,
-  mobile: PropTypes.shape({
-    mobileOpen: PropTypes.bool.isRequired
-  }).isRequired,
+  mobileOpen: PropTypes.bool.isRequired,
   onToggleSidebar: PropTypes.func.isRequired
 }
 

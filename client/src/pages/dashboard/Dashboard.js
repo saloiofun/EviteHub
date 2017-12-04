@@ -63,27 +63,27 @@ const styles = theme => ({
 })
 
 class Dashboard extends Component {
-  componentWillMount () {
-    this.setState({ profile: {} })
-    const { userProfile, getProfile } = this.props.auth
-    if (!userProfile) {
-      getProfile((err, profile) => {
-        this.setState({ profile })
-      })
-    } else {
-      this.setState({ profile: userProfile })
-    }
+  // componentWillMount () {
+  //   this.setState({ profile: {} })
+  //   const { userProfile, getProfile } = this.props.auth
+  //   if (!userProfile) {
+  //     getProfile((err, profile) => {
+  //       this.setState({ profile })
+  //     })
+  //   } else {
+  //     this.setState({ profile: userProfile })
+  //   }
 
-    this.props.showSideBar()
-  }
+  //   this.props.showSideBar()
+  // }
 
   render () {
     const { classes } = this.props
-    const { profile } = this.state
+    // const { profile } = this.state
 
     return (
       <div className={classes.root}>
-        <PageHeader title='Dashboard' body={`Welcome Back! ${profile.name}`} />
+        {/* <PageHeader title='Dashboard' body={`Welcome Back! ${profile.name}`} /> */}
         <Grid container spacing={24}>
           <Grid item xs={12} sm={4}>
             <ProgressCard title='Days Left' info='3'>

@@ -56,13 +56,10 @@ export default class Auth {
     return accessToken
   }
 
-  getProfileR () {
-    let accessToken = this.getAccessToken()
+  setProfile (accessToken) {
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
-        this.userProfile = profile
-      } else {
-        console.log(err)
+        window.localStorage.setItem('profile', JSON.stringify(profile))
       }
     })
   }
@@ -75,6 +72,12 @@ export default class Auth {
       }
       cb(err, profile)
     })
+  }
+
+  getProfileFromLS () {
+    // Retrieves the profile data from window.localStorage
+    const profile = window.localStorage.getItem('profile')
+    return profile ? JSON.parse(window.localStorage.profile) : {}
   }
 
   logout () {
