@@ -13,6 +13,7 @@ import ProgressCard from '../../components/progressCard'
 import TodayIcon from 'material-ui-icons/Today'
 import GroupIcon from 'material-ui-icons/Group'
 import ListIcon from 'material-ui-icons/List'
+import API from '../../utils/Api'
 
 const styles = theme => ({
   root: {
@@ -63,6 +64,33 @@ const styles = theme => ({
 })
 
 class Dashboard extends Component {
+  componentWillMount () {
+    this.setState({
+      toDoCount: 0,
+      toDoCompleted: 0
+    })
+  }
+
+  componentDidMount () {
+    // Get Todo Count
+    API.getTodo()
+    .then(res => this.setState({ toDoCount: res.data.length }))
+    .catch(err => console.log(err))
+
+    // Get Todo Completed Count
+    API.doneTodo()
+    .then(res => this.setState({ toDoCompleted: res.data.length }))
+    .catch(err => console.log(err))
+  }
+
+    // const { userProfile, getProfile } = this.props.auth
+    // if (!userProfile) {
+    //   getProfile((err, profile) => {
+    //     this.setState({ profile })
+    //   })
+    // } else {
+    //   this.setState({ profile: userProfile })
+    // }
   // componentWillMount () {
   //   this.setState({ profile: {} })
   //   const { userProfile, getProfile } = this.props.auth
@@ -96,7 +124,7 @@ class Dashboard extends Component {
             </ProgressCard>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <ProgressCard title='To Do' info='15/50'>
+            <ProgressCard title='To Do' info={`${this.state.toDoCompleted} / ${this.state.toDoCount}`}>
               <ListIcon className={classes.progressIcon} />
             </ProgressCard>
           </Grid>
@@ -125,15 +153,8 @@ class Dashboard extends Component {
           <Grid item xs={12} sm={4}>
             <Card className={classes.card}>
               <CardContent>
-                <Typography type='headline' component='h2'>
-                  To Do List
-                </Typography>
                 <CheckboxList />
               </CardContent>
-              <CardActions align='right'>
-                <Button dense color='primary'>Share</Button>
-                <Button dense color='primary'>View All</Button>
-              </CardActions>
             </Card>
           </Grid>
           <Grid item xs={6} sm={3}>

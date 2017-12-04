@@ -44,5 +44,29 @@ export default {
   // Send Email
   sendEmail: function (data) {
     return axios.post('/api/email', data)
+  },
+  // Get Todo
+  getTodo: function () {
+    return axios.get('/api/todos')
+  },
+  // Save Todo
+  saveTodo: function (data) {
+    return axios.post('/api/todos', data)
+  },
+  // Update Todo
+  updateTodo: function (id, data) {
+    return axios.put('api/todos/listed/' + id, data)
+  },
+  // Done Todo
+  doneTodo: function () {
+    return axios.get('/api/todos/done')
+  },
+  // UnDone Todo
+  unDoneTodo: function () {
+    return axios.get('/api/todos/undone')
+  },
+  // Delete Todo
+  deleteTodo: function (id) {
+    return axios.delete('/api/todos/listed/' + id)
   }
 }
