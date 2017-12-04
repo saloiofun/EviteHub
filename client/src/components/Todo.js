@@ -7,12 +7,12 @@ import TextField from 'material-ui/TextField'
 import Dialog, { DialogActions, DialogContent, DialogTitle} from 'material-ui/Dialog'
 import Button from 'material-ui/Button'
 import Tabs, { Tab } from 'material-ui/Tabs'
-import {PlaylistAddCheck, ViewList, PlaylistAdd, Delete} from 'material-ui-icons'
+import {PlaylistAddCheck, PlaylistAdd, Delete} from 'material-ui-icons'
+import ListIcon from 'material-ui-icons/List'
 import AppBar from 'material-ui/AppBar'
-import Snackbar from 'material-ui/Snackbar'
 import IconButton from 'material-ui/IconButton'
-import CloseIcon from 'material-ui-icons/Close'
 import API from '../utils/Api'
+import Alert from './Alert'
 
 function TabContainer ({ children, dir }) {
   return (
@@ -40,7 +40,8 @@ class CheckboxList extends React.Component {
     completedItems: [],
     value: 0,
     addTodo: '',
-    snack: false
+    snack: false,
+    snackMessage: ''
   }
 
   componentDidMount () {
@@ -79,6 +80,7 @@ class CheckboxList extends React.Component {
 
   // Handles To Do Item Checkboxes
   handleCompleted = (id, value) => () => {
+    this.closeSnack()
      // Updated Todo item todoDone as true
     API.updateTodo(id, {'todoDone': true})
       .then(res => {
@@ -90,13 +92,14 @@ class CheckboxList extends React.Component {
         // load todo items from DB
         this.loadCompletedItems()
         this.loadTodoItems()
-        this.openSnack()
+        this.openSnack(`Checked: ${value}`)
       })
     .catch(err => console.log(err))
   }
 
   // Handles To Do Item Checkboxes
   handleNotCompleted = (id, value) => () => {
+    this.closeSnack()
      // Updated Todo item todoDone as false
     API.updateTodo(id, {'todoDone': false})
       .then(res => {
@@ -109,7 +112,7 @@ class CheckboxList extends React.Component {
         // load todo items from DB
         this.loadCompletedItems()
         this.loadTodoItems()
-        this.openSnack()
+        this.openSnack(`Unchecked: ${value}`)
       })
     .catch(err => console.log(err))
   }
@@ -134,13 +137,14 @@ class CheckboxList extends React.Component {
     .then(res => {
       this.loadTodoItems()
       this.closeModal()
+      this.openSnack(`Added: ${res.data.todoDesc}`)
     })
     .catch(err => console.log(err))
   }
 
   // Opens Snackbar
-  openSnack = () => {
-    this.setState({ snack: true })
+  openSnack = (snackMessage) => {
+    this.setState({ snack: true, snackMessage })
   }
 
   // Closes Snackbar
@@ -158,6 +162,7 @@ class CheckboxList extends React.Component {
     .then(res => {
       this.loadCompletedItems()
       this.loadTodoItems()
+      this.openSnack(`Deleted: ${res.data.todoDesc}`)
     })
     .catch(err => console.log(err))
   }
@@ -176,7 +181,7 @@ class CheckboxList extends React.Component {
             indicatorColor='primary'
             textColor='primary'
           >
-            <Tab icon={<ViewList />} label='To Do' />
+            <Tab icon={<ListIcon />} label='To Do' />
             <Tab icon={<PlaylistAddCheck />} label='Completed' />
           </Tabs>
         </AppBar>
@@ -266,29 +271,10 @@ class CheckboxList extends React.Component {
           </DialogActions>
         </Dialog>
 
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left'
-          }}
+        <Alert
           open={this.state.snack}
-          autoHideDuration={3000}
           onRequestClose={this.closeSnack}
-          SnackbarContentProps={{
-            'aria-describedby': 'message-id'
-          }}
-          message={<span id='message-id'>Saved</span>}
-          action={[
-            <IconButton
-              key='close'
-              aria-label='Close'
-              color='inherit'
-              className={classes.close}
-              onClick={this.closeSnack}
-            >
-              <CloseIcon />
-            </IconButton>
-          ]}
+          message={this.state.snackMessage}
         />
 
       </div>
