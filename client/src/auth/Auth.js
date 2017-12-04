@@ -30,9 +30,10 @@ export default class Auth {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
+        this.setProfile(authResult.accessToken)
         history.replace('/dashboard')
       } else if (err) {
-        history.replace('/dashboard')
+        history.replace('/')
         console.log(err)
       }
     })
@@ -85,6 +86,7 @@ export default class Auth {
     localStorage.removeItem('access_token')
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
+    localStorage.removeItem('profile')
     this.userProfile = null
     // navigate to the dashboard route
     history.replace('/logout')

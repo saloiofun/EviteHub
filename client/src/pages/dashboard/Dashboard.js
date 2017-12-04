@@ -8,7 +8,7 @@ import Grid from 'material-ui/Grid'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import CheckboxList from '../../components/Todo'
-import PageHeader from '../../components/PageHeader'
+// import PageHeader from '../../components/PageHeader'
 import ProgressCard from '../../components/progressCard'
 import TodayIcon from 'material-ui-icons/Today'
 import GroupIcon from 'material-ui-icons/Group'
@@ -83,7 +83,7 @@ class Dashboard extends Component {
 
     return (
       <div className={classes.root}>
-        {/* <PageHeader title='Dashboard' body={`Welcome Back! ${profile.name}`} /> */}
+        {/* <PageHeader title='Dashboard' body={`Welcome Back! ${auth.profile.name}`} /> */}
         <Grid container spacing={24}>
           <Grid item xs={12} sm={4}>
             <ProgressCard title='Days Left' info='3'>

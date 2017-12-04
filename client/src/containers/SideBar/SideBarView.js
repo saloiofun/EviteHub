@@ -125,7 +125,9 @@ SideBarView.propTypes = {
     profile: PropTypes.object,
     error: PropTypes.string
   }).isRequired,
-  mobile: PropTypes.object.isRequired,
+  mobile: PropTypes.shape({
+    mobileOpen: PropTypes.bool.isRequired
+  }).isRequired,
   onToggleSidebar: PropTypes.func.isRequired
 }
 

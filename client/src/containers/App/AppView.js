@@ -55,6 +55,7 @@ const authService = new Auth()
 const handleAuthentication = (nextState, replace) => {
   if (/access_token|id_token|error/.test(nextState.location.hash)) {
     authService.handleAuthentication()
+    // this.props.loginSuccess(authService.getProfileFromLS())
   }
 }
 
