@@ -1,4 +1,5 @@
-import * as actionTypes from '../actions/ActionTypes'
+import * as actionTypes from '../actions/actionTypes'
+import { updateObject } from '../utility'
 
 const initialState = {
   mobileOpen: false
@@ -6,13 +7,8 @@ const initialState = {
 
 const mobileReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.TOGGLE_SIDEBAR:
-      return {
-        ...state,
-        mobileOpen: !state.mobileOpen
-      }
-    default:
-      return state
+    case actionTypes.TOGGLE_SIDEBAR: return updateObject(state, { mobileOpen: !state.mobileOpen })
+    default: return state
   }
 }
 
