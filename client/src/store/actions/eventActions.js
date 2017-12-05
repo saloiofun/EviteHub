@@ -1,29 +1,6 @@
 import * as actionTypes from './actionTypes'
-import API from '../../utils/Api'
-
-// export const getAllEvents = () => {
-//   return {
-//     type: actionTypes.EVENT_GET_ALL
-//   }
-// }
-
-// export const viewAllEvents = () => {
-//   return (dispatch) => {
-//     setTimeout(() => {
-//       dispatch(getAllEvents)
-//     }, 2000)
-//   }
-// }
-
-// export const storeEvent = () => {
-//   return (dispatch, getState) => {
-//     setTimeout(() => {
-//       const userEmail = getState().auth.profile.email
-//       console.log(userEmail)
-//       dispatch(getAllEvents)
-//     }, 2000)
-//   }
-// }
+// import API from '../../utils/Api'
+import axios from 'axios'
 
 export const fetchEventsSuccess = (events) => {
   return {
@@ -49,8 +26,10 @@ export const fetchEvents = () => {
   return dispatch => {
     dispatch(fetchEventsStart())
 
-    API.getEvents()
+    axios.get('localhost:3000/api/events/')
     .then(res => {
+      console.log(res)
+      console.log(res.data)
       const fetchedEvents = []
       for (let key in res.data) {
         fetchedEvents.push({
@@ -61,6 +40,7 @@ export const fetchEvents = () => {
       dispatch(fetchEventsSuccess(fetchedEvents))
     })
     .catch(err => {
+      console.log(err)
       dispatch(fetchEventsFail(err))
     })
   }

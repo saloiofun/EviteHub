@@ -8,6 +8,8 @@ import TodayIcon from 'material-ui-icons/Today'
 import Divider from 'material-ui/Divider'
 import { Link } from 'react-router-dom'
 
+import API from '../utils/Api'
+
 const styles = theme => ({
   root: {
     width: '100%',
@@ -16,17 +18,30 @@ const styles = theme => ({
   }
 })
 
-const options = [
-  'Housewarming Party',
-  'Baby Shower'
-]
+// const options = [
+//   'Housewarming Party',
+//   'Baby Shower'
+// ]
 
 class EventsDropdown extends Component {
   state = {
     anchorEl: null,
     open: false,
-    selectedIndex: 0
+    selectedIndex: 0,
+    events: []
   };
+
+  componentWillMount () {
+    this.loadEvents()
+  }
+
+  loadEvents = () => {
+    API.getEvents()
+    .then(res => {
+      this.setState({ events: res.data })
+    })
+    .catch(err => this.setState({ error: err.message }))
+  }
 
   button = undefined;
 
@@ -44,6 +59,8 @@ class EventsDropdown extends Component {
 
   render () {
     const { classes } = this.props
+    const { events } = this.state
+    console.log(events[0])
     return (
       <div className={classes.root}>
         <List>
@@ -60,7 +77,7 @@ class EventsDropdown extends Component {
             <ListItemText
               type='title'
               primary='Event'
-              secondary={options[this.state.selectedIndex]}
+              // secondary={events[this.state.selectedIndex]}
             />
           </ListItem>
         </List>
@@ -70,13 +87,13 @@ class EventsDropdown extends Component {
           open={this.state.open}
           onRequestClose={this.handleRequestClose}
         >
-          {options.map((option, index) => (
+          {events.map((option, index) => (
             <MenuItem
-              key={option}
+              key={option.eventName}
               selected={index === this.state.selectedIndex}
               onClick={event => this.handleMenuItemClick(event, index)}
             >
-              {option}
+              {option.eventName}
             </MenuItem>
           ))}
           <Divider />
