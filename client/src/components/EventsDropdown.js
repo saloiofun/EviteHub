@@ -28,7 +28,8 @@ class EventsDropdown extends Component {
     anchorEl: null,
     open: false,
     selectedIndex: 0,
-    events: []
+    events: [],
+    latestEvent: ''
   };
 
   componentWillMount () {
@@ -38,7 +39,7 @@ class EventsDropdown extends Component {
   loadEvents = () => {
     API.getEvents()
     .then(res => {
-      this.setState({ events: res.data })
+      this.setState({ events: res.data, latestEvent: res.data[0].eventName })
     })
     .catch(err => this.setState({ error: err.message }))
   }
@@ -77,7 +78,7 @@ class EventsDropdown extends Component {
             <ListItemText
               type='title'
               primary='Event'
-              // secondary={events[this.state.selectedIndex]}
+              secondary={events[0] ? events[this.state.selectedIndex].eventName : ''}
             />
           </ListItem>
         </List>
