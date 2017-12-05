@@ -29,6 +29,10 @@ export default {
   registerUser: function (userData) {
     return axios.post('/api/user', userData)
   },
+  // Get Event by id
+  getEventId: function(id) {
+    return axios.get('/api/events/' + id)
+  },
   // Gets all events of user
   getEvents: function () {
     return axios.get('/api/events/')

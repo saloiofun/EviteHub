@@ -14,7 +14,7 @@ import TodayIcon from 'material-ui-icons/Today'
 import GroupIcon from 'material-ui-icons/Group'
 import ListIcon from 'material-ui-icons/List'
 import API from '../../utils/Api'
-
+import moment from 'moment'
 import compose from 'recompose/compose'
 import { connect } from 'react-redux'
 
@@ -84,17 +84,27 @@ class Dashboard extends Component {
     API.doneTodo()
     .then(res => this.setState({ toDoCompleted: res.data.length }))
     .catch(err => console.log(err))
+
+    // Get Event 
+    API.getEventId('5a12268354e951217c4e5d75')
+    .then(res => {
+      var daysLeft = moment(res.data.date).startOf('day').diff(moment().startOf('day'),'days')
+      this.setState({ 
+        event: res.data,
+        daysLeft: daysLeft
+      })
+    })
+    .catch(err => console.log(err))
   }
 
   render () {
     const { classes, auth } = this.props
-
     return (
       <div className={classes.root}>
         <PageHeader title='Dashboard' body={`Welcome Back! ${auth.profile.name}`} />
         <Grid container spacing={24}>
           <Grid item xs={12} sm={4}>
-            <ProgressCard title='Days Left' info='3'>
+            <ProgressCard title='Days Left' info={this.state.daysLeft ? this.state.daysLeft : ""}>
               <TodayIcon className={classes.progressIcon} />
             </ProgressCard>
           </Grid>
