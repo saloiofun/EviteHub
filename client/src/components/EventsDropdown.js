@@ -7,8 +7,10 @@ import Menu, { MenuItem } from 'material-ui/Menu'
 import TodayIcon from 'material-ui-icons/Today'
 import Divider from 'material-ui/Divider'
 import { Link } from 'react-router-dom'
+import * as actionTypes from '../store/actions/'
 
-import API from '../utils/Api'
+import compose from 'recompose/compose'
+import { connect } from 'react-redux'
 
 const styles = theme => ({
   root: {
@@ -18,30 +20,15 @@ const styles = theme => ({
   }
 })
 
-// const options = [
-//   'Housewarming Party',
-//   'Baby Shower'
-// ]
-
 class EventsDropdown extends Component {
   state = {
     anchorEl: null,
     open: false,
-    selectedIndex: 0,
-    events: [],
-    latestEvent: ''
-  };
-
-  componentWillMount () {
-    this.loadEvents()
+    selectedIndex: 0
   }
 
-  loadEvents = () => {
-    API.getEvents()
-    .then(res => {
-      this.setState({ events: res.data, latestEvent: res.data[0].eventName })
-    })
-    .catch(err => this.setState({ error: err.message }))
+  componentDidMount () {
+    this.props.onFetchEvents()
   }
 
   button = undefined;
@@ -59,9 +46,8 @@ class EventsDropdown extends Component {
   };
 
   render () {
-    const { classes } = this.props
-    const { events } = this.state
-    console.log(events[0])
+    const { classes, events } = this.props
+
     return (
       <div className={classes.root}>
         <List>
@@ -70,38 +56,33 @@ class EventsDropdown extends Component {
             aria-haspopup='true'
             aria-controls='lock-menu'
             aria-label='Event'
-            onClick={this.handleClickListItem}
-          >
+            onClick={this.handleClickListItem} >
             <ListItemIcon>
               <TodayIcon />
             </ListItemIcon>
             <ListItemText
               type='title'
               primary='Event'
-              secondary={events[0] ? events[this.state.selectedIndex].eventName : ''}
-            />
+              secondary={events[0] ? events[this.state.selectedIndex].eventName : ''} />
           </ListItem>
         </List>
         <Menu
           id='lock-menu'
           anchorEl={this.state.anchorEl}
           open={this.state.open}
-          onRequestClose={this.handleRequestClose}
-        >
+          onRequestClose={this.handleRequestClose} >
           {events.map((option, index) => (
             <MenuItem
               key={option.eventName}
               selected={index === this.state.selectedIndex}
-              onClick={event => this.handleMenuItemClick(event, index)}
-            >
+              onClick={event => this.handleMenuItemClick(event, index)} >
               {option.eventName}
             </MenuItem>
           ))}
           <Divider />
           <MenuItem
             component={Link} to='/events'
-            onClick={this.handleRequestClose}
-            >
+            onClick={this.handleRequestClose} >
             View All
           </MenuItem>
         </Menu>
@@ -114,4 +95,20 @@ EventsDropdown.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(EventsDropdown)
+const mapStateToProps = state => {
+  return {
+    events: state.event.events
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchEvents: () => dispatch(actionTypes.fetchEvents())
+  }
+}
+
+export default compose(
+  withStyles(styles, {
+    name: 'EventsDropdown'
+  }), connect(mapStateToProps, mapDispatchToProps)
+)(EventsDropdown)

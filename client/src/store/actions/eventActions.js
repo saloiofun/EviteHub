@@ -1,6 +1,5 @@
 import * as actionTypes from './actionTypes'
-// import API from '../../utils/Api'
-import axios from 'axios'
+import API from '../../utils/Api'
 
 export const fetchEventsSuccess = (events) => {
   return {
@@ -25,22 +24,14 @@ export const fetchEventsStart = () => {
 export const fetchEvents = () => {
   return dispatch => {
     dispatch(fetchEventsStart())
-
-    axios.get('localhost:3000/api/events/')
+    API.getEvents()
     .then(res => {
       console.log(res)
       console.log(res.data)
-      const fetchedEvents = []
-      for (let key in res.data) {
-        fetchedEvents.push({
-          ...res.data[key],
-          id: key
-        })
-      }
+      const fetchedEvents = res.data
       dispatch(fetchEventsSuccess(fetchedEvents))
     })
     .catch(err => {
-      console.log(err)
       dispatch(fetchEventsFail(err))
     })
   }
