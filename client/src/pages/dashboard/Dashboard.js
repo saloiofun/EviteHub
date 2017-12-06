@@ -87,11 +87,12 @@ class Dashboard extends Component {
   }
 
   render () {
-    const { classes, auth } = this.props
+    const { classes, auth, currentEvent } = this.props
+    console.log(currentEvent.eventName)
 
     return (
       <div className={classes.root}>
-        <PageHeader title='Dashboard' body={`Welcome Back! ${auth.profile.name}`} />
+        <PageHeader title={currentEvent.eventName ? currentEvent.eventName : 'Dashboard'} body={`Welcome Back! ${auth.profile.name}`} />
         <Grid container spacing={24}>
           <Grid item xs={12} sm={4}>
             <ProgressCard title='Days Left' info='3'>
@@ -161,7 +162,8 @@ Dashboard.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    auth: state.auth
+    auth: state.auth,
+    currentEvent: state.event.currentEvent
   }
 }
 

@@ -14,6 +14,7 @@ const fetchEventsStart = (state, action) => {
 const fetchEventsSuccess = (state, action) => {
   return updateObject(state, {
     events: action.events,
+    currentEvent: action.currentEvent,
     loading: false
   })
 }
