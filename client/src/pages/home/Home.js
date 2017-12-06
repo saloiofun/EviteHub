@@ -52,7 +52,6 @@ class Home extends Component {
               <p>Plan your next Event with us by using our easy to use Event Planner. Event Planning has never been easier.</p>
               <div>
                 <Button raised color='primary' className={classes.button}>Sign Up</Button>
-                <Button raised color='accent' className={classNames(classes.button, classes.raisedAccent)}>Sign In</Button>
               </div>
             </div>
           </div>
