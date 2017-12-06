@@ -11,19 +11,11 @@ import { Face, Print, ViewList, Assignment } from 'material-ui-icons'
 
 const styles = theme => ({
   root: {
-    padding: theme.spacing.unit * 2,
     paddingTop: 80,
     margin: '0 auto',
     marginBottom: 30,
-    minHeight: '100vh',
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: theme.spacing.unit * 3,
-      paddingRight: theme.spacing.unit * 3
-    }
-  },
-  cards: {
-    flexGrow: 1,
-    marginTop: 30
+    width: '100%',
+    minHeight: '100vh'
   },
   button: {
     margin: theme.spacing.unit
@@ -36,6 +28,21 @@ const styles = theme => ({
   },
   iconColor: {
     color: orange[700]
+  },
+  section: {
+    paddingTop: '50px',
+    paddingBottom: '50px'
+  },
+  sectionWhite: {
+    paddingTop: '50px',
+    paddingBottom: '50px',
+    backgroundColor: '#fff'
+  },
+  sectionContent: {
+    paddingTop: '200px'
+  },
+  sectionContentLeft: {
+    paddingLeft: '200px'
   }
 })
 
@@ -56,54 +63,60 @@ class Home extends Component {
             </div>
           </div>
         </div>
-        <div className={classes.cards}>
-          <Grid container spacing={24}>
-            <Grid item xs={6} lg={3}>
-              <Card className={classNames(classes.card, classes.cardItem)}>
-                <CardContent>
-                  <Face className={classes.iconColor} style={{ width: 64, height: 64 }} />
-                  <Typography type='headline' component='h2'>Invitations</Typography>
-                  <Typography component='p'>
-                    Create your guest list and send out invitations for your event. Send out reminders and more...
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={6} lg={3}>
-              <Card className={classNames(classes.card, classes.cardItem)}>
-                <CardContent>
-                  <Print className={classes.iconColor} style={{ width: 64, height: 64 }} />
-                  <Typography type='headline' component='h2'>Guest List</Typography>
-                  <Typography component='p'>
-                    Use our guest list to keep track of who's RSVP'd, Invite guest. Send out invitations and more...
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={6} lg={3}>
-              <Card className={classNames(classes.card, classes.cardItem)}>
-                <CardContent>
-                  <ViewList className={classes.iconColor} style={{ width: 64, height: 64 }} />
-                  <Typography type='headline' component='h2'>Checklist</Typography>
-                  <Typography component='p'>
-                    Stay on schedule and keep track of your checklist of items needed for your event
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={6} lg={3}>
-              <Card className={classNames(classes.card, classes.cardItem)}>
-                <CardContent>
-                  <Assignment className={classes.iconColor} style={{ width: 64, height: 64 }} />
-                  <Typography type='headline' component='h2'>Events</Typography>
-                  <Typography component='p'>
-                    You can create multiple events and keep track of each event with guestlist, invitations and more...
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
+
+        <Grid container spacing={24} className={classes.sectionWhite}>
+          <Grid item xs={12} lg={6} style={{textAlign: 'center'}}>
+            <img src='/static/images/home/invitation-1.jpg' width='600px' />
           </Grid>
-        </div>
+          <Grid item xs={12} lg={3}>
+            <div className={classes.sectionContent}>
+              <Typography type='headline' component='h2'>Invitations</Typography>
+              <Typography component='p'>Create your guest list and send out invitations for your event. Send out reminders and more...</Typography>
+            </div>
+          </Grid>
+        </Grid>
+
+        <Grid container spacing={24} className={classes.section}>
+          <Grid item xs={12} lg={6}>
+            <div className={classNames(classes.sectionContent, classes.sectionContentLeft)}>
+              <Typography type='headline' component='h2'>Guest List</Typography>
+              <Typography component='p'>
+                Use our guest list to keep track of who's RSVP'd, Invite guest. Send out invitations and more...
+              </Typography>
+            </div>
+          </Grid>
+          <Grid item xs={12} lg={6} style={{textAlign: 'center'}}>
+            <img src='/static/images/home/invitation-1.jpg' width='600px' />
+          </Grid>
+        </Grid>
+
+        <Grid container spacing={24} className={classes.sectionWhite}>
+          <Grid item xs={12} lg={6} style={{textAlign: 'center'}}>
+            <img src='/static/images/home/invitation-1.jpg' width='600px' />
+          </Grid>
+          <Grid item xs={12} lg={3}>
+            <div className={classes.sectionContent}>
+              <Typography type='headline' component='h2'>Checklist</Typography>
+              <Typography component='p'>
+                Stay on schedule and keep track of your checklist of items needed for your event
+              </Typography>
+            </div>
+          </Grid>
+        </Grid>
+
+        <Grid container spacing={24} className={classes.section}>
+          <Grid item xs={12} lg={6}>
+            <div className={classNames(classes.sectionContent, classes.sectionContentLeft)}>
+              <Typography type='headline' component='h2'>Events</Typography>
+              <Typography component='p'>
+                You can create multiple events and keep track of each event with guestlist, invitations and more...
+              </Typography>
+            </div>
+          </Grid>
+          <Grid item xs={12} lg={6} style={{textAlign: 'center'}}>
+            <img src='/static/images/home/invitation-1.jpg' width='600px' />
+          </Grid>
+        </Grid>
       </div>
     )
   }
