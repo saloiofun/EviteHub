@@ -12,6 +12,10 @@ router.route('/:id')
   .put(controller.updateGuest)
   .delete(controller.removeGuest)
 
+// Matches with "api/guests/event/:id"
+router.route('/event/:id')
+  .get(controller.findGuestByEventId)
+
 // Matches with "/api/guests/rsvp/:id"
 router.route('/rsvp/:id')
   .get(controller.findGuestByHash)

@@ -6,6 +6,10 @@ const eventSchema = new Schema({
     type: String,
     required: true
   },
+  userId: {
+    type: String,
+    required: true
+  },
   description: {
     type: String
   },
@@ -19,6 +23,10 @@ const eventSchema = new Schema({
   time: {
     type: Date,
     required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   },
   guests: [{
     guest: {

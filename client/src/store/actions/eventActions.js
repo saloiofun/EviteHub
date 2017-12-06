@@ -1,10 +1,11 @@
 import * as actionTypes from './actionTypes'
 import API from '../../utils/Api'
 
-export const fetchEventsSuccess = (events) => {
+export const fetchEventsSuccess = (events, currentEvent) => {
   return {
     type: actionTypes.FETCH_EVENTS_SUCCESS,
-    events: events
+    events: events,
+    currentEvent: currentEvent
   }
 }
 
@@ -21,15 +22,23 @@ export const fetchEventsStart = () => {
   }
 }
 
-export const fetchEvents = () => {
+export const updateCurrentEvent = (currentEvent) => {
+  return {
+    type: actionTypes.UPDATE_CURRENT_EVENT,
+    currentEvent: currentEvent
+  }
+}
+
+export const fetchEvents = (userId) => {
   return dispatch => {
     dispatch(fetchEventsStart())
-    API.getEvents()
+    API.getEventByUserId(userId)
     .then(res => {
       console.log(res)
       console.log(res.data)
       const fetchedEvents = res.data
-      dispatch(fetchEventsSuccess(fetchedEvents))
+      const currentEvent = res.data.length !== 0 ? res.data[0] : {}
+      dispatch(fetchEventsSuccess(fetchedEvents, currentEvent))
     })
     .catch(err => {
       dispatch(fetchEventsFail(err))
