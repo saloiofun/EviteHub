@@ -70,7 +70,9 @@ class Dashboard extends Component {
   componentWillMount () {
     this.setState({
       toDoCount: 0,
-      toDoCompleted: 0
+      toDoCompleted: 0,
+      totalGuest: 0,
+      totalGuestRSVP: 0
     })
   }
 
@@ -83,6 +85,16 @@ class Dashboard extends Component {
     // Get Todo Completed Count
     API.doneTodo()
     .then(res => this.setState({ toDoCompleted: res.data.length }))
+    .catch(err => console.log(err))
+
+    // Get total guest
+    API.getGuests()
+    .then(res => this.setState({ totalGuest: res.data.length }))
+    .catch(err => console.log(err))
+
+    // Get total guest RSVP
+    API.getGuestsRSVP()
+    .then(res => this.setState({ totalGuestRSVP: res.data.length }))
     .catch(err => console.log(err))
   }
 
@@ -99,7 +111,7 @@ class Dashboard extends Component {
             </ProgressCard>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <ProgressCard title='RSVP' info='25/150'>
+            <ProgressCard title='RSVP' info={`${this.state.totalGuestRSVP} / ${this.state.totalGuest}`}>
               <GroupIcon className={classes.progressIcon} />
             </ProgressCard>
           </Grid>

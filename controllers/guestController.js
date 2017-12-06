@@ -8,6 +8,12 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err))
   },
+  findGuestRSVP: function (req, res) {
+    db.Guest
+      .find({rsvp: true})
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err))
+  },
   findGuestById: function (req, res) {
     db.Guest
       .findById({_id: req.params.id})
