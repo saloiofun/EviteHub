@@ -74,7 +74,7 @@ class SendInvites extends React.Component {
 Please click on the link to let me know if you can make it!`,
     error: false,
     emailsSent: false,
-    emailURL: 'http://localhost:3000/rsvp/?token=',
+    emailURL: process.env.REACT_APP_EMAIL_LINK,
     guests: []
   }
 
@@ -140,7 +140,7 @@ Please click on the link to let me know if you can make it!`,
     let emailArray = this.state.to.split(';')
 
     for (let i in emailArray) {
-      if (!this.validateEmail(emailArray[i])) {
+      if (!this.validateEmail(emailArray[i].trim())) {
         this.setState({error: true})
         return
       }

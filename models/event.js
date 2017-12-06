@@ -21,7 +21,8 @@ const eventSchema = new Schema({
     required: true
   },
   time: {
-    type: Date
+    type: Date,
+    required: true
   },
   guests: [{
     guest: {
