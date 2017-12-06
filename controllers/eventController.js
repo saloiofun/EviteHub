@@ -14,6 +14,13 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err))
   },
+  findEventAllById: function (req, res) {
+    db.Event
+      .find({userId: req.params.id})
+      .sort({createdAt: 'desc'})
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err))
+  },
   createEvent: function (req, res) {
     db.Event
       .create(req.body)

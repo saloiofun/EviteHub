@@ -8,6 +8,7 @@ import TodayIcon from 'material-ui-icons/Today'
 import Divider from 'material-ui/Divider'
 import { Link } from 'react-router-dom'
 import * as actionTypes from '../store/actions/'
+import API from '../utils/Api'
 
 import compose from 'recompose/compose'
 import { connect } from 'react-redux'
@@ -28,7 +29,7 @@ class EventsDropdown extends Component {
   }
 
   componentDidMount () {
-    this.props.onFetchEvents()
+    this.props.onFetchEvents(this.props.userId)
   }
 
   button = undefined;
@@ -37,8 +38,13 @@ class EventsDropdown extends Component {
     this.setState({ open: true, anchorEl: event.currentTarget })
   };
 
-  handleMenuItemClick = (event, index) => {
+  handleMenuItemClick = (event, index, eventId) => {
     this.setState({ selectedIndex: index, open: false })
+    API.getEventById(eventId)
+    .then(res => {
+      this.props.onUpdateCurrentEvent(res.data)
+    })
+    .catch(err => console.log(err))
   };
 
   handleRequestClose = () => {
@@ -75,7 +81,7 @@ class EventsDropdown extends Component {
             <MenuItem
               key={option.eventName}
               selected={index === this.state.selectedIndex}
-              onClick={event => this.handleMenuItemClick(event, index)} >
+              onClick={event => this.handleMenuItemClick(event, index, option._id)} >
               {option.eventName}
             </MenuItem>
           ))}
@@ -97,13 +103,15 @@ EventsDropdown.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    events: state.event.events
+    events: state.event.events,
+    userId: state.auth.profile.sub
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchEvents: () => dispatch(actionTypes.fetchEvents())
+    onFetchEvents: (userId) => dispatch(actionTypes.fetchEvents(userId)),
+    onUpdateCurrentEvent: (currentEvent) => dispatch(actionTypes.updateCurrentEvent(currentEvent))
   }
 }
 
