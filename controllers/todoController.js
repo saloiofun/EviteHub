@@ -3,9 +3,20 @@ const db = require('../models')
 // Defining methods for the Controller
 module.exports = {
   createTodo: function (req, res) {
+    console.log('eventID', req.body.eventId)
     db.Todo
-    .create(req.body)
-    .then(dbModel => res.json(dbModel))
+    .create({
+      todoDesc: req.body.todoDesc
+    })
+    .then(dbModel => {
+      return db.Event.findOneAndUpdate(
+        {_id: req.body.eventId},
+        {$push: {todo: dbModel._id}},
+        {new: true}
+      )
+      .then(dbEventModel => res.json(dbEventModel))
+      .catch(errr => res.status(422).json(errr))
+    })
     .catch(err => res.status(422).json(err))
   },
   updateTodo: function (req, res) {

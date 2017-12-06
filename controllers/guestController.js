@@ -38,7 +38,7 @@ module.exports = {
       console.log(dbModel)
       // Add new guest to event
       db.Event.findByIdandupdate(
-        req.body.eventID,
+        req.body.eventId,
         {$push: {guests: dbModel}},
         {upsert: true}
       )
