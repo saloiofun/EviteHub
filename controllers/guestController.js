@@ -8,6 +8,13 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err))
   },
+  findGuestByEventId: function (req, res) {
+    db.Event
+      .find({_id: req.body.eventId})
+      .populate('guest')
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err))
+  },
   findGuestById: function (req, res) {
     db.Guest
       .findById({_id: req.params.id})

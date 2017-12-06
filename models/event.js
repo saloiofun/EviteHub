@@ -6,7 +6,7 @@ const eventSchema = new Schema({
     type: String,
     required: true
   },
-  userID: {
+  userId: {
     type: String,
     required: true
   },
@@ -23,6 +23,10 @@ const eventSchema = new Schema({
   time: {
     type: Date,
     required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   },
   guests: [{
     guest: {

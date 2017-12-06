@@ -17,6 +17,9 @@ import Dialog, {
 import Slide from 'material-ui/transitions/Slide'
 import PagesIcon from 'material-ui-icons/Pages'
 
+import compose from 'recompose/compose'
+import { connect } from 'react-redux'
+
 const styles = theme => ({
   paper: {
     padding: '10px'
@@ -143,13 +146,14 @@ class addEvent extends React.Component {
     })
   }
 
-  onSubmit = () => {
+  onSubmit = (userId) => {
     let eventData = {
       eventName: this.state.name,
       description: this.state.description,
       location: this.state.location,
       date: this.state.selectedDate,
-      time: this.state.selectedTime
+      time: this.state.selectedTime,
+      userId: userId
     }
     this.setState({
       name: '',
@@ -163,7 +167,8 @@ class addEvent extends React.Component {
 
   render () {
     const { selectedDate, selectedTime } = this.state
-    const { classes } = this.props
+    const { classes, auth } = this.props
+    console.log(auth)
     return (
 
       <span>
@@ -250,7 +255,7 @@ class addEvent extends React.Component {
             <Button onClick={this.handleRequestClose} color='primary'>
               Cancel
             </Button>
-            <Button onClick={this.onSubmit} color='primary'>
+            <Button onClick={() => this.onSubmit(auth.profile.sub)} color='primary'>
               Create
             </Button>
           </DialogActions>
@@ -265,4 +270,14 @@ addEvent.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(addEvent)
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  }
+}
+
+export default compose(
+  withStyles(styles, {
+    name: 'addEvent'
+  }), connect(mapStateToProps)
+)(addEvent)
