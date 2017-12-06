@@ -21,6 +21,13 @@ export const fetchEventsStart = () => {
   }
 }
 
+export const updateCurrentEvent = (currentEvent) => {
+  return {
+    type: actionTypes.UPDATE_CURRENT_EVENT,
+    currentEvent: currentEvent
+  }
+}
+
 export const fetchEvents = () => {
   return dispatch => {
     dispatch(fetchEventsStart())
