@@ -14,6 +14,9 @@ import IconButton from 'material-ui/IconButton'
 import API from '../utils/Api'
 import Alert from './Alert'
 
+import compose from 'recompose/compose'
+import { connect } from 'react-redux'
+
 function TabContainer ({ children, dir }) {
   return (
     <div dir={dir} style={{ paddingBottom: 8 * 3 }}>
@@ -133,7 +136,7 @@ class CheckboxList extends React.Component {
     const addTodo = this.state.addTodo
 
     // Save Todo in DB
-    API.saveTodo({ todoDesc: addTodo })
+    API.saveTodo({ eventId: this.props.currentEvent._id, todoDesc: addTodo })
     .then(res => {
       this.loadTodoItems()
       this.closeModal()
@@ -291,4 +294,15 @@ TabContainer.propTypes = {
   dir: PropTypes.string.isRequired
 }
 
-export default withStyles(styles)(CheckboxList)
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+    currentEvent: state.event.currentEvent
+  }
+}
+
+export default compose(
+  withStyles(styles, {
+    name: 'CheckboxList'
+  }), connect(mapStateToProps)
+)(CheckboxList)
