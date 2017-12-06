@@ -22,8 +22,22 @@ module.exports = {
   },
   createGuest: function (req, res) {
     db.Guest
-    .create(req.body)
-    .then(dbModel => res.json(dbModel))
+    .create({
+      guestName: req.body.guestName,
+      guestParty: req.body.guestParty,
+      guestEmail: req.body.guestEmail
+    })
+    .then(dbModel => {
+      console.log(dbModel)
+      // Add new guest to event
+      db.Event.findByIdandupdate(
+        req.body.eventID,
+        {$push: {guests: dbModel}},
+        {upsert: true}
+      )
+      .then(dbEventModel => res.json(dbEventModel))
+      .catch(errr => res.status(422).json(errr))
+    })
     .catch(err => res.status(422).json(err))
   },
   updateGuest: function (req, res) {

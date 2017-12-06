@@ -11,4 +11,7 @@ router.route('/:id')
   .put(controller.updateEvent)
   .delete(controller.deleteEvent)
 
+router.route('/user/:id')
+  .get(controller.findEventAllById)
+
 module.exports = router
