@@ -5,6 +5,10 @@ export default {
   getGuests: function () {
     return axios.get('/api/guests')
   },
+  // Gets all guests RSVP
+  getGuestsRSVP: function () {
+    return axios.get('/api/guests/data/rsvp')
+  },
   // Gets the guest with the given id
   getGuestId: function (id) {
     return axios.get('/api/guests/' + id)
