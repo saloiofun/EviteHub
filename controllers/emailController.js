@@ -15,7 +15,6 @@ module.exports = {
     let hash = crypto.createHash('md5').update(req.body.to).digest('hex')
     var guest = { guestEmail: req.body.to, emailed: true, emailHash: hash, eventId: req.body.eventId }
     req.body.message = req.body.message.replace(/\n/ig, '<br>')
-    console.log(req.body.url)
     const mailOptions = {
       to: req.body.to,
       subject: req.body.subject,
@@ -27,8 +26,17 @@ module.exports = {
         res.json(error)
       } else {
         db.Guest
-        .create(guest)
-        .then(dbModel => res.json(dbModel))
+          .create(guest)
+          .then(dbModel => {
+            // Add new guest to event
+            return db.Event.findOneAndUpdate(
+              {_id: guest.eventId},
+              {$push: {guest: dbModel._id}},
+              {new: true}
+            )
+            .then(dbEventModel => res.json(dbEventModel))
+            .catch(errr => res.status(422).json(errr))
+          })
         .catch(err => {
           console.log(err.name)
           if (err.name === 'ValidationError') {
