@@ -18,4 +18,9 @@ router.route('/undone')
 router.route('/listed/:id')
 .put(controller.updateTodo)
 .delete(controller.removeTodo)
+
+// Matches with "/api/todos/event/:id"
+router.route('/event/:id')
+.get(controller.findTodoByEvent)
+
 module.exports = router

@@ -76,5 +76,9 @@ export default {
   // Delete Todo
   deleteTodo: function (id) {
     return axios.delete('/api/todos/listed/' + id)
+  },
+  // Get Todo by Event
+  getTodoByEvent: function (id) {
+    return axios.get('/api/todos/event/' + id)
   }
 }
