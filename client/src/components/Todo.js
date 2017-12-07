@@ -14,6 +14,9 @@ import IconButton from 'material-ui/IconButton'
 import API from '../utils/Api'
 import Alert from './Alert'
 
+import compose from 'recompose/compose'
+import { connect } from 'react-redux'
+
 function TabContainer ({ children, dir }) {
   return (
     <div dir={dir} style={{ paddingBottom: 8 * 3 }}>
@@ -45,25 +48,17 @@ class CheckboxList extends React.Component {
   }
 
   componentDidMount () {
-    this.loadCompletedItems()
     this.loadTodoItems()
-  }
-
-  loadCompletedItems () {
-    // Get Todo from DB
-    API.doneTodo()
-    .then(res => {
-      const checked = res.data.map(item => item.todoDesc)
-      this.setState({ completedItems: res.data, checked })
-    })
-    .catch(err => console.log(err))
   }
 
   loadTodoItems () {
     // Get Completed Todo from DB
-    API.unDoneTodo()
+    API.getTodoByEvent(this.props.currentEvent._id)
     .then(res => {
-      this.setState({ todoItems: res.data })
+      const todoDone = res.data.todo.filter(todoItem => !todoItem.todoDone)
+      const todoNotDone = res.data.todo.filter(todoItem => todoItem.todoDone)
+
+      this.setState({ todoItems: todoDone, completedItems: todoNotDone })
     })
     .catch(err => console.log(err))
   }
@@ -90,7 +85,7 @@ class CheckboxList extends React.Component {
         this.setState({checked})
 
         // load todo items from DB
-        this.loadCompletedItems()
+
         this.loadTodoItems()
         this.openSnack(`Checked: ${value}`)
       })
@@ -110,7 +105,7 @@ class CheckboxList extends React.Component {
         this.setState({checked})
 
         // load todo items from DB
-        this.loadCompletedItems()
+
         this.loadTodoItems()
         this.openSnack(`Unchecked: ${value}`)
       })
@@ -133,7 +128,7 @@ class CheckboxList extends React.Component {
     const addTodo = this.state.addTodo
 
     // Save Todo in DB
-    API.saveTodo({ todoDesc: addTodo })
+    API.saveTodo({ eventId: this.props.currentEvent._id, todoDesc: addTodo })
     .then(res => {
       this.loadTodoItems()
       this.closeModal()
@@ -160,7 +155,6 @@ class CheckboxList extends React.Component {
   handleDeleteTodo = (id) => {
     API.deleteTodo(id)
     .then(res => {
-      this.loadCompletedItems()
       this.loadTodoItems()
       this.openSnack(`Deleted: ${res.data.todoDesc}`)
     })
@@ -291,4 +285,15 @@ TabContainer.propTypes = {
   dir: PropTypes.string.isRequired
 }
 
-export default withStyles(styles)(CheckboxList)
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+    currentEvent: state.event.currentEvent
+  }
+}
+
+export default compose(
+  withStyles(styles, {
+    name: 'CheckboxList'
+  }), connect(mapStateToProps)
+)(CheckboxList)

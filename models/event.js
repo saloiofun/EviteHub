@@ -28,11 +28,13 @@ const eventSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  guests: [{
-    guest: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Guest'
-    }
+  guest: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Guest'
+  }],
+  todo: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Todo'
   }]
 
 })
