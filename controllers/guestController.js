@@ -8,13 +8,6 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err))
   },
-  findGuestByEventId: function (req, res) {
-    db.Event
-      .find({_id: req.body.eventId})
-      .populate('guest')
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err))
-  },
   findGuestById: function (req, res) {
     db.Guest
       .findById({_id: req.params.id})
@@ -35,12 +28,11 @@ module.exports = {
       guestEmail: req.body.guestEmail
     })
     .then(dbModel => {
-      console.log(dbModel)
       // Add new guest to event
-      db.Event.findByIdandupdate(
-        req.body.eventId,
-        {$push: {guests: dbModel}},
-        {upsert: true}
+      return db.Event.findOneAndUpdate(
+        {_id: req.body.eventId},
+        {$push: {guest: dbModel._id}},
+        {new: true}
       )
       .then(dbEventModel => res.json(dbEventModel))
       .catch(errr => res.status(422).json(errr))
@@ -57,6 +49,13 @@ module.exports = {
     db.Guest
       .findById({ _id: req.params.id })
       .then(dbModel => dbModel.remove())
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err))
+  },
+  findGuestByEvent: function (req, res) {
+    db.Event
+      .findOne({ _id: req.params.id })
+      .populate('guest')
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err))
   }

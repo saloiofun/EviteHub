@@ -19,6 +19,8 @@ import PageHeader from '../../components/PageHeader'
 import { FormControlLabel, FormGroup } from 'material-ui/Form'
 import Grid from 'material-ui/Grid'
 import Slide from 'material-ui/transitions/Slide'
+import compose from 'recompose/compose'
+import { connect } from 'react-redux'
 
 // const for style
 const styles = theme => ({
@@ -65,8 +67,8 @@ class GuestList extends Component {
 
   // handle call all guest
   loadGuest = () => {
-    API.getGuests()
-      .then(res => this.setState({ allGuest: res.data }))
+    API.getGuestByEvent(this.props.currentEvent._id)
+      .then(res => this.setState({ allGuest: res.data.guest }))
       .catch(err => console.log(err))
   }
 
@@ -339,4 +341,15 @@ GuestList.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(GuestList)
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+    currentEvent: state.event.currentEvent
+  }
+}
+
+export default compose(
+  withStyles(styles, {
+    name: 'GuestList'
+  }), connect(mapStateToProps)
+)(GuestList)
