@@ -87,8 +87,8 @@ class Rsvp extends React.Component {
 
   getEventInfo = (id) => {
     API.getEventById(id)
-    .then((data) => {
-      console.log('Event:', data)
+    .then(res => {
+      console.log('Event:', res.data)
     })
   }
 
