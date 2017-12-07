@@ -48,25 +48,17 @@ class CheckboxList extends React.Component {
   }
 
   componentDidMount () {
-    this.loadCompletedItems()
     this.loadTodoItems()
-  }
-
-  loadCompletedItems () {
-    // Get Todo from DB
-    API.doneTodo()
-    .then(res => {
-      const checked = res.data.map(item => item.todoDesc)
-      this.setState({ completedItems: res.data, checked })
-    })
-    .catch(err => console.log(err))
   }
 
   loadTodoItems () {
     // Get Completed Todo from DB
-    API.unDoneTodo()
+    API.getTodoByEvent(this.props.currentEvent._id)
     .then(res => {
-      this.setState({ todoItems: res.data })
+      const todoDone = res.data.todo.filter(todoItem => !todoItem.todoDone)
+      const todoNotDone = res.data.todo.filter(todoItem => todoItem.todoDone)
+
+      this.setState({ todoItems: todoDone, completedItems: todoNotDone })
     })
     .catch(err => console.log(err))
   }
@@ -93,7 +85,7 @@ class CheckboxList extends React.Component {
         this.setState({checked})
 
         // load todo items from DB
-        this.loadCompletedItems()
+
         this.loadTodoItems()
         this.openSnack(`Checked: ${value}`)
       })
@@ -113,7 +105,7 @@ class CheckboxList extends React.Component {
         this.setState({checked})
 
         // load todo items from DB
-        this.loadCompletedItems()
+
         this.loadTodoItems()
         this.openSnack(`Unchecked: ${value}`)
       })
@@ -163,7 +155,6 @@ class CheckboxList extends React.Component {
   handleDeleteTodo = (id) => {
     API.deleteTodo(id)
     .then(res => {
-      this.loadCompletedItems()
       this.loadTodoItems()
       this.openSnack(`Deleted: ${res.data.todoDesc}`)
     })
