@@ -49,5 +49,12 @@ module.exports = {
       .find({ todoDone: false })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err))
+  },
+  findTodoByEvent: function (req, res) {
+    db.Event
+      .findOne({ _id: req.params.id })
+      .populate('todo')
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err))
   }
 }
