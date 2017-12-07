@@ -6,6 +6,8 @@ import orange from 'material-ui/colors/orange'
 import classNames from 'classnames'
 import Grid from 'material-ui/Grid'
 import Typography from 'material-ui/Typography'
+import Auth from '../../auth'
+const auth = new Auth()
 
 const styles = theme => ({
   root: {
@@ -70,8 +72,13 @@ const styles = theme => ({
 })
 
 class Home extends Component {
+  login () {
+    auth.login()
+  }
+
   render () {
     const { classes } = this.props
+    console.log(this.props)
 
     return (
       <div className={classes.root}>
@@ -81,7 +88,7 @@ class Home extends Component {
               <h1 className='featured-title'>Take the Hassle out of Event Planning</h1>
               <p>Plan your next Event with us by using our easy to use Event Planner. Event Planning has never been easier.</p>
               <div>
-                <Button raised color='primary' className={classes.button}>Sign Up</Button>
+                <Button raised color='primary' className={classes.button} onClick={this.login.bind(this)}>Sign Up</Button>
               </div>
             </div>
           </div>
