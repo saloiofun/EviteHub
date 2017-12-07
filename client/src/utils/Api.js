@@ -80,5 +80,9 @@ export default {
   // Get Todo by Event
   getTodoByEvent: function (id) {
     return axios.get('/api/todos/event/' + id)
+  },
+  // Get Guest by Event
+  getGuestByEvent: function (id) {
+    return axios.get('/api/guests/event/' + id)
   }
 }
