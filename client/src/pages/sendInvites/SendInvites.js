@@ -81,6 +81,12 @@ Please click on the link to let me know if you can make it!`,
     guests: []
   }
 
+  componentDidMount () {
+    if (this.props.currentEvent) {
+      this.setState({subject: this.props.currentEvent.eventName})
+    }
+  }
+
   validateEmail = (email) => {
     let reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     if (reg.test(email)) {

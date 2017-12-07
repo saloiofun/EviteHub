@@ -9,7 +9,8 @@ const guestSchema = new Schema({
   emailHash: { type: String },
   rsvp: { type: Boolean, default: false },
   emailed: { type: Boolean, default: false },
-  comment: String
+  comment: String,
+  eventId: { type: String }
 })
 
 guestSchema.plugin(uniqueValidator)

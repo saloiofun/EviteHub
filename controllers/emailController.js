@@ -13,7 +13,7 @@ module.exports = {
       }
     })
     let hash = crypto.createHash('md5').update(req.body.to).digest('hex')
-    var guest = { guestEmail: req.body.to, emailed: true, emailHash: hash }
+    var guest = { guestEmail: req.body.to, emailed: true, emailHash: hash, eventId: req.body.eventId }
     req.body.message = req.body.message.replace(/\n/ig, '<br>')
     console.log(req.body.url)
     const mailOptions = {
@@ -34,7 +34,7 @@ module.exports = {
           if (err.name === 'ValidationError') {
             // If guest with email address exist in database we insert hash
             db.Guest
-            .findOneAndUpdate({guestEmail: guest.guestEmail}, { emailHash: guest.emailHash }, { upsert: true, new: true })
+            .findOneAndUpdate({guestEmail: guest.guestEmail}, { emailHash: guest.emailHash, eventId: guest.eventId }, { upsert: true, new: true })
             .then(dbModel => res.json(dbModel))
             .catch(upError => res.status(422).json(upError))
           } else {
