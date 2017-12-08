@@ -10,6 +10,10 @@ import Button from 'material-ui/Button'
 import PageHeader from '../../components/PageHeader'
 import Divider from 'material-ui/Divider'
 import moment from 'moment'
+import * as actionTypes from '../../store/actions/'
+
+import compose from 'recompose/compose'
+import { connect } from 'react-redux'
 
 const styles = theme => ({
   root: {
@@ -46,25 +50,24 @@ class viewEvents extends React.Component {
     events: []
   }
 
-  componentDidMount () {
-    this.loadEvents()
-  }
-
-  loadEvents = () => {
-    API.getEvents()
-    .then(res => {
-      this.setState({ events: res.data })
-    })
-    .catch(err => this.setState({ error: err.message }))
-  }
-
   deleteEvent = (id) => {
     API.deleteEvent(id)
     .then(data => {
-      this.loadEvents()
       console.log(data)
+      API.getEventByUserId(this.props.auth.profile.sub)
+      .then(res => {
+        this.props.onUpdateAllEvents(res.data)
+      })
     })
     .catch(err => console.log(err))
+  }
+
+  onView = (id) => {
+    API.getEventById(id)
+    .then(res => {
+      console.log(res.data)
+      this.props.onUpdateCurrentEvent(res.data)
+    })
   }
 
   render () {
@@ -73,7 +76,7 @@ class viewEvents extends React.Component {
       <div className={classes.root}>
         <PageHeader title='Events' body={`Manage your Events!`} />
         <Grid container spacing={24}>
-          {this.state.events.map(event => (
+          {this.props.events.map(event => (
             <Grid item xs={12} sm={4} key={event._id}>
               <Card>
                 <CardMedia
@@ -96,7 +99,7 @@ class viewEvents extends React.Component {
                 </CardContent>
                 <Divider />
                 <CardActions>
-                  <Button dense component={Link} to='/' >
+                  <Button dense onClick={() => this.onView(event._id)} component={Link} to='/' >
                     View
                   </Button>
                   <Button dense onClick={() => this.deleteEvent(event._id)} >
@@ -115,4 +118,23 @@ class viewEvents extends React.Component {
 viewEvents.propTypes = {
   classes: PropTypes.object.isRequired
 }
-export default withStyles(styles)(viewEvents)
+
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+    events: state.event.events
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onUpdateAllEvents: (events) => dispatch(actionTypes.updateAllEvents(events)),
+    onUpdateCurrentEvent: (currentEvent) => dispatch(actionTypes.updateCurrentEvent(currentEvent))
+  }
+}
+
+export default compose(
+  withStyles(styles, {
+    name: 'viewEvents'
+  }), connect(mapStateToProps, mapDispatchToProps)
+)(viewEvents)

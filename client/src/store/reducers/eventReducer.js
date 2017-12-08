@@ -27,12 +27,17 @@ const updateCurrentEvent = (state, action) => {
   return updateObject(state, { currentEvent: action.currentEvent })
 }
 
+const updateAllEvents = (state, action) => {
+  return updateObject(state, { events: action.events })
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.FETCH_EVENTS_START: return fetchEventsStart(state, action)
     case actionTypes.FETCH_EVENTS_SUCCESS: return fetchEventsSuccess(state, action)
     case actionTypes.FETCH_EVENTS_FAIL: return fetchEventsFail(state, action)
     case actionTypes.UPDATE_CURRENT_EVENT: return updateCurrentEvent(state, action)
+    case actionTypes.UPDATE_ALL_EVENTS: return updateAllEvents(state, action)
     default: return state
   }
 }

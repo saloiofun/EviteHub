@@ -29,6 +29,13 @@ export const updateCurrentEvent = (currentEvent) => {
   }
 }
 
+export const updateAllEvents = (events) => {
+  return {
+    type: actionTypes.UPDATE_ALL_EVENTS,
+    events: events
+  }
+}
+
 export const fetchEvents = (userId) => {
   return dispatch => {
     dispatch(fetchEventsStart())

@@ -5,6 +5,6 @@ export {
   logoutSuccess
 } from './authActions'
 
-export { fetchEvents, updateCurrentEvent } from './eventActions'
+export { fetchEvents, updateCurrentEvent, updateAllEvents } from './eventActions'
 
 export { toggleSidebar } from './mobileActions'
