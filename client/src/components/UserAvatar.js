@@ -2,11 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { MuiThemeProvider, createMuiTheme, withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemText } from 'material-ui/List'
-import IconButton from 'material-ui/IconButton'
 import Avatar from 'material-ui/Avatar'
-import PowerSettingsNewIcon from 'material-ui-icons/PowerSettingsNew'
-import EmailIcon from 'material-ui-icons/Email'
-import AccountCircle from 'material-ui-icons/AccountCircle'
+// Future Reference
+// import IconButton from 'material-ui/IconButton'
+// import PowerSettingsNewIcon from 'material-ui-icons/PowerSettingsNew'
+// import EmailIcon from 'material-ui-icons/Email'
+// import AccountCircle from 'material-ui-icons/AccountCircle'
 import { Link } from 'react-router-dom'
 
 const theme = createMuiTheme({
@@ -25,7 +26,8 @@ const theme = createMuiTheme({
 const styles = theme => ({
   root: {
     width: '100%',
-    maxWidth: 360
+    maxWidth: 360,
+    paddingBottom: 8
   },
   details: {
     display: 'flex',
@@ -52,11 +54,12 @@ function UserAvatar (props) {
             <Avatar
               alt={profile.name}
               src={profile.picture}
-          />
+              component={Link} to='/profile'
+            />
             <ListItemText primary={profile.name} secondary={profile.email} />
           </ListItem>
         </List>
-        <div className={classes.details}>
+        {/* <div className={classes.details}>
           <Link to='/logout'>
             <IconButton className={classes.button} aria-label='Logout'>
               <PowerSettingsNewIcon />
@@ -72,7 +75,7 @@ function UserAvatar (props) {
               <AccountCircle />
             </IconButton>
           </Link>
-        </div>
+        </div> */}
       </div>
     </MuiThemeProvider>
   )
