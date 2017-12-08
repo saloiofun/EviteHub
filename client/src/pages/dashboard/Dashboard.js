@@ -72,13 +72,16 @@ class Dashboard extends Component {
     this.setState({
       toDoCount: 0,
       toDoCompleted: 0,
-      daysLeft: ''
+      daysLeft: '',
+      allGuest: '',
+      rsvpGuest: ''
     })
   }
 
   componentDidMount () {
     this.findDaysLeft()
     this.getTodos()
+    this.guestbox()
   }
 
   findDaysLeft = () => {
@@ -86,12 +89,24 @@ class Dashboard extends Component {
     this.setState({daysLeft: daysLeft})
   }
 
+  // Todo box count
   getTodos = () => {
     API.getTodoByEvent(this.props.currentEvent._id)
     .then(res => {
       const toDoCount = res.data.todo.length
       const toDoCompleted = res.data.todo.filter(todo => todo.todoDone).length || 0
       this.setState({ toDoCount, toDoCompleted })
+    })
+    .catch(err => console.log(err))
+  }
+
+  // for the guest RSVP box
+  guestbox = () => {
+    API.getGuestByEvent(this.props.currentEvent._id)
+    .then(res => {
+      const allGuest = res.data.guest.length || 0
+      const rsvpGuest = res.data.guest.filter(guest => guest.rsvp).length || 0
+      this.setState({ allGuest: allGuest, rsvpGuest: rsvpGuest })
     })
     .catch(err => console.log(err))
   }
@@ -109,7 +124,7 @@ class Dashboard extends Component {
             </ProgressCard>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <ProgressCard title='RSVP' info='25/150'>
+            <ProgressCard title='RSVP' info={`${this.state.rsvpGuest} / ${this.state.allGuest}`}>
               <GroupIcon className={classes.progressIcon} />
             </ProgressCard>
           </Grid>
