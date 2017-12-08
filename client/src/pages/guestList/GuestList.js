@@ -7,10 +7,7 @@ import IconButton from 'material-ui/IconButton'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
 import EditIcon from 'material-ui-icons/Edit'
 import DeleteIcon from 'material-ui-icons/Delete'
-import Chip from 'material-ui/Chip'
-import AddIcon from 'material-ui-icons/Add'
-import FaceIcon from 'material-ui-icons/Face'
-import Avatar from 'material-ui/Avatar'
+import PersonAddIcon from 'material-ui-icons/PersonAdd'
 import TextField from 'material-ui/TextField'
 import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog'
 import Button from 'material-ui/Button'
@@ -51,7 +48,10 @@ const styles = theme => ({
     paddingTop: 16,
     paddingBottom: 16,
     marginTop: theme.spacing.unit * 3
-  })
+  }),
+  leftIcon: {
+    marginRight: theme.spacing.unit
+  }
 })
 
 function Transition (props) {
@@ -167,16 +167,12 @@ class GuestList extends Component {
     return (
       <div className={classes.root}>
         <PageHeader title='Guest List' body='Manage your Guest List!' />
-        <Chip
-          avatar={
-            <Avatar className={classes.Avatar}>
-              <FaceIcon className={classes.FaceIcon} />
-            </Avatar>
-          }
-          label=' Add a Guest ' style={{backgroundColor: '#009688', color: 'white'}}
-          onClick={this.newDialogOpen}
-          onRequestDelete={this.newDialogOpen}
-          deleteIcon={<AddIcon style={{color: 'white'}} />} />
+        <Button raised color='primary'
+          onClick={this.newDialogOpen}>
+          <PersonAddIcon className={classes.leftIcon} />
+              Add a Guest
+        </Button>
+
         <Paper className={classes.paperRoot} elevation={4}>
           <Table>
             <TableHead>
