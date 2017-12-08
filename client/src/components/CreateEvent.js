@@ -16,6 +16,7 @@ import Dialog, {
 } from 'material-ui/Dialog'
 import Slide from 'material-ui/transitions/Slide'
 import PagesIcon from 'material-ui-icons/Pages'
+import * as actionTypes from '../store/actions/'
 
 import compose from 'recompose/compose'
 import { connect } from 'react-redux'
@@ -162,6 +163,12 @@ class addEvent extends React.Component {
     })
     console.log(eventData)
     API.saveEvent(eventData)
+    .then(res => {
+      API.getEventByUserId(userId)
+      .then(result => {
+        this.props.onUpdateAllEvents(result.data)
+      })
+    })
     this.setState({ open: false })
   }
 
@@ -276,8 +283,14 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onUpdateAllEvents: (events) => dispatch(actionTypes.updateAllEvents(events))
+  }
+}
+
 export default compose(
   withStyles(styles, {
     name: 'addEvent'
-  }), connect(mapStateToProps)
+  }), connect(mapStateToProps, mapDispatchToProps)
 )(addEvent)
