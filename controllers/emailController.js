@@ -13,12 +13,13 @@ module.exports = {
       }
     })
     let hash = crypto.createHash('md5').update(req.body.to).digest('hex')
+    let eventID = '&id=' + req.body.eventId
     var guest = { guestEmail: req.body.to, emailed: true, emailHash: hash, eventId: req.body.eventId }
     req.body.message = req.body.message.replace(/\n/ig, '<br>')
     const mailOptions = {
       to: req.body.to,
       subject: req.body.subject,
-      html: `<p>${req.body.message}</p> <a href='${req.body.url + hash}' target='_blank'>Click here for more details.</a>`
+      html: `<p>${req.body.message}</p> <a href='${req.body.url + hash + eventID}' target='_blank'>Click here for more details.</a>`
     }
     smtpTransport.sendMail(mailOptions, function (error, response) {
       if (error) {
