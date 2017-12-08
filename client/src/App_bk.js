@@ -96,7 +96,7 @@ class App extends React.Component {
                 <Route exact path='/invitation' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Invitation auth={auth} {...props} />)} />
                 <Route exact path='/send-invites' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <SendInvites auth={auth} {...props} />)} />
                 <Route exact path='/profile' render={(props) => (!auth.isAuthenticated() ? <Redirect to='/' /> : <Profile auth={auth} {...props} />)} />
-                <Route exact path='/logout' render={(props) => <LogOut hideSideBar={this.hideSideBar} />} />
+                <Route exact path='/logout' render={(props) => <LogOut hideSideBar={this.hideSideBar} auth={auth} {...props} />} />
                 <Route path='/callback' render={(props) => {
                   handleAuthentication(props)
                   return <Callback {...props} />

@@ -6,7 +6,8 @@ import IconButton from 'material-ui/IconButton'
 import Avatar from 'material-ui/Avatar'
 import PowerSettingsNewIcon from 'material-ui-icons/PowerSettingsNew'
 import EmailIcon from 'material-ui-icons/Email'
-import SettingsIcon from 'material-ui-icons/Settings'
+import AccountCircle from 'material-ui-icons/AccountCircle'
+import { Link } from 'react-router-dom'
 
 const theme = createMuiTheme({
   overrides: {
@@ -56,15 +57,21 @@ function UserAvatar (props) {
           </ListItem>
         </List>
         <div className={classes.details}>
-          <IconButton className={classes.button} aria-label='Logout'>
-            <PowerSettingsNewIcon />
-          </IconButton>
+          <Link to='/logout'>
+            <IconButton className={classes.button} aria-label='Logout'>
+              <PowerSettingsNewIcon />
+            </IconButton>
+          </Link>
           <IconButton className={classes.button} aria-label='Inbox'>
             <EmailIcon />
           </IconButton>
-          <IconButton className={classes.button} aria-label='Settings'>
-            <SettingsIcon />
-          </IconButton>
+          <Link to='/profile'>
+            <IconButton
+              className={classes.button}
+              aria-label='Settings'>
+              <AccountCircle />
+            </IconButton>
+          </Link>
         </div>
       </div>
     </MuiThemeProvider>

@@ -7,7 +7,7 @@ import Paper from 'material-ui/Paper'
 import Grid from 'material-ui/Grid'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
-import CheckboxList from '../../components/Todo'
+import TodoList from '../../components/TodoList'
 import PageHeader from '../../components/PageHeader'
 import ProgressCard from '../../components/progressCard'
 import TodayIcon from 'material-ui-icons/Today'
@@ -72,26 +72,60 @@ class Dashboard extends Component {
     this.setState({
       toDoCount: 0,
       toDoCompleted: 0,
-      daysLeft: ''
+      daysLeft: '',
+      allGuest: '',
+      rsvpGuest: ''
     })
   }
 
   componentDidMount () {
-    this.findDaysLeft()
-    // Get Todo Count
-    API.getTodo()
-    .then(res => this.setState({ toDoCount: res.data.length }))
-    .catch(err => console.log(err))
+    if (this.props.currentEvent._id) {
+      this.findDaysLeft()
+      this.getTodos()
+      this.guestbox()
+    }
+  }
 
-    // Get Todo Completed Count
-    API.doneTodo()
-    .then(res => this.setState({ toDoCompleted: res.data.length }))
-    .catch(err => console.log(err))
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
+      API.getGuestByEvent(this.props.currentEvent._id)
+      .then(res => {
+        const allGuest = res.data.guest.length || 0
+        const rsvpGuest = res.data.guest.filter(guest => guest.rsvp).length || 0
+        this.setState({ allGuest: allGuest, rsvpGuest: rsvpGuest })
+      })
+      .catch(err => console.log(err))
+
+      let daysLeft = moment(nextProps.currentEvent.date).startOf('day').diff(moment().startOf('day'), 'days')
+      this.setState({daysLeft: daysLeft})
+    }
   }
 
   findDaysLeft = () => {
     let daysLeft = moment(this.props.currentEvent.date).startOf('day').diff(moment().startOf('day'), 'days')
     this.setState({daysLeft: daysLeft})
+  }
+
+  // Todo box count
+  getTodos = () => {
+    API.getTodoByEvent(this.props.currentEvent._id)
+    .then(res => {
+      const toDoCount = res.data.todo.length
+      const toDoCompleted = res.data.todo.filter(todo => todo.todoDone).length || 0
+      this.setState({ toDoCount, toDoCompleted })
+    })
+    .catch(err => console.log(err))
+  }
+
+  // for the guest RSVP box
+  guestbox = () => {
+    API.getGuestByEvent(this.props.currentEvent._id)
+    .then(res => {
+      const allGuest = res.data.guest.length || 0
+      const rsvpGuest = res.data.guest.filter(guest => guest.rsvp).length || 0
+      this.setState({ allGuest: allGuest, rsvpGuest: rsvpGuest })
+    })
+    .catch(err => console.log(err))
   }
 
   render () {
@@ -107,7 +141,7 @@ class Dashboard extends Component {
             </ProgressCard>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <ProgressCard title='RSVP' info='25/150'>
+            <ProgressCard title='RSVP' info={`${this.state.rsvpGuest} / ${this.state.allGuest}`}>
               <GroupIcon className={classes.progressIcon} />
             </ProgressCard>
           </Grid>
@@ -141,7 +175,7 @@ class Dashboard extends Component {
           <Grid item xs={12} sm={4}>
             <Card className={classes.card}>
               <CardContent>
-                <CheckboxList />
+                <TodoList />
               </CardContent>
             </Card>
           </Grid>
