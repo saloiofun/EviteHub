@@ -29,9 +29,17 @@ export default {
   registerUser: function (userData) {
     return axios.post('/api/user', userData)
   },
-  // Gets all events of user
+  // Gets all events
   getEvents: function () {
     return axios.get('/api/events/')
+  },
+  // Get event by Event Id
+  getEventById: function (id) {
+    return axios.get('/api/events/' + id)
+  },
+  // Get all Events from User
+  getEventByUserId: function (id) {
+    return axios.get('/api/events/user/' + id)
   },
   // Create Event
   saveEvent: function (data) {
@@ -44,5 +52,37 @@ export default {
   // Send Email
   sendEmail: function (data) {
     return axios.post('/api/email', data)
+  },
+  // Get Todo
+  getTodo: function () {
+    return axios.get('/api/todos')
+  },
+  // Save Todo
+  saveTodo: function (data) {
+    return axios.post('/api/todos', data)
+  },
+  // Update Todo
+  updateTodo: function (id, data) {
+    return axios.put('api/todos/listed/' + id, data)
+  },
+  // Done Todo
+  doneTodo: function () {
+    return axios.get('/api/todos/done')
+  },
+  // UnDone Todo
+  unDoneTodo: function () {
+    return axios.get('/api/todos/undone')
+  },
+  // Delete Todo
+  deleteTodo: function (id) {
+    return axios.delete('/api/todos/listed/' + id)
+  },
+  // Get Todo by Event
+  getTodoByEvent: function (id) {
+    return axios.get('/api/todos/event/' + id)
+  },
+  // Get Guest by Event
+  getGuestByEvent: function (id) {
+    return axios.get('/api/guests/event/' + id)
   }
 }

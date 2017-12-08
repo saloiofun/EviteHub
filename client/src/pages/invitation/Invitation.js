@@ -19,6 +19,9 @@ import ExpansionPanel, {
 } from 'material-ui/ExpansionPanel'
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
 import PageHeader from '../../components/PageHeader'
+import Card01 from '../../components/invitationCard/Card01'
+import Card02 from '../../components/invitationCard/Card02'
+import Card03 from '../../components/invitationCard/Card03'
 
 const styles = theme => ({
   root: {
@@ -53,6 +56,14 @@ const bg = [
   {
     value: 'url("/static/images/invitation/paper03.jpg")',
     label: 'paper03'
+  },
+  {
+    value: 'url("/static/images/invitation/paper04.jpg")',
+    label: 'paper04'
+  },
+  {
+    value: 'url("/static/images/invitation/paper05.jpg")',
+    label: 'paper05'
   }
 ]
 
@@ -124,13 +135,55 @@ class Invitation extends Component {
         .then((canvas) => {
           const imgData = canvas.toDataURL('image/png')
           const pdf = new JSPDF()
-          pdf.addImage(imgData, 'JPEG', 28, 20)
+          pdf.addImage(imgData, 'JPEG', 13, 20)
           pdf.save('invitation.pdf')
         })
   }
 
+    // handle background change
+  Card = () => {
+    switch (this.state.background) {
+      case 'url("/static/images/invitation/paper02.jpg")':
+        return (
+          <Card02
+            titleFontType={this.state.titleFontType}
+            background={this.state.background}
+            titleFontSize={this.state.titleFontSize}
+            title={this.state.title}
+            date={this.state.date}
+            time={this.state.time}
+            address1={this.state.address1}
+            address2={this.state.address2}
+      />)
+      case 'url("/static/images/invitation/paper03.jpg")':
+        return (
+          <Card03
+            titleFontType={this.state.titleFontType}
+            background={this.state.background}
+            titleFontSize={this.state.titleFontSize}
+            title={this.state.title}
+            date={this.state.date}
+            time={this.state.time}
+            address1={this.state.address1}
+            address2={this.state.address2}
+        />)
+      default:
+        return (
+          <Card01
+            titleFontType={this.state.titleFontType}
+            background={this.state.background}
+            titleFontSize={this.state.titleFontSize}
+            title={this.state.title}
+            date={this.state.date}
+            time={this.state.time}
+            address1={this.state.address1}
+            address2={this.state.address2}
+        />)
+    }
+  }
+
   render () {
-    const { background, titleFontType, selectedDate, selectedTime, title, date, time, address1, address2 } = this.state
+    const { background, titleFontType, selectedDate, selectedTime } = this.state
     const { classes } = this.props
 
     return (
@@ -258,19 +311,7 @@ class Invitation extends Component {
           </Grid>
 
           <Grid item xs={12} sm={12} md={8}>
-            <div id='saveArea' style={{ textAlign: 'center',
-              height: '425px',
-              width: '710px',
-              fontFamily: titleFontType,
-              backgroundImage: background,
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover'}}>
-              <p style={{ color: 'white', fontSize: this.state.titleFontSize, padding: '14% 0 0 0' }}> {title} </p>
-              <p style={{ color: 'white', fontSize: '22px' }}> {date} </p>
-              <p style={{ color: 'white', fontSize: '15px' }}> {time} </p>
-              <p style={{ color: 'white', fontSize: '18px' }}> {address1} </p>
-              <p style={{ color: 'white', fontSize: '18px' }}> {address2} </p>
-            </div>
+            {this.Card()}
             <hr />
             <center>
               <Chip

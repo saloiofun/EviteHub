@@ -13,6 +13,11 @@ import ProgressCard from '../../components/progressCard'
 import TodayIcon from 'material-ui-icons/Today'
 import GroupIcon from 'material-ui-icons/Group'
 import ListIcon from 'material-ui-icons/List'
+import API from '../../utils/Api'
+import moment from 'moment'
+
+import compose from 'recompose/compose'
+import { connect } from 'react-redux'
 
 const styles = theme => ({
   root: {
@@ -64,29 +69,40 @@ const styles = theme => ({
 
 class Dashboard extends Component {
   componentWillMount () {
-    this.setState({ profile: {} })
-    const { userProfile, getProfile } = this.props.auth
-    if (!userProfile) {
-      getProfile((err, profile) => {
-        this.setState({ profile })
-      })
-    } else {
-      this.setState({ profile: userProfile })
-    }
+    this.setState({
+      toDoCount: 0,
+      toDoCompleted: 0,
+      daysLeft: ''
+    })
+  }
 
-    this.props.showSideBar()
+  componentDidMount () {
+    this.findDaysLeft()
+    // Get Todo Count
+    API.getTodo()
+    .then(res => this.setState({ toDoCount: res.data.length }))
+    .catch(err => console.log(err))
+
+    // Get Todo Completed Count
+    API.doneTodo()
+    .then(res => this.setState({ toDoCompleted: res.data.length }))
+    .catch(err => console.log(err))
+  }
+
+  findDaysLeft = () => {
+    let daysLeft = moment(this.props.currentEvent.date).startOf('day').diff(moment().startOf('day'), 'days')
+    this.setState({daysLeft: daysLeft})
   }
 
   render () {
-    const { classes } = this.props
-    const { profile } = this.state
+    const { classes, auth, currentEvent } = this.props
 
     return (
       <div className={classes.root}>
-        <PageHeader title='Dashboard' body={`Welcome Back! ${profile.name}`} />
+        <PageHeader title={currentEvent.eventName ? currentEvent.eventName : 'Dashboard'} body={`Welcome Back! ${auth.profile.name}`} />
         <Grid container spacing={24}>
           <Grid item xs={12} sm={4}>
-            <ProgressCard title='Days Left' info='3'>
+            <ProgressCard title='Days Left' info={this.state.daysLeft}>
               <TodayIcon className={classes.progressIcon} />
             </ProgressCard>
           </Grid>
@@ -96,7 +112,7 @@ class Dashboard extends Component {
             </ProgressCard>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <ProgressCard title='To Do' info='15/50'>
+            <ProgressCard title='To Do' info={`${this.state.toDoCompleted} / ${this.state.toDoCount}`}>
               <ListIcon className={classes.progressIcon} />
             </ProgressCard>
           </Grid>
@@ -125,15 +141,8 @@ class Dashboard extends Component {
           <Grid item xs={12} sm={4}>
             <Card className={classes.card}>
               <CardContent>
-                <Typography type='headline' component='h2'>
-                  To Do List
-                </Typography>
                 <CheckboxList />
               </CardContent>
-              <CardActions align='right'>
-                <Button dense color='primary'>Share</Button>
-                <Button dense color='primary'>View All</Button>
-              </CardActions>
             </Card>
           </Grid>
           <Grid item xs={6} sm={3}>
@@ -158,4 +167,15 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Dashboard)
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+    currentEvent: state.event.currentEvent
+  }
+}
+
+export default compose(
+  withStyles(styles, {
+    name: 'Dashboard'
+  }), connect(mapStateToProps)
+)(Dashboard)

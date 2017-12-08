@@ -5,25 +5,17 @@ import { withStyles } from 'material-ui/styles'
 import orange from 'material-ui/colors/orange'
 import classNames from 'classnames'
 import Grid from 'material-ui/Grid'
-import Card, { CardContent } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
-import { Face, Print, ViewList, Assignment } from 'material-ui-icons'
+import Auth from '../../auth'
+const auth = new Auth()
 
 const styles = theme => ({
   root: {
-    padding: theme.spacing.unit * 2,
-    paddingTop: 80,
+    paddingTop: 64,
     margin: '0 auto',
     marginBottom: 30,
-    minHeight: '100vh',
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: theme.spacing.unit * 3,
-      paddingRight: theme.spacing.unit * 3
-    }
-  },
-  cards: {
-    flexGrow: 1,
-    marginTop: 30
+    width: '100vw',
+    minHeight: '100vh'
   },
   button: {
     margin: theme.spacing.unit
@@ -31,25 +23,62 @@ const styles = theme => ({
   raisedAccent: {
     backgroundColor: orange[700]
   },
-  cardItem: {
-    textAlign: 'center'
+  section: {
+    paddingTop: '50px',
+    paddingBottom: '50px'
   },
-  iconColor: {
-    color: orange[700]
+  sectionWhite: {
+    paddingTop: '50px',
+    paddingBottom: '50px',
+    backgroundColor: '#fff'
+  },
+  sectionContentRight: {
+    [theme.breakpoints.up('sm')]: {
+      paddingTop: '100px'
+    },
+    [theme.breakpoints.up('lg')]: {
+      paddingTop: '175px',
+      paddingRight: '200px'
+    },
+    [theme.breakpoints.up('xl')]: {
+      paddingRight: '500px'
+    }
+  },
+  sectionContentLeft: {
+    [theme.breakpoints.up('sm')]: {
+      paddingTop: '100px'
+    },
+    [theme.breakpoints.up('lg')]: {
+      paddingTop: '175px',
+      paddingLeft: '200px'
+    },
+    [theme.breakpoints.up('xl')]: {
+      paddingLeft: '500px'
+    }
+  },
+  image: {
+    display: 'block',
+    maxWidth: '100%',
+    height: 'auto',
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  heading: {
+    fontSize: '2.5rem',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    textShadow: '0 1px 0 rgba(0, 0, 0, 0.25)'
   }
 })
 
 class Home extends Component {
   login () {
-    this.props.auth.login()
-  }
-  logout () {
-    this.props.auth.logout()
+    auth.login()
   }
 
   render () {
-    const { isAuthenticated } = this.props.auth
     const { classes } = this.props
+    console.log(this.props)
 
     return (
       <div className={classes.root}>
@@ -58,60 +87,60 @@ class Home extends Component {
             <div className='featured-content-gradient'>
               <h1 className='featured-title'>Take the Hassle out of Event Planning</h1>
               <p>Plan your next Event with us by using our easy to use Event Planner. Event Planning has never been easier.</p>
-              { !isAuthenticated() && (
-                <div>
-                  <Button raised color='primary' className={classes.button} onClick={this.login.bind(this)}>Sign Up</Button>
-                  <Button raised color='accent' className={classNames(classes.button, classes.raisedAccent)} onClick={this.login.bind(this)}>Sign In</Button>
-                </div>
-              )}
+              <div>
+                <Button raised color='primary' className={classes.button} onClick={this.login.bind(this)}>Sign Up</Button>
+              </div>
             </div>
           </div>
         </div>
-        <div className={classes.cards}>
-          <Grid container spacing={24}>
-            <Grid item xs={6} lg={3}>
-              <Card className={classNames(classes.card, classes.cardItem)}>
-                <CardContent>
-                  <Face className={classes.iconColor} style={{ width: 64, height: 64 }} />
-                  <Typography type='headline' component='h2'>Invitations</Typography>
-                  <Typography component='p'>
-                    Create your guest list and send out invitations for your event. Send out reminders and more...
-                  </Typography>
-                </CardContent>
-              </Card>
+
+        <div style={{ padding: 20 }}>
+          <Grid container spacing={40} className={classes.sectionWhite}>
+            <Grid item xs={12} sm={6}>
+              <img src='/static/images/home/guest-list.jpg' alt='Guestlist' className={classes.image} />
             </Grid>
-            <Grid item xs={6} lg={3}>
-              <Card className={classNames(classes.card, classes.cardItem)}>
-                <CardContent>
-                  <Print className={classes.iconColor} style={{ width: 64, height: 64 }} />
-                  <Typography type='headline' component='h2'>Guest List</Typography>
-                  <Typography component='p'>
-                    Use our guest list to keep track of who's RSVP'd, Invite guest. Send out invitations and more...
-                  </Typography>
-                </CardContent>
-              </Card>
+            <Grid item xs={12} sm={6}>
+              <div className={classes.sectionContentRight}>
+                <Typography type='headline' component='h1' className={classes.heading} color='primary'>Guest List</Typography>
+                <Typography component='p'>
+                Manage your Guest List for your next event. Your Guest list can keep track of who's RSVP'd, Number of party for each guest, You can add guest to your Guest List anytime, Manage your guest contact information and more...</Typography>
+              </div>
             </Grid>
-            <Grid item xs={6} lg={3}>
-              <Card className={classNames(classes.card, classes.cardItem)}>
-                <CardContent>
-                  <ViewList className={classes.iconColor} style={{ width: 64, height: 64 }} />
-                  <Typography type='headline' component='h2'>Checklist</Typography>
-                  <Typography component='p'>
-                    Stay on schedule and keep track of your checklist of items needed for your event
-                  </Typography>
-                </CardContent>
-              </Card>
+          </Grid>
+
+          <Grid container spacing={40} className={classes.section}>
+            <Grid item xs={12} sm={6}>
+              <div className={classNames(classes.sectionContent, classes.sectionContentLeft)}>
+                <Typography type='headline' component='h1' className={classes.heading} color='primary'>Invitations</Typography>
+                <Typography component='p'>Create your guest list and send out invitations for your next event. With our simple to use Invitation Maker. You can Send out customized Invitations with ease.</Typography>
+              </div>
             </Grid>
-            <Grid item xs={6} lg={3}>
-              <Card className={classNames(classes.card, classes.cardItem)}>
-                <CardContent>
-                  <Assignment className={classes.iconColor} style={{ width: 64, height: 64 }} />
-                  <Typography type='headline' component='h2'>Events</Typography>
-                  <Typography component='p'>
-                    You can create multiple events and keep track of each event with guestlist, invitations and more...
-                  </Typography>
-                </CardContent>
-              </Card>
+            <Grid item xs={12} sm={6}>
+              <img src='/static/images/home/invitation-1.jpg' alt='Invitations' className={classes.image} />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={40} className={classes.sectionWhite}>
+            <Grid item xs={12} sm={6}>
+              <img src='/static/images/home/events.jpg' alt='' className={classes.image} />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <div className={classes.sectionContentRight}>
+                <Typography type='headline' component='h1' className={classes.heading} color='primary'>Events</Typography>
+                <Typography component='p'>Are you an Event Planner? Our dashboard allows you to create multiple events and keep track of each event with Guest List, Invitations and more...</Typography>
+              </div>
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={40} className={classes.section}>
+            <Grid item xs={12} sm={6}>
+              <div className={classNames(classes.sectionContent, classes.sectionContentLeft)}>
+                <Typography type='headline' component='h1' className={classes.heading} color='primary'>Todo Checklist</Typography>
+                <Typography component='p'>Stay on schedule and keep track of your checklist of items needed for your event. You can keep track of items completed along the way.</Typography>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <img src='/static/images/home/todo-list.jpg' alt='Todo list' className={classes.image} />
             </Grid>
           </Grid>
         </div>

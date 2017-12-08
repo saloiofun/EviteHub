@@ -6,6 +6,10 @@ const eventSchema = new Schema({
     type: String,
     required: true
   },
+  userId: {
+    type: String,
+    required: true
+  },
   description: {
     type: String
   },
@@ -20,11 +24,17 @@ const eventSchema = new Schema({
     type: Date,
     required: true
   },
-  guests: [{
-    guest: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Guest'
-    }
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  guest: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Guest'
+  }],
+  todo: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Todo'
   }]
 
 })

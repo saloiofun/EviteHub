@@ -16,4 +16,8 @@ router.route('/:id')
 router.route('/rsvp/:id')
   .get(controller.findGuestByHash)
 
+  // Matches with "/api/guests/event/:id"
+router.route('/event/:id')
+.get(controller.findGuestByEvent)
+
 module.exports = router
