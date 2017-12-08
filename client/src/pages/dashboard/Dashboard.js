@@ -87,17 +87,19 @@ class Dashboard extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
-      API.getGuestByEvent(this.props.currentEvent._id)
-      .then(res => {
-        const allGuest = res.data.guest.length || 0
-        const rsvpGuest = res.data.guest.filter(guest => guest.rsvp).length || 0
-        this.setState({ allGuest: allGuest, rsvpGuest: rsvpGuest })
-      })
-      .catch(err => console.log(err))
+    if (this.props.currentEvent._id) {
+      if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
+        API.getGuestByEvent(this.props.currentEvent._id)
+        .then(res => {
+          const allGuest = res.data.guest.length || 0
+          const rsvpGuest = res.data.guest.filter(guest => guest.rsvp).length || 0
+          this.setState({ allGuest: allGuest, rsvpGuest: rsvpGuest })
+        })
+        .catch(err => console.log(err))
 
-      let daysLeft = moment(nextProps.currentEvent.date).startOf('day').diff(moment().startOf('day'), 'days')
-      this.setState({daysLeft: daysLeft})
+        let daysLeft = moment(nextProps.currentEvent.date).startOf('day').diff(moment().startOf('day'), 'days')
+        this.setState({daysLeft: daysLeft})
+      }
     }
   }
 
