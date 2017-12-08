@@ -48,7 +48,9 @@ class TodoList extends React.Component {
   }
 
   componentDidMount () {
-    this.loadTodoItems()
+    if (this.props.currentEvent._id) {
+      this.loadTodoItems()
+    }
   }
 
   componentWillReceiveProps (nextProps) {
