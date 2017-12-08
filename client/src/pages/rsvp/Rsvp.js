@@ -61,8 +61,7 @@ class Rsvp extends React.Component {
     description: 'This is the description of the event which was given by the creator of the event',
     date: 'March 8, 2018',
     time: '3:15 PM',
-    address1: 'Irvine, CA',
-    address2: 'Irvine, CA',
+    location: 'Irvine, CA',
     rsvp: '',
     name: '',
     party: 0,
@@ -97,7 +96,7 @@ class Rsvp extends React.Component {
         description: res.data.description,
         date: moment(res.data.date).format('MMMM Do YYYY'),
         time: moment(res.data.time).format('hh:mm A'),
-        address1: res.data.location
+        location: res.data.location
       })
     })
   }
@@ -155,8 +154,7 @@ class Rsvp extends React.Component {
             title={this.state.title}
             date={this.state.date}
             time={this.state.time}
-            address1={this.state.address1}
-            address2={this.state.address2} />
+            location={this.state.location} />
           <div className={classes.container}>
             <CardContent>
               <Typography type='headline' component='h2'>
