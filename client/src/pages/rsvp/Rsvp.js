@@ -8,6 +8,7 @@ import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
 import Radio, { RadioGroup } from 'material-ui/Radio'
 import { FormControl, FormControlLabel } from 'material-ui/Form'
+import moment from 'moment'
 
 import Card01 from '../../components/invitationCard/Card01'
 
@@ -69,16 +70,18 @@ class Rsvp extends React.Component {
   }
 
   componentDidMount () {
-    var parsedURL = new URL(window.location.href)
-    var hash = parsedURL.searchParams.get('token')
+    let parsedURL = new URL(window.location.href)
+    let hash = parsedURL.searchParams.get('token')
+    let eventId = parsedURL.searchParams.get('id')
+    this.getEventInfo(eventId)
     this.getGuest(hash)
   }
 
   getGuest = (hash) => {
     API.getGuestByHash(hash)
-    .then((data) => {
-      console.log('Guest:', data)
-      this.setState({ guestObject: data })
+    .then((res) => {
+      console.log('Guest:', res.data)
+      this.setState({ guestObject: res.data })
     })
     .catch((err) => {
       throw (err)
@@ -89,11 +92,19 @@ class Rsvp extends React.Component {
     API.getEventById(id)
     .then(res => {
       console.log('Event:', res.data)
+      this.setState({
+        title: res.data.eventName,
+        description: res.data.description,
+        date: moment(res.data.date).format('MMMM Do YYYY'),
+        time: moment(res.data.time).format('hh:mm A'),
+        address1: res.data.location
+      })
     })
   }
 
   onSubmit = () => {
-    switch (this.state.rsvp) {
+    console.log(this.state.guestObject)
+    switch (this.state.value) {
       case 'Accept':
         API.updateGuest(this.state.guestObject._id,
           {
@@ -119,11 +130,6 @@ class Rsvp extends React.Component {
       default:
         console.log('Error did not select radio button')
     }
-  }
-
-  handleRSVP = (event, rsvp) => {
-    console.log(rsvp)
-    this.setState({ rsvp })
   }
 
     // handle input changes

@@ -27,6 +27,9 @@ import Avatar from 'material-ui/Avatar'
 import Slide from 'material-ui/transitions/Slide'
 import RemoveRedEyeIcon from 'material-ui-icons/RemoveRedEye'
 
+import compose from 'recompose/compose'
+import { connect } from 'react-redux'
+
 const styles = theme => ({
   root: {
     padding: theme.spacing.unit * 2,
@@ -78,6 +81,17 @@ Please click on the link to let me know if you can make it!`,
     guests: []
   }
 
+  componentDidMount () {
+    if (this.props.currentEvent) {
+      this.setState({subject: this.props.currentEvent.eventName})
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
+      this.setState({subject: nextProps.currentEvent.eventName})
+    }
+  }
   validateEmail = (email) => {
     let reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     if (reg.test(email)) {
@@ -102,11 +116,11 @@ Please click on the link to let me know if you can make it!`,
   };
 
   importOpen = () => {
-    API.getGuests()
-    .then((data) => {
-      this.setState({ guests: data.data })
-      for (let i in data.data) {
-        this.setState({ [data.data[i]._id]: false })
+    API.getGuestByEvent(this.props.currentEvent._id)
+    .then((res) => {
+      this.setState({ guests: res.data.guest })
+      for (let i in res.data.guest) {
+        this.setState({ [res.data.guest[i]._id]: false })
       }
     })
     this.setState({ open: true })
@@ -152,8 +166,10 @@ Please click on the link to let me know if you can make it!`,
         to: emailArray[i],
         subject: this.state.subject,
         message: this.state.message,
-        url: this.state.emailURL
+        url: this.state.emailURL,
+        eventId: this.props.currentEvent._id
       }
+      console.log(email)
 
       API.sendEmail(email)
       .then((data) => {
@@ -280,8 +296,18 @@ Please click on the link to let me know if you can make it!`,
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    currentEvent: state.event.currentEvent
+  }
+}
+
 SendInvites.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles, { withTheme: true })(SendInvites)
+export default compose(
+  withStyles(styles, {
+    name: 'Dashboard'
+  }), connect(mapStateToProps)
+)(SendInvites)
