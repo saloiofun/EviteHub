@@ -132,7 +132,7 @@ class CheckboxList extends React.Component {
     .then(res => {
       this.loadTodoItems()
       this.closeModal()
-      this.openSnack(`Added: ${res.data.todoDesc}`)
+      this.openSnack(`Added: ${addTodo}`)
     })
     .catch(err => console.log(err))
   }

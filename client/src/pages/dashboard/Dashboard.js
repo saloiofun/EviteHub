@@ -80,21 +80,24 @@ class Dashboard extends Component {
 
   componentDidMount () {
     this.findDaysLeft()
+    this.getTodos()
     this.guestbox()
-    // Get Todo Count
-    API.getTodo()
-    .then(res => this.setState({ toDoCount: res.data.length }))
-    .catch(err => console.log(err))
-
-    // Get Todo Completed Count
-    API.doneTodo()
-    .then(res => this.setState({ toDoCompleted: res.data.length }))
-    .catch(err => console.log(err))
   }
 
   findDaysLeft = () => {
     let daysLeft = moment(this.props.currentEvent.date).startOf('day').diff(moment().startOf('day'), 'days')
     this.setState({daysLeft: daysLeft})
+  }
+
+  // Todo box count
+  getTodos = () => {
+    API.getTodoByEvent(this.props.currentEvent._id)
+    .then(res => {
+      const toDoCount = res.data.todo.length
+      const toDoCompleted = res.data.todo.filter(todo => todo.todoDone).length || 0
+      this.setState({ toDoCount, toDoCompleted })
+    })
+    .catch(err => console.log(err))
   }
 
   // for the guest RSVP box
