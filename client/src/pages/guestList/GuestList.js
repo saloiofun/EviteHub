@@ -124,7 +124,7 @@ class GuestList extends Component {
   // Handle saves a guest to the database then close modal and call all guest
   saveGuest = () => {
     if (this.state.name && this.state.party && this.state.email) {
-      API.saveGuest({ guestName: this.state.name, guestParty: this.state.party, guestEmail: this.state.email })
+      API.saveGuest({ guestName: this.state.name, guestParty: this.state.party, guestEmail: this.state.email, eventId: this.props.currentEvent._id })
         .then(res => this.loadGuest(), this.newDialogClose())
         .catch(err => console.log(err))
     }
