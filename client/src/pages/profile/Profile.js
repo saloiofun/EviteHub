@@ -56,12 +56,6 @@ class Profile extends Component {
                     <ListItem divider>
                       <ListItemText primary={auth.profile.name} />
                     </ListItem>
-                    <ListItem divider>
-                      <Avatar className={classes.iconAvatar}>
-                        <AccountCircle />
-                      </Avatar>
-                      <ListItemText primary={auth.profile.sub} secondary='User ID' />
-                    </ListItem>
                     { (auth.profile.email) &&
                       <ListItem divider>
                         <Avatar className={classes.iconAvatar}>
