@@ -18,6 +18,8 @@ class Rsvp extends React.Component {
   componentDidMount () {
     var parsedURL = new URL(window.location.href)
     var hash = parsedURL.searchParams.get('token')
+    var eventId = parsedURL.searchParams.get('id')
+    console.log('Event ID: ', eventId)
     API.getGuestByHash(hash)
         .then((data) => {
           console.log(data)

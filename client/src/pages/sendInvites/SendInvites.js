@@ -111,11 +111,11 @@ Please click on the link to let me know if you can make it!`,
   };
 
   importOpen = () => {
-    API.getGuests()
-    .then((data) => {
-      this.setState({ guests: data.data })
-      for (let i in data.data) {
-        this.setState({ [data.data[i]._id]: false })
+    API.getGuestByEvent(this.props.currentEvent._id)
+    .then((res) => {
+      this.setState({ guests: res.data.guest })
+      for (let i in res.data.guest) {
+        this.setState({ [res.data.guest[i]._id]: false })
       }
     })
     this.setState({ open: true })
