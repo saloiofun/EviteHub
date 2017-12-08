@@ -5,9 +5,8 @@ import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
 import Divider from 'material-ui/Divider'
-import Archive from 'material-ui-icons/Loupe'
-import Avatar from 'material-ui/Avatar'
-import Chip from 'material-ui/Chip'
+import SaveIcon from 'material-ui-icons/Save'
+import Button from 'material-ui/Button'
 import html2canvas from 'html2canvas'
 import JSPDF from 'jspdf'
 import { TimePicker, DatePicker } from 'material-ui-pickers'
@@ -41,6 +40,9 @@ const styles = theme => ({
   icon: { color: 'white' },
   displayBlock: {
     display: 'block'
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit
   }
 })
 
@@ -314,15 +316,11 @@ class Invitation extends Component {
             {this.Card()}
             <hr />
             <center>
-              <Chip
-                avatar={
-                  <Avatar className={classes.Avatar}>
-                    <Archive className={classes.icon} />
-                  </Avatar>
-                }
-                label=' SAVE TO FILE ' style={{backgroundColor: '#009688', color: 'white'}}
-                onClick={this.handleSave}
-              />
+              <Button raised color='primary'
+                onClick={this.handleSave}>
+                <SaveIcon className={classes.leftIcon} />
+                SAVE TO FILE
+              </Button>
             </center>
           </Grid>
         </Grid>

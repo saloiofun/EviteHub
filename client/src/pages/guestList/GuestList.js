@@ -1,24 +1,26 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import API from '../../utils/Api'
+
 import Switch from 'material-ui/Switch'
 import IconButton from 'material-ui/IconButton'
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table'
 import EditIcon from 'material-ui-icons/Edit'
 import DeleteIcon from 'material-ui-icons/Delete'
-import Chip from 'material-ui/Chip'
-import AddIcon from 'material-ui-icons/Add'
-import FaceIcon from 'material-ui-icons/Face'
-import Avatar from 'material-ui/Avatar'
+import PersonAddIcon from 'material-ui-icons/PersonAdd'
 import TextField from 'material-ui/TextField'
 import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog'
 import Button from 'material-ui/Button'
 import Tooltip from 'material-ui/Tooltip'
 import { withStyles } from 'material-ui/styles'
-import PropTypes from 'prop-types'
-import PageHeader from '../../components/PageHeader'
+import Paper from 'material-ui/Paper'
 import { FormControlLabel, FormGroup } from 'material-ui/Form'
 import Grid from 'material-ui/Grid'
 import Slide from 'material-ui/transitions/Slide'
+import Typography from 'material-ui/Typography'
+
+import PageHeader from '../../components/PageHeader'
+
 import compose from 'recompose/compose'
 import { connect } from 'react-redux'
 
@@ -41,7 +43,15 @@ const styles = theme => ({
   },
   TableCell: { textAlign: 'center' },
   Avatar: { backgroundColor: '#009688' },
-  FaceIcon: { color: 'white' }
+  FaceIcon: { color: 'white' },
+  paperRoot: theme.mixins.gutters({
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginTop: theme.spacing.unit * 3
+  }),
+  leftIcon: {
+    marginRight: theme.spacing.unit
+  }
 })
 
 function Transition (props) {
@@ -157,76 +167,72 @@ class GuestList extends Component {
     return (
       <div className={classes.root}>
         <PageHeader title='Guest List' body='Manage your Guest List!' />
-        <Chip
-          avatar={
-            <Avatar className={classes.Avatar}>
-              <FaceIcon className={classes.FaceIcon} />
-            </Avatar>
-         }
-          label=' Add a Guest ' style={{backgroundColor: '#009688', color: 'white'}}
-          onClick={this.newDialogOpen}
-          onRequestDelete={this.newDialogOpen}
-          deleteIcon={<AddIcon style={{color: 'white'}} />}
-       />
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>NAME</TableCell>
-              <TableCell>PARTY</TableCell>
-              <TableCell>RSVP</TableCell>
-              <TableCell>EMAILED</TableCell>
-              <TableCell>CONTACT</TableCell>
-              <TableCell>EDIT</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {this.state.allGuest.map(n => {
-              return (
-                <TableRow key={n._id}>
-                  <TableCell>{n.guestName}</TableCell>
-                  <TableCell>{n.guestParty}</TableCell>
-                  <TableCell>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={n.rsvp}
-                            onChange={this.rsvpToggle(n._id, n.rsvp)} />
+        <Button raised color='primary'
+          onClick={this.newDialogOpen}>
+          <PersonAddIcon className={classes.leftIcon} />
+              Add a Guest
+        </Button>
+
+        <Paper className={classes.paperRoot} elevation={4}>
+          <Table>
+            <TableHead>
+              <TableRow>
+
+                <TableCell><Typography type='subheading' gutterBottom>NAME</Typography></TableCell>
+                <TableCell><Typography type='subheading' gutterBottom>PARTY</Typography></TableCell>
+                <TableCell><Typography type='subheading' gutterBottom>RSVP</Typography></TableCell>
+                <TableCell><Typography type='subheading' gutterBottom>INVITE</Typography></TableCell>
+                <TableCell><Typography type='subheading' gutterBottom>CONTACT</Typography></TableCell>
+                <TableCell><Typography type='subheading' gutterBottom>EDIT</Typography></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.state.allGuest.map(n => {
+                return (
+                  <TableRow key={n._id}>
+                    <TableCell>{n.guestName}</TableCell>
+                    <TableCell>{n.guestParty}</TableCell>
+                    <TableCell>
+                      <FormGroup>
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              checked={n.rsvp}
+                              onChange={this.rsvpToggle(n._id, n.rsvp)} />
                           }
-                        label={n.rsvp ? 'Yes' : 'No'}
-                      />
-                    </FormGroup>
-                  </TableCell>
-                  <TableCell>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={n.emailed}
-                            onChange={this.emailToggle(n._id, n.emailed)} />
+                          label={n.rsvp ? 'Yes' : 'No'} />
+                      </FormGroup>
+                    </TableCell>
+                    <TableCell>
+                      <FormGroup>
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              checked={n.emailed}
+                              onChange={this.emailToggle(n._id, n.emailed)} />
                           }
-                        label={n.emailed ? 'Yes' : 'No'}
-                      />
-                    </FormGroup>
-                  </TableCell>
-                  <TableCell>{n.guestEmail}</TableCell>
-                  <TableCell>
-                    <Tooltip title='Edit' placement='left'>
-                      <IconButton onClick={() => this.editGuest(n._id)}>
-                        <EditIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title='Delete' placement='right'>
-                      <IconButton onClick={() => this.deleteGuest(n._id)}>
-                        <DeleteIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
+                          label={n.emailed ? 'Yes' : 'No'} />
+                      </FormGroup>
+                    </TableCell>
+                    <TableCell>{n.guestEmail}</TableCell>
+                    <TableCell>
+                      <Tooltip title='Edit' placement='left'>
+                        <IconButton onClick={() => this.editGuest(n._id)}>
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title='Delete' placement='right'>
+                        <IconButton onClick={() => this.deleteGuest(n._id)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        </Paper>
 
         <Dialog open={this.state.newDialog} onRequestClose={this.newDialogClose} transition={Transition}>
           <DialogTitle>New Guest</DialogTitle>
@@ -243,8 +249,7 @@ class GuestList extends Component {
                     name='name'
                     label='Guest Name'
                     fullWidth
-                    onChange={this.handleInputChange}
-                  />
+                    onChange={this.handleInputChange} />
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
@@ -254,8 +259,7 @@ class GuestList extends Component {
                     inputProps={{min: 0}}
                     label='No. of Party'
                     fullWidth
-                    onChange={this.handleInputChange}
-                  />
+                    onChange={this.handleInputChange} />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -264,8 +268,7 @@ class GuestList extends Component {
                     label='Email Address'
                     type='email'
                     fullWidth
-                    onChange={this.handleInputChange}
-                  />
+                    onChange={this.handleInputChange} />
                 </Grid>
               </Grid>
             </form>
@@ -294,8 +297,7 @@ class GuestList extends Component {
                   label='Guest Name'
                   fullWidth
                   value={this.state.name}
-                  onChange={this.handleInputChange}
-            />
+                  onChange={this.handleInputChange} />
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
@@ -306,8 +308,7 @@ class GuestList extends Component {
                   label='No. of Party'
                   fullWidth
                   value={this.state.party}
-                  onChange={this.handleInputChange}
-            />
+                  onChange={this.handleInputChange} />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -317,8 +318,7 @@ class GuestList extends Component {
                   type='email'
                   fullWidth
                   value={this.state.email}
-                  onChange={this.handleInputChange}
-            />
+                  onChange={this.handleInputChange} />
               </Grid>
             </Grid>
           </DialogContent>

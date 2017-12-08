@@ -20,12 +20,8 @@ import {
   FormControlLabel
 } from 'material-ui/Form'
 import Checkbox from 'material-ui/Checkbox'
-import Chip from 'material-ui/Chip'
-import AddIcon from 'material-ui-icons/Add'
-import FaceIcon from 'material-ui-icons/Face'
-import Avatar from 'material-ui/Avatar'
 import Slide from 'material-ui/transitions/Slide'
-import RemoveRedEyeIcon from 'material-ui-icons/RemoveRedEye'
+import ImportContactsIcon from 'material-ui-icons/ImportContacts'
 
 import compose from 'recompose/compose'
 import { connect } from 'react-redux'
@@ -60,8 +56,14 @@ const styles = theme => ({
     marginLeft: 'auto',
     marginRight: theme.spacing.unit
   },
+  paperRoot: theme.mixins.gutters({
+    marginTop: theme.spacing.unit * 3
+  }),
   rightIcon: {
     marginLeft: theme.spacing.unit
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit
   }
 })
 
@@ -188,17 +190,11 @@ Please click on the link to let me know if you can make it!`,
     return (
       <div className={classes.root}>
         <PageHeader title='Send Invites' body={`Send Invites!`} />
-        <Chip
-          avatar={
-            <Avatar className={classes.Avatar}>
-              <FaceIcon className={classes.FaceIcon} />
-            </Avatar>
-            }
-          label=' Import Guests ' style={{backgroundColor: '#009688', color: 'white'}}
-          onClick={this.importOpen}
-          onRequestDelete={this.importOpen}
-          deleteIcon={<AddIcon style={{color: 'white'}} />}
-        />
+        <Button raised color='primary'
+          onClick={this.importOpen}>
+          <ImportContactsIcon className={classes.leftIcon} />
+          Import Guests
+        </Button>
         <Dialog open={this.state.open} onRequestClose={this.importClose} transition={Transition}>
           <DialogTitle>Import Guests</DialogTitle>
           <DialogContent>
@@ -238,7 +234,7 @@ Please click on the link to let me know if you can make it!`,
             </Button>
           </DialogActions>
         </Dialog>
-        <Paper elevation={4}>
+        <Paper className={classes.paperRoot} elevation={4}>
           <form className={classes.container} noValidate autoComplete='off'>
             <TextField
               label='To'
@@ -270,13 +266,9 @@ Please click on the link to let me know if you can make it!`,
               onChange={this.handleChange('message')}
               />
             <div className={classes.button}>
-              <Button className={classes.button} raised color='primary' >
-              Preview
-              <RemoveRedEyeIcon className={classes.rightIcon} />
-              </Button>
               <Button raised color='primary' onClick={this.onSend} >
-              Send
-              <SendIcon className={classes.rightIcon} />
+                <SendIcon className={classes.leftIcon} />
+                Send
               </Button>
             </div>
           </form>

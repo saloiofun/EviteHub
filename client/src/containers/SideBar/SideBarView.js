@@ -7,11 +7,15 @@ import Drawer from 'material-ui/Drawer'
 import List from 'material-ui/List'
 import Hidden from 'material-ui/Hidden'
 import Divider from 'material-ui/Divider'
+import DashboardIcon from 'material-ui-icons/Dashboard'
+import ContactsIcon from 'material-ui-icons/Contacts'
+import PresentToAllIcon from 'material-ui-icons/PresentToAll'
+import BorderAllIcon from 'material-ui-icons/BorderAll'
 
+import DrawerLink from '../../components/DrawerLink'
 import UserAvatar from '../../components/UserAvatar'
 import Brand from '../../components/Brand'
 import EventsDropdown from '../../components/EventsDropdown'
-import { DashboardListItems, GuestListItems, SendInvitesListItems } from '../../components/drawerItems'
 
 const drawerWidth = 250
 
@@ -85,9 +89,10 @@ const SideBarView = ({ auth, onToggleSidebar, mobile, classes }) => (
               <Divider />
               <EventsDropdown />
               <Divider />
-              <List><DashboardListItems /></List>
-              <List><GuestListItems /></List>
-              <List><SendInvitesListItems /></List>
+              <List><DrawerLink label='Dashboard' to='/dashboard'><DashboardIcon /></DrawerLink></List>
+              <List><DrawerLink label='Guest List' to='/guest-list'><ContactsIcon /></DrawerLink></List>
+              <List><DrawerLink label='Invitation Maker' to='/invitation'><BorderAllIcon /></DrawerLink></List>
+              <List><DrawerLink label='Send Invites' to='/send-invites'><PresentToAllIcon /></DrawerLink></List>
             </div>
           </Drawer>
         </Hidden>
@@ -107,9 +112,10 @@ const SideBarView = ({ auth, onToggleSidebar, mobile, classes }) => (
               <Divider />
               <EventsDropdown />
               <Divider />
-              <List><DashboardListItems /></List>
-              <List><GuestListItems /></List>
-              <List><SendInvitesListItems /></List>
+              <List><DrawerLink label='Dashboard' to='/dashboard'><DashboardIcon /></DrawerLink></List>
+              <List><DrawerLink label='Guest List' to='/guest-list'><ContactsIcon /></DrawerLink></List>
+              <List><DrawerLink label='Invitation Maker' to='/invitation'><BorderAllIcon /></DrawerLink></List>
+              <List><DrawerLink label='Send Invites' to='/send-invites'><PresentToAllIcon /></DrawerLink></List>
             </div>
           </Drawer>
         </Hidden>

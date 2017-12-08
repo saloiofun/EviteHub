@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import teal from 'material-ui/colors/teal'
 import { withStyles } from 'material-ui/styles'
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
-import Paper from 'material-ui/Paper'
 import Grid from 'material-ui/Grid'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
@@ -87,17 +86,19 @@ class Dashboard extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
-      API.getGuestByEvent(this.props.currentEvent._id)
-      .then(res => {
-        const allGuest = res.data.guest.length || 0
-        const rsvpGuest = res.data.guest.filter(guest => guest.rsvp).length || 0
-        this.setState({ allGuest: allGuest, rsvpGuest: rsvpGuest })
-      })
-      .catch(err => console.log(err))
+    if (this.props.currentEvent._id) {
+      if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
+        API.getGuestByEvent(this.props.currentEvent._id)
+        .then(res => {
+          const allGuest = res.data.guest.length || 0
+          const rsvpGuest = res.data.guest.filter(guest => guest.rsvp).length || 0
+          this.setState({ allGuest: allGuest, rsvpGuest: rsvpGuest })
+        })
+        .catch(err => console.log(err))
 
-      let daysLeft = moment(nextProps.currentEvent.date).startOf('day').diff(moment().startOf('day'), 'days')
-      this.setState({daysLeft: daysLeft})
+        let daysLeft = moment(nextProps.currentEvent.date).startOf('day').diff(moment().startOf('day'), 'days')
+        this.setState({daysLeft: daysLeft})
+      }
     }
   }
 
@@ -178,18 +179,6 @@ class Dashboard extends Component {
                 <TodoList />
               </CardContent>
             </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>xs=6 sm=3</Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>xs=6 sm=3</Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>xs=6 sm=3</Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>xs=6 sm=3</Paper>
           </Grid>
         </Grid>
       </div>
