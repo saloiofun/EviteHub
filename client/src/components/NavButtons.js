@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
-import classNames from 'classnames'
-import BorderVertical from 'material-ui-icons/BorderVertical'
-import Search from 'material-ui-icons/Search'
-import Button from 'material-ui/Button'
+// For future reference
+// import { Link } from 'react-router-dom'
+// import classNames from 'classnames'
+// import BorderVertical from 'material-ui-icons/BorderVertical'
+// import Search from 'material-ui-icons/Search'
+// import Button from 'material-ui/Button'
 import CreateEvent from './CreateEvent'
 import orange from 'material-ui/colors/orange'
 
@@ -29,14 +30,10 @@ function IconLabelButtons (props) {
   return (
     <div className={classes.flex}>
       <CreateEvent />
-      <Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' component={Link} to='/invitation'>
+      {/* <Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' component={Link} to='/invitation'>
         <BorderVertical className={classes.leftIcon} />
         Invitation Maker
-      </Button>
-      <Button className={classNames(classes.button, classes.raisedAccent)} raised color='accent' component={Link} to='/guest-list'>
-        <Search className={classes.leftIcon} />
-        Find
-      </Button>
+      </Button> */}
     </div>
   )
 }
