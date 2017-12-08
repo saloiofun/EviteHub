@@ -7,7 +7,7 @@ import Paper from 'material-ui/Paper'
 import Grid from 'material-ui/Grid'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
-import CheckboxList from '../../components/Todo'
+import TodoList from '../../components/TodoList'
 import PageHeader from '../../components/PageHeader'
 import ProgressCard from '../../components/progressCard'
 import TodayIcon from 'material-ui-icons/Today'
@@ -158,7 +158,7 @@ class Dashboard extends Component {
           <Grid item xs={12} sm={4}>
             <Card className={classes.card}>
               <CardContent>
-                <CheckboxList />
+                <TodoList />
               </CardContent>
             </Card>
           </Grid>

@@ -35,7 +35,7 @@ const styles = theme => ({
   }
 })
 
-class CheckboxList extends React.Component {
+class TodoList extends React.Component {
   state = {
     checked: [],
     modal: false,
@@ -48,10 +48,25 @@ class CheckboxList extends React.Component {
   }
 
   componentDidMount () {
-    this.loadTodoItems()
+    if (this.props.currentEvent._id) {
+      this.loadTodoItems()
+    }
   }
 
-  loadTodoItems () {
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
+      API.getTodoByEvent(nextProps.currentEvent._id)
+      .then(res => {
+        const todoDone = res.data.todo.filter(todoItem => !todoItem.todoDone)
+        const todoNotDone = res.data.todo.filter(todoItem => todoItem.todoDone)
+
+        this.setState({ todoItems: todoDone, completedItems: todoNotDone })
+      })
+      .catch(err => console.log(err))
+    }
+  }
+
+  loadTodoItems = () => {
     // Get Completed Todo from DB
     API.getTodoByEvent(this.props.currentEvent._id)
     .then(res => {
@@ -276,7 +291,7 @@ class CheckboxList extends React.Component {
   }
 }
 
-CheckboxList.propTypes = {
+TodoList.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
@@ -294,6 +309,6 @@ const mapStateToProps = state => {
 
 export default compose(
   withStyles(styles, {
-    name: 'CheckboxList'
+    name: 'TodoList'
   }), connect(mapStateToProps)
-)(CheckboxList)
+)(TodoList)
