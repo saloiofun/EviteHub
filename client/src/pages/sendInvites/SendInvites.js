@@ -87,6 +87,11 @@ Please click on the link to let me know if you can make it!`,
     }
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
+      this.setState({subject: nextProps.currentEvent.eventName})
+    }
+  }
   validateEmail = (email) => {
     let reg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     if (reg.test(email)) {
