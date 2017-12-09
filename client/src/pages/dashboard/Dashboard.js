@@ -40,7 +40,7 @@ const styles = theme => ({
     minWidth: 275
   },
   media: {
-    height: 250
+    height: 375
   },
   progress: {
     height: 150
@@ -155,22 +155,14 @@ class Dashboard extends Component {
             <Card className={classes.card}>
               <CardMedia
                 className={classes.media}
-                image='/static/images/cards/contemplative-reptile.jpg'
+                image='/static/images/events/event-dashboard.jpg'
                 title='Website'
               />
               <CardContent>
                 <Typography type='headline' component='h2'>
-                  Title
+                  {currentEvent.eventName ? currentEvent.eventName : ''}
                 </Typography>
               </CardContent>
-              <CardActions>
-                <Button dense color='primary'>
-                  Share
-                </Button>
-                <Button dense color='primary'>
-                  View Website
-                </Button>
-              </CardActions>
             </Card>
           </Grid>
           <Grid item xs={12} sm={4}>
