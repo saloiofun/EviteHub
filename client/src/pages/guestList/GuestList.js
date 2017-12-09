@@ -18,6 +18,7 @@ import { FormControlLabel, FormGroup } from 'material-ui/Form'
 import Grid from 'material-ui/Grid'
 import Slide from 'material-ui/transitions/Slide'
 import Typography from 'material-ui/Typography'
+import Checkbox from 'material-ui/Checkbox'
 
 import PageHeader from '../../components/PageHeader'
 
@@ -210,18 +211,18 @@ class GuestList extends Component {
                               checked={n.rsvp}
                               onChange={this.rsvpToggle(n._id, n.rsvp)} />
                           }
-                          label={n.rsvp ? 'Yes' : 'No'} />
+                          label={n.rsvp ? 'Yes' : 'No '} />
                       </FormGroup>
                     </TableCell>
                     <TableCell>
                       <FormGroup>
                         <FormControlLabel
                           control={
-                            <Switch
+                            <Checkbox
                               checked={n.emailed}
                               onChange={this.emailToggle(n._id, n.emailed)} />
                           }
-                          label={n.emailed ? 'Yes' : 'No'} />
+                          label={'Sent'} />
                       </FormGroup>
                     </TableCell>
                     <TableCell>{n.guestEmail}</TableCell>
