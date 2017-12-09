@@ -75,6 +75,16 @@ class GuestList extends Component {
     this.loadGuest()
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (this.props.currentEvent) {
+      if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
+        API.getGuestByEvent(nextProps.currentEvent._id)
+        .then(res => this.setState({ allGuest: res.data.guest }))
+        .catch(err => console.log(err))
+      }
+    }
+  }
+
   // handle call all guest
   loadGuest = () => {
     API.getGuestByEvent(this.props.currentEvent._id)
