@@ -7,8 +7,9 @@ const Card01 = props => (
     fontFamily: props.titleFontType,
     backgroundImage: props.background,
     backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover'}}>
-    <p style={{ color: 'white', fontSize: props.titleFontSize, padding: '14% 0 0 0' }}> {props.title} </p>
+    backgroundSize: 'cover',
+    margin: '0 auto'}}>
+    <p style={{ color: 'white', fontSize: props.titleFontSize, padding: '14% 0 0 0', marginTop: 0 }}> {props.title} </p>
     <p style={{ color: 'white', fontSize: '22px' }}> {props.date} </p>
     <p style={{ color: 'white', fontSize: '15px' }}> {props.time} </p>
     <p style={{ color: 'white', fontSize: '18px' }}> {props.address1} </p>
