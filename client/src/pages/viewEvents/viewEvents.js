@@ -81,7 +81,7 @@ class viewEvents extends React.Component {
               <Card>
                 <CardMedia
                   className={classes.media}
-                  image='/static/images/events/event.jpg'
+                  image='/static/images/events/event-dashboard.jpg'
                   title='Event'
               />
                 <CardContent>
