@@ -5,10 +5,12 @@ import teal from 'material-ui/colors/teal'
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import TodayIcon from 'material-ui-icons/Today'
+import KeyboardArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
 import Divider from 'material-ui/Divider'
 import { Link } from 'react-router-dom'
 import * as actionTypes from '../store/actions/'
 import API from '../utils/Api'
+import orange from 'material-ui/colors/orange'
 
 import compose from 'recompose/compose'
 import { connect } from 'react-redux'
@@ -18,6 +20,9 @@ const styles = theme => ({
     width: '100%',
     maxWidth: 360,
     background: teal[500]
+  },
+  iconOrange: {
+    fill: orange[500]
   }
 })
 
@@ -70,6 +75,7 @@ class EventsDropdown extends Component {
               type='title'
               primary='Event'
               secondary={events[0] ? events[this.state.selectedIndex].eventName : ''} />
+            <KeyboardArrowDownIcon className={classes.iconOrange} />
           </ListItem>
         </List>
         <Menu
@@ -81,7 +87,8 @@ class EventsDropdown extends Component {
             <MenuItem
               key={option.eventName}
               selected={index === this.state.selectedIndex}
-              onClick={event => this.handleMenuItemClick(event, index, option._id)} >
+              onClick={event => this.handleMenuItemClick(event, index, option._id)}
+              component={Link} to='/dashboard'>
               {option.eventName}
             </MenuItem>
           ))}

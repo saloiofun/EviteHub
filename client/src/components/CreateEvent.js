@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
 import TextField from 'material-ui/TextField'
@@ -161,12 +162,13 @@ class addEvent extends React.Component {
       location: '',
       description: ''
     })
-    console.log(eventData)
     API.saveEvent(eventData)
     .then(res => {
       API.getEventByUserId(userId)
       .then(result => {
+        console.log(result.data[0]._id)
         this.props.onUpdateAllEvents(result.data)
+        this.props.onUpdateCurrentEvent(result.data[0])
       })
     })
     this.setState({ open: false })
@@ -262,7 +264,7 @@ class addEvent extends React.Component {
             <Button onClick={this.handleRequestClose} color='primary'>
               Cancel
             </Button>
-            <Button onClick={() => this.onSubmit(auth.profile.sub)} color='primary'>
+            <Button onClick={() => this.onSubmit(auth.profile.sub)} color='primary' component={Link} to='/dashboard'>
               Create
             </Button>
           </DialogActions>
@@ -285,7 +287,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onUpdateAllEvents: (events) => dispatch(actionTypes.updateAllEvents(events))
+    onUpdateAllEvents: (events) => dispatch(actionTypes.updateAllEvents(events)),
+    onUpdateCurrentEvent: (eventId) => dispatch(actionTypes.updateCurrentEvent(eventId))
   }
 }
 

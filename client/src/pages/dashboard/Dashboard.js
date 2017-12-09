@@ -70,21 +70,39 @@ class Dashboard extends Component {
     daysLeft: ''
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (this.props.currentEvent) {
-      if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
-        this.props.onFetchGuest(nextProps.currentEvent._id)
-        this.props.onFetchTodo(nextProps.currentEvent._id)
+  componentDidMount () {
+    this.findDaysLeft()
+  }
 
-        let daysLeft = moment(nextProps.currentEvent.date).startOf('day').diff(moment().startOf('day'), 'days')
-        this.setState({daysLeft: daysLeft})
-      }
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
+      this.props.onFetchGuest(nextProps.currentEvent._id)
+      this.props.onFetchTodo(nextProps.currentEvent._id)
+
+      let daysLeft = moment(nextProps.currentEvent.date).startOf('day').diff(moment().startOf('day'), 'days')
+      this.setState({daysLeft: daysLeft})
     }
   }
 
   findDaysLeft = () => {
     let daysLeft = moment(this.props.currentEvent.date).startOf('day').diff(moment().startOf('day'), 'days')
     this.setState({daysLeft: daysLeft})
+  }
+
+  countDaysLeftTitle = () => {
+    if (this.state.daysLeft < -1) {
+      return 'Days Ago'
+    } else if (this.state.daysLeft === -1) {
+      return 'Day Ago'
+    }
+    return 'Days Left'
+  }
+
+  countDaysLeft = () => {
+    if (this.state.daysLeft < 0) {
+      return this.state.daysLeft * (-1)
+    }
+    return this.state.daysLeft
   }
 
   render () {
@@ -95,7 +113,7 @@ class Dashboard extends Component {
         <PageHeader title={currentEvent.eventName ? currentEvent.eventName : 'Dashboard'} body={`Welcome Back! ${auth.profile.name}`} />
         <Grid container spacing={24}>
           <Grid item xs={12} sm={4}>
-            <ProgressCard title='Days Left' info={this.state.daysLeft}>
+            <ProgressCard title={this.countDaysLeftTitle()} info={this.countDaysLeft()}>
               <TodayIcon className={classes.progressIcon} />
             </ProgressCard>
           </Grid>
