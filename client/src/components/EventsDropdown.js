@@ -57,7 +57,7 @@ class EventsDropdown extends Component {
   };
 
   render () {
-    const { classes, events } = this.props
+    const { classes, events, currentEvent } = this.props
 
     return (
       <div className={classes.root}>
@@ -74,7 +74,7 @@ class EventsDropdown extends Component {
             <ListItemText
               type='title'
               primary='Event'
-              secondary={events[0] ? events[this.state.selectedIndex].eventName : ''} />
+              secondary={currentEvent.eventName} />
             <KeyboardArrowDownIcon className={classes.iconOrange} />
           </ListItem>
         </List>
@@ -111,6 +111,7 @@ EventsDropdown.propTypes = {
 const mapStateToProps = state => {
   return {
     events: state.event.events,
+    currentEvent: state.event.currentEvent,
     userId: state.auth.profile.sub
   }
 }
