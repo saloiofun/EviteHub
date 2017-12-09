@@ -12,8 +12,8 @@ import ProgressCard from '../../components/progressCard'
 import TodayIcon from 'material-ui-icons/Today'
 import GroupIcon from 'material-ui-icons/Group'
 import ListIcon from 'material-ui-icons/List'
-import API from '../../utils/Api'
 import moment from 'moment'
+import * as actionTypes from '../../store/actions'
 
 import compose from 'recompose/compose'
 import { connect } from 'react-redux'
@@ -67,34 +67,15 @@ const styles = theme => ({
 })
 
 class Dashboard extends Component {
-  componentWillMount () {
-    this.setState({
-      toDoCount: 0,
-      toDoCompleted: 0,
-      daysLeft: '',
-      allGuest: '',
-      rsvpGuest: ''
-    })
-  }
-
-  componentDidMount () {
-    if (this.props.currentEvent._id) {
-      this.findDaysLeft()
-      this.getTodos()
-      this.guestbox()
-    }
+  state = {
+    daysLeft: ''
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.props.currentEvent._id) {
+    if (this.props.currentEvent) {
       if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
-        API.getGuestByEvent(this.props.currentEvent._id)
-        .then(res => {
-          const allGuest = res.data.guest.length || 0
-          const rsvpGuest = res.data.guest.filter(guest => guest.rsvp).length || 0
-          this.setState({ allGuest: allGuest, rsvpGuest: rsvpGuest })
-        })
-        .catch(err => console.log(err))
+        this.props.onFetchGuest(nextProps.currentEvent._id)
+        this.props.onFetchTodo(nextProps.currentEvent._id)
 
         let daysLeft = moment(nextProps.currentEvent.date).startOf('day').diff(moment().startOf('day'), 'days')
         this.setState({daysLeft: daysLeft})
@@ -107,30 +88,8 @@ class Dashboard extends Component {
     this.setState({daysLeft: daysLeft})
   }
 
-  // Todo box count
-  getTodos = () => {
-    API.getTodoByEvent(this.props.currentEvent._id)
-    .then(res => {
-      const toDoCount = res.data.todo.length
-      const toDoCompleted = res.data.todo.filter(todo => todo.todoDone).length || 0
-      this.setState({ toDoCount, toDoCompleted })
-    })
-    .catch(err => console.log(err))
-  }
-
-  // for the guest RSVP box
-  guestbox = () => {
-    API.getGuestByEvent(this.props.currentEvent._id)
-    .then(res => {
-      const allGuest = res.data.guest.length || 0
-      const rsvpGuest = res.data.guest.filter(guest => guest.rsvp).length || 0
-      this.setState({ allGuest: allGuest, rsvpGuest: rsvpGuest })
-    })
-    .catch(err => console.log(err))
-  }
-
   render () {
-    const { classes, auth, currentEvent } = this.props
+    const { classes, auth, currentEvent, dashboard } = this.props
 
     return (
       <div className={classes.root}>
@@ -142,12 +101,12 @@ class Dashboard extends Component {
             </ProgressCard>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <ProgressCard title='RSVP' info={`${this.state.rsvpGuest} / ${this.state.allGuest}`}>
+            <ProgressCard title='RSVP' info={`${dashboard.rsvpGuest} / ${dashboard.allGuest}`}>
               <GroupIcon className={classes.progressIcon} />
             </ProgressCard>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <ProgressCard title='To Do' info={`${this.state.toDoCompleted} / ${this.state.toDoCount}`}>
+            <ProgressCard title='To Do' info={`${dashboard.toDoCompleted} / ${dashboard.toDoCount}`}>
               <ListIcon className={classes.progressIcon} />
             </ProgressCard>
           </Grid>
@@ -193,12 +152,20 @@ Dashboard.propTypes = {
 const mapStateToProps = state => {
   return {
     auth: state.auth,
-    currentEvent: state.event.currentEvent
+    currentEvent: state.event.currentEvent,
+    dashboard: state.dashboard
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchGuest: (eventId) => dispatch(actionTypes.fetchGuestDashboard(eventId)),
+    onFetchTodo: (eventId) => dispatch(actionTypes.fetchTodoDashboard(eventId))
   }
 }
 
 export default compose(
   withStyles(styles, {
     name: 'Dashboard'
-  }), connect(mapStateToProps)
+  }), connect(mapStateToProps, mapDispatchToProps)
 )(Dashboard)

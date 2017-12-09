@@ -7,4 +7,6 @@ export {
 
 export { fetchEvents, updateCurrentEvent, updateAllEvents } from './eventActions'
 
+export { fetchGuestDashboard, fetchTodoDashboard } from './dashboardActions'
+
 export { toggleSidebar } from './mobileActions'

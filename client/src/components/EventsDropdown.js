@@ -28,7 +28,7 @@ class EventsDropdown extends Component {
     selectedIndex: 0
   }
 
-  componentDidMount () {
+  componentWillMount () {
     this.props.onFetchEvents(this.props.userId)
   }
 
