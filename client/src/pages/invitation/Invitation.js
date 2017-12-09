@@ -217,12 +217,12 @@ class Invitation extends Component {
   }
 
   render () {
-    const { background, titleFontType, title, selectedDate, selectedTime } = this.state
+    const { background, titleFontType, title, selectedDate, selectedTime, location } = this.state
     const { classes } = this.props
 
     return (
       <main className={classes.root}>
-        <PageHeader title='Invitation Maker' body='Invitation Maker' />
+        <PageHeader title='Invitation Maker' body='Customize Your Invitation!' />
         <Grid container spacing={24}>
           <Grid item xs={12} sm={12} md={4}>
 
@@ -329,6 +329,7 @@ class Invitation extends Component {
                 <Divider light />
                 <TextField
                   label='Location'
+                  value={location}
                   helperText='ex: 1234 Santa Margarita Blvd'
                   fullWidth
                   margin='normal'

@@ -189,7 +189,7 @@ Please click on the link to let me know if you can make it!`,
 
     return (
       <div className={classes.root}>
-        <PageHeader title='Send Invites' body={`Send Invites!`} />
+        <PageHeader title='Send Invites' body={`An email will be sent to your guest to RSVP!`} />
         <Button raised color='primary'
           onClick={this.importOpen}>
           <ImportContactsIcon className={classes.leftIcon} />
