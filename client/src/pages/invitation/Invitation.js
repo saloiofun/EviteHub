@@ -21,6 +21,10 @@ import PageHeader from '../../components/PageHeader'
 import Card01 from '../../components/invitationCard/Card01'
 import Card02 from '../../components/invitationCard/Card02'
 import Card03 from '../../components/invitationCard/Card03'
+import API from '../../utils/Api'
+
+import compose from 'recompose/compose'
+import { connect } from 'react-redux'
 
 const styles = theme => ({
   root: {
@@ -81,22 +85,50 @@ const font = [
 class Invitation extends Component {
     // set initial state
   state = {
-    title: 'JOHAN & ERIKA',
-    date: moment().format('dddd, MMMM Do YYYY'),
-    time: moment().format('hh:mm A'),
-    address1: '1234 Santa Margarita Blvd',
-    address2: 'Lake Forest, CA 92555',
+    title: '',
+    date: '',
+    time: '',
+    location: '',
     background: 'url("/static/images/invitation/paper01.jpg")',
     titleFontSize: 35,
     titleFontType: 'Arial',
-    selectedDate: new Date(),
-    selectedTime: new Date()
-
+    selectedDate: '',
+    selectedTime: ''
   };
 
     // mount component
+  // mount component
   componentDidMount () {
+    this.loadGuest()
+  }
 
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
+      API.getEventById(nextProps.currentEvent._id)
+      .then(res => this.setState({
+        title: res.data.eventName,
+        date: moment(res.data.date).format('dddd, MMMM Do YYYY'),
+        time: moment(res.data.time).format('hh:mm A'),
+        location: res.data.location,
+        selectedDate: res.data.date,
+        selectedTime: res.data.time
+      }))
+      .catch(err => console.log(err))
+    }
+  }
+
+  // handle call all guest
+  loadGuest = () => {
+    API.getEventById(this.props.currentEvent._id)
+      .then(res => this.setState({
+        title: res.data.eventName,
+        date: moment(res.data.date).format('dddd, MMMM Do YYYY'),
+        time: moment(res.data.time).format('hh:mm A'),
+        location: res.data.location,
+        selectedDate: res.data.date,
+        selectedTime: res.data.time
+      }))
+      .catch(err => console.log(err))
   }
 
   handleDateChange = date => {
@@ -157,8 +189,7 @@ class Invitation extends Component {
             title={this.state.title}
             date={this.state.date}
             time={this.state.time}
-            address1={this.state.address1}
-            address2={this.state.address2}
+            location={this.state.location}
       />)
       case 'url("/static/images/invitation/paper03.jpg")':
         return (
@@ -169,8 +200,7 @@ class Invitation extends Component {
             title={this.state.title}
             date={this.state.date}
             time={this.state.time}
-            address1={this.state.address1}
-            address2={this.state.address2}
+            location={this.state.location}
         />)
       default:
         return (
@@ -181,14 +211,13 @@ class Invitation extends Component {
             title={this.state.title}
             date={this.state.date}
             time={this.state.time}
-            address1={this.state.address1}
-            address2={this.state.address2}
+            location={this.state.location}
         />)
     }
   }
 
   render () {
-    const { background, titleFontType, selectedDate, selectedTime } = this.state
+    const { background, titleFontType, title, selectedDate, selectedTime } = this.state
     const { classes } = this.props
 
     return (
@@ -233,6 +262,7 @@ class Invitation extends Component {
                       label='Title'
                       helperText='ex: JOHAN &amp; ERIKA'
                       fullWidth
+                      value={title}
                       margin='dense'
                       onChange={this.handleInputChange('title')}
                       />
@@ -298,18 +328,11 @@ class Invitation extends Component {
                 />
                 <Divider light />
                 <TextField
-                  label='Address Line 1'
+                  label='Location'
                   helperText='ex: 1234 Santa Margarita Blvd'
                   fullWidth
                   margin='normal'
-                  onChange={this.handleInputChange('address1')}
-                  />
-                <TextField
-                  label='Address Line 2'
-                  helperText='ex: Lake Forest, CA 92555'
-                  fullWidth
-                  margin='normal'
-                  onChange={this.handleInputChange('address2')}
+                  onChange={this.handleInputChange('location')}
                   />
               </ExpansionPanelDetails>
             </ExpansionPanel>
@@ -335,4 +358,13 @@ Invitation.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Invitation)
+const mapStateToProps = state => {
+  return {
+    currentEvent: state.event.currentEvent
+  }
+}
+export default compose(
+  withStyles(styles, {
+    name: 'Invitation'
+  }), connect(mapStateToProps)
+)(Invitation)

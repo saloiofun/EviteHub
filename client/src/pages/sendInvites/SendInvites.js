@@ -288,18 +288,18 @@ Please click on the link to let me know if you can make it!`,
   }
 }
 
+SendInvites.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
 const mapStateToProps = state => {
   return {
     currentEvent: state.event.currentEvent
   }
 }
 
-SendInvites.propTypes = {
-  classes: PropTypes.object.isRequired
-}
-
 export default compose(
   withStyles(styles, {
-    name: 'Dashboard'
+    name: 'SendInvites'
   }), connect(mapStateToProps)
 )(SendInvites)
