@@ -168,7 +168,7 @@ class addEvent extends React.Component {
       .then(result => {
         console.log(result.data[0]._id)
         this.props.onUpdateAllEvents(result.data)
-        this.props.onUpdateCurrentEvent(result.data[0])
+        this.props.onUpdateCurrentEvent(result.data[0], 0)
       })
     })
     this.setState({ open: false })
@@ -288,7 +288,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onUpdateAllEvents: (events) => dispatch(actionTypes.updateAllEvents(events)),
-    onUpdateCurrentEvent: (eventId) => dispatch(actionTypes.updateCurrentEvent(eventId))
+    onUpdateCurrentEvent: (eventId, selectedIndex) => dispatch(actionTypes.updateCurrentEvent(eventId, selectedIndex))
   }
 }
 

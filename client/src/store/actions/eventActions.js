@@ -22,10 +22,11 @@ export const fetchEventsStart = () => {
   }
 }
 
-export const updateCurrentEvent = (currentEvent) => {
+export const updateCurrentEvent = (currentEvent, selectedIndex) => {
   return {
     type: actionTypes.UPDATE_CURRENT_EVENT,
-    currentEvent: currentEvent
+    currentEvent: currentEvent,
+    selectedIndex: selectedIndex
   }
 }
 

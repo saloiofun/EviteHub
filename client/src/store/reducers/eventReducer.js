@@ -4,7 +4,8 @@ import { updateObject } from '../utility'
 const initialState = {
   events: [],
   loading: false,
-  currentEvent: {}
+  currentEvent: {},
+  selectedIndex: 0
 }
 
 const fetchEventsStart = (state, action) => {
@@ -24,7 +25,7 @@ const fetchEventsFail = (state, action) => {
 }
 
 const updateCurrentEvent = (state, action) => {
-  return updateObject(state, { currentEvent: action.currentEvent })
+  return updateObject(state, { currentEvent: action.currentEvent, selectedIndex: action.selectedIndex })
 }
 
 const updateAllEvents = (state, action) => {

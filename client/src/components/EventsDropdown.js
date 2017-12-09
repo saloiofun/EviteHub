@@ -29,8 +29,7 @@ const styles = theme => ({
 class EventsDropdown extends Component {
   state = {
     anchorEl: null,
-    open: false,
-    selectedIndex: 0
+    open: false
   }
 
   componentWillMount () {
@@ -44,10 +43,10 @@ class EventsDropdown extends Component {
   };
 
   handleMenuItemClick = (event, index, eventId) => {
-    this.setState({ selectedIndex: index, open: false })
+    this.setState({ open: false })
     API.getEventById(eventId)
     .then(res => {
-      this.props.onUpdateCurrentEvent(res.data)
+      this.props.onUpdateCurrentEvent(res.data, index)
     })
     .catch(err => console.log(err))
   };
@@ -57,7 +56,7 @@ class EventsDropdown extends Component {
   };
 
   render () {
-    const { classes, events, currentEvent } = this.props
+    const { classes, events, currentEvent, selectedIndex } = this.props
 
     return (
       <div className={classes.root}>
@@ -86,9 +85,9 @@ class EventsDropdown extends Component {
           {events.map((option, index) => (
             <MenuItem
               key={option.eventName}
-              selected={index === this.state.selectedIndex}
+              selected={index === selectedIndex}
               onClick={event => this.handleMenuItemClick(event, index, option._id)}
-              component={Link} to='/dashboard'>
+              component={Link} to='/'>
               {option.eventName}
             </MenuItem>
           ))}
@@ -112,14 +111,15 @@ const mapStateToProps = state => {
   return {
     events: state.event.events,
     currentEvent: state.event.currentEvent,
-    userId: state.auth.profile.sub
+    userId: state.auth.profile.sub,
+    selectedIndex: state.event.selectedIndex
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     onFetchEvents: (userId) => dispatch(actionTypes.fetchEvents(userId)),
-    onUpdateCurrentEvent: (currentEvent) => dispatch(actionTypes.updateCurrentEvent(currentEvent))
+    onUpdateCurrentEvent: (currentEventId, selectedIndex) => dispatch(actionTypes.updateCurrentEvent(currentEventId, selectedIndex))
   }
 }
 

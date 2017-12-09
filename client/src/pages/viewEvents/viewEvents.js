@@ -62,11 +62,11 @@ class viewEvents extends React.Component {
     .catch(err => console.log(err))
   }
 
-  onView = (id) => {
+  onView = (id, index) => {
     API.getEventById(id)
     .then(res => {
       console.log(res.data)
-      this.props.onUpdateCurrentEvent(res.data)
+      this.props.onUpdateCurrentEvent(res.data, index)
     })
   }
 
@@ -76,7 +76,7 @@ class viewEvents extends React.Component {
       <div className={classes.root}>
         <PageHeader title='Events' body={`Manage your Events!`} />
         <Grid container spacing={24}>
-          {this.props.events.map(event => (
+          {this.props.events.map((event, index) => (
             <Grid item xs={12} sm={4} key={event._id}>
               <Card>
                 <CardMedia
@@ -99,7 +99,7 @@ class viewEvents extends React.Component {
                 </CardContent>
                 <Divider />
                 <CardActions>
-                  <Button dense onClick={() => this.onView(event._id)} component={Link} to='/' >
+                  <Button dense onClick={() => this.onView(event._id, index)} component={Link} to='/' >
                     View
                   </Button>
                   <Button dense onClick={() => this.deleteEvent(event._id)} >
@@ -129,7 +129,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onUpdateAllEvents: (events) => dispatch(actionTypes.updateAllEvents(events)),
-    onUpdateCurrentEvent: (currentEvent) => dispatch(actionTypes.updateCurrentEvent(currentEvent))
+    onUpdateCurrentEvent: (currentEvent, selectedIndex) => dispatch(actionTypes.updateCurrentEvent(currentEvent, selectedIndex))
   }
 }
 
