@@ -71,7 +71,7 @@ class Rsvp extends React.Component {
   componentDidMount () {
     let parsedURL = new URL(window.location.href)
     let hash = parsedURL.searchParams.get('token')
-    let eventId = parsedURL.searchParams.get('id')
+    let eventId = parsedURL.searchParams.get('id') || this.props.currentEvent._id
     this.getEventInfo(eventId)
     this.getGuest(hash)
   }
