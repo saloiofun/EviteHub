@@ -47,6 +47,9 @@ const styles = theme => ({
   },
   leftIcon: {
     marginRight: theme.spacing.unit
+  },
+  button: {
+    marginTop: theme.spacing.unit * 2
   }
 })
 
@@ -337,9 +340,8 @@ class Invitation extends Component {
 
           <Grid item xs={12} sm={12} md={8}>
             {this.Card()}
-            <hr />
             <center>
-              <Button raised color='primary'
+              <Button raised color='primary' className={classes.button}
                 onClick={this.handleSave}>
                 <SaveIcon className={classes.leftIcon} />
                 SAVE TO FILE
