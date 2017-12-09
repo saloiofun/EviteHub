@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import teal from 'material-ui/colors/teal'
 import { withStyles } from 'material-ui/styles'
-import Card, { CardContent, CardMedia } from 'material-ui/Card'
+import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
 import Grid from 'material-ui/Grid'
-import Typography from 'material-ui/Typography'
+import Button from 'material-ui/Button'
 import TodoList from '../../components/TodoList'
 import PageHeader from '../../components/PageHeader'
 import ProgressCard from '../../components/progressCard'
@@ -134,11 +135,11 @@ class Dashboard extends Component {
                 image='/static/images/events/event-dashboard.jpg'
                 title='Website'
               />
-              <CardContent>
-                <Typography type='headline' component='h2'>
-                  {currentEvent.eventName ? currentEvent.eventName : ''}
-                </Typography>
-              </CardContent>
+              <CardActions>
+                <Button dense color='primary' component={Link} to='/rsvp'>
+                  View Invitation Template
+                </Button>
+              </CardActions>
             </Card>
           </Grid>
           <Grid item xs={12} sm={4}>

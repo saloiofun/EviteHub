@@ -142,7 +142,7 @@ class Rsvp extends React.Component {
   };
 
   render () {
-    const { classes } = this.props
+    const { classes, auth } = this.props
 
     return (
       <div className={classes.root}>
@@ -212,9 +212,14 @@ class Rsvp extends React.Component {
               </Grid>
             </CardContent>
             <CardActions>
-              <Button raised color='primary' className={classes.button} onClick={this.onSubmit}>
+              {auth.isAuthenticated
+              ? <Button raised color='primary' disabled className={classes.button} onClick={this.onSubmit}>
+              Submit
+              </Button>
+              : <Button raised color='primary' className={classes.button} onClick={this.onSubmit}>
               Submit
             </Button>
+            }
             </CardActions>
           </div>
         </Card>
