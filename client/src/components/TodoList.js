@@ -302,7 +302,6 @@ TabContainer.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    auth: state.auth,
     currentEvent: state.event.currentEvent
   }
 }

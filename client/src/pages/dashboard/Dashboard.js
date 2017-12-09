@@ -70,6 +70,10 @@ class Dashboard extends Component {
     daysLeft: ''
   }
 
+  componentDidMount () {
+    this.findDaysLeft()
+  }
+
   componentWillReceiveProps (nextProps) {
     if (this.props.currentEvent) {
       if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
