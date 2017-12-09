@@ -97,7 +97,7 @@ class Home extends Component {
         <div style={{ padding: 20 }}>
           <Grid container spacing={40} className={classes.sectionWhite}>
             <Grid item xs={12} sm={6}>
-              <img src='/static/images/home/guest-list.jpg' alt='Guestlist' className={classes.image} />
+              <img src='/static/images/home/guest-list.png' alt='Guestlist' className={classes.image} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <div className={classes.sectionContentRight}>
@@ -122,7 +122,7 @@ class Home extends Component {
 
           <Grid container spacing={40} className={classes.sectionWhite}>
             <Grid item xs={12} sm={6}>
-              <img src='/static/images/home/events.jpg' alt='' className={classes.image} />
+              <img src='/static/images/home/events.png' alt='' className={classes.image} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <div className={classes.sectionContentRight}>
