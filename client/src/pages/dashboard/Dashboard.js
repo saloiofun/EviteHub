@@ -91,6 +91,22 @@ class Dashboard extends Component {
     this.setState({daysLeft: daysLeft})
   }
 
+  countDaysLeftTitle = () => {
+    if (this.state.daysLeft < -1) {
+      return 'Days Ago'
+    } else if (this.state.daysLeft === -1) {
+      return 'Day Ago'
+    }
+    return 'Days Left'
+  }
+
+  countDaysLeft = () => {
+    if (this.state.daysLeft < 0) {
+      return this.state.daysLeft * (-1)
+    }
+    return this.state.daysLeft
+  }
+
   render () {
     const { classes, auth, currentEvent, dashboard } = this.props
 
@@ -99,7 +115,7 @@ class Dashboard extends Component {
         <PageHeader title={currentEvent.eventName ? currentEvent.eventName : 'Dashboard'} body={`Welcome Back! ${auth.profile.name}`} />
         <Grid container spacing={24}>
           <Grid item xs={12} sm={4}>
-            <ProgressCard title='Days Left' info={this.state.daysLeft}>
+            <ProgressCard title={this.countDaysLeftTitle()} info={this.countDaysLeft()}>
               <TodayIcon className={classes.progressIcon} />
             </ProgressCard>
           </Grid>
