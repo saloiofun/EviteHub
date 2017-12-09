@@ -73,6 +73,8 @@ class Dashboard extends Component {
 
   componentDidMount () {
     this.findDaysLeft()
+    this.props.onFetchGuest(this.props.currentEvent._id)
+    this.props.onFetchTodo(this.props.currentEvent._id)
   }
 
   componentWillReceiveProps (nextProps) {
