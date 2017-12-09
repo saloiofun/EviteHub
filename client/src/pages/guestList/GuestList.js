@@ -66,7 +66,7 @@ class GuestList extends Component {
     newDialog: false,
     editDialog: false,
     id: '',
-    name: '',
+    name: '-',
     party: '',
     email: ''
   };
