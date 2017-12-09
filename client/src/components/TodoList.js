@@ -13,6 +13,7 @@ import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
 import API from '../utils/Api'
 import Alert from './Alert'
+import * as actionTypes from '../store/actions'
 
 import compose from 'recompose/compose'
 import { connect } from 'react-redux'
@@ -103,6 +104,7 @@ class TodoList extends React.Component {
 
         this.loadTodoItems()
         this.openSnack(`Checked: ${value}`)
+        this.props.onFetchTodo(this.props.currentEvent._id)
       })
     .catch(err => console.log(err))
   }
@@ -123,6 +125,7 @@ class TodoList extends React.Component {
 
         this.loadTodoItems()
         this.openSnack(`Unchecked: ${value}`)
+        this.props.onFetchTodo(this.props.currentEvent._id)
       })
     .catch(err => console.log(err))
   }
@@ -148,6 +151,7 @@ class TodoList extends React.Component {
       this.loadTodoItems()
       this.closeModal()
       this.openSnack(`Added: ${addTodo}`)
+      this.props.onFetchTodo(this.props.currentEvent._id)
     })
     .catch(err => console.log(err))
   }
@@ -306,8 +310,14 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchTodo: (eventId) => dispatch(actionTypes.fetchTodoDashboard(eventId))
+  }
+}
+
 export default compose(
   withStyles(styles, {
     name: 'TodoList'
-  }), connect(mapStateToProps)
+  }), connect(mapStateToProps, mapDispatchToProps)
 )(TodoList)
