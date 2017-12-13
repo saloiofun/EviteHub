@@ -6,6 +6,7 @@ const guestSchema = new Schema({
   guestParty: { type: String },
   guestEmail: { type: String, required: true },
   emailHash: { type: String },
+  eventId: { type: String },
   rsvp: { type: Boolean, default: false },
   emailed: { type: Boolean, default: false },
   comment: String
