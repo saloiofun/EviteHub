@@ -53,7 +53,6 @@ class viewEvents extends React.Component {
   deleteEvent = (id) => {
     API.deleteEvent(id)
     .then(data => {
-      console.log(data)
       API.getEventByUserId(this.props.auth.profile.sub)
       .then(res => {
         this.props.onUpdateAllEvents(res.data)
@@ -65,7 +64,6 @@ class viewEvents extends React.Component {
   onView = (id, index) => {
     API.getEventById(id)
     .then(res => {
-      console.log(res.data)
       this.props.onUpdateCurrentEvent(res.data, index)
     })
   }
