@@ -16,7 +16,7 @@ module.exports = {
   },
   findGuestByHash: function (req, res) {
     db.Guest
-      .findOne({emailHash: req.params.id})
+      .findOne({emailHash: req.params.hash, eventId: req.params.id})
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err))
   },
@@ -25,7 +25,8 @@ module.exports = {
     .create({
       guestName: req.body.guestName,
       guestParty: req.body.guestParty,
-      guestEmail: req.body.guestEmail
+      guestEmail: req.body.guestEmail,
+      eventId: req.body.eventId
     })
     .then(dbModel => {
       // Add new guest to event

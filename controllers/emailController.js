@@ -27,29 +27,46 @@ module.exports = {
         res.json(error)
       } else {
         db.Guest
-          .create(guest)
-          .then(dbModel => {
-            // Add new guest to event
-            return db.Event.findOneAndUpdate(
-              {_id: guest.eventId},
-              {$push: {guest: dbModel._id}},
-              {new: true}
-            )
-            .then(dbEventModel => res.json(dbEventModel))
-            .catch(errr => res.status(422).json(errr))
-          })
-        .catch(err => {
-          console.log(err.name)
-          if (err.name === 'ValidationError') {
+        .find({ eventId: req.body.eventId})
+        .then(result => {
+          let duplicate = false;
+          for (let i in result){
+            if (result[i].guestEmail === guest.guestEmail){
+              console.log('duplicate')
+              duplicate = true
+            }
+          }
+          if (duplicate){
+            console.log(guest)
             // If guest with email address exist in database we insert hash
             db.Guest
-            .findOneAndUpdate({guestEmail: guest.guestEmail}, { emailHash: guest.emailHash, eventId: guest.eventId }, { upsert: true, new: true })
+            .findOneAndUpdate({guestEmail: guest.guestEmail, eventId: guest.eventId}, { emailHash: guest.emailHash,  emailed: true }, { upsert: true, new: true })
             .then(dbModel => res.json(dbModel))
             .catch(upError => res.status(422).json(upError))
-          } else {
-            res.status(422).json(err)
+          } else{
+            db.Guest
+            .create(guest)
+            .then(dbModel => {
+              // Add new guest to event
+              return db.Event.findOneAndUpdate(
+                {_id: guest.eventId},
+                {$push: {guest: dbModel._id}},
+                {new: true}
+              )
+              .then(dbEventModel => res.json(dbEventModel))
+              .catch(errr => res.status(422).json(errr))
+            })
+            .catch(err => {
+              console.log(err)
+                res.status(422).json(err)
+            })
           }
         })
+        .catch(findErr => {
+          console.log('FindError: ', findErr)
+            res.status(422).json(findErr)
+        })
+
       }
     })
   }

@@ -73,11 +73,11 @@ class Rsvp extends React.Component {
     let hash = parsedURL.searchParams.get('token')
     let eventId = parsedURL.searchParams.get('id') || this.props.currentEvent._id
     this.getEventInfo(eventId)
-    this.getGuest(hash)
+    this.getGuest(hash,eventId)
   }
 
-  getGuest = (hash) => {
-    API.getGuestByHash(hash)
+  getGuest = (hash,eventId) => {
+    API.getGuestByHash(hash,eventId)
     .then((res) => {
       console.log('Guest:', res.data)
       this.setState({ guestObject: res.data })
