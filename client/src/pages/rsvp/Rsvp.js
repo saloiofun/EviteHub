@@ -11,6 +11,7 @@ import { FormControl, FormControlLabel } from 'material-ui/Form'
 import moment from 'moment'
 
 import Card01 from '../../components/invitationCard/Card01'
+import Alert from '../../components/Alert'
 
 import API from '../../utils/Api'
 
@@ -65,8 +66,18 @@ class Rsvp extends React.Component {
     rsvp: '',
     name: '',
     party: 0,
-    value: ''
+    value: '',
+    open: false,
+    error: false
   }
+
+  handleRequestClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    this.setState({ open: false, error: false })
+  };
 
   componentDidMount () {
     let parsedURL = new URL(window.location.href)
@@ -108,8 +119,8 @@ class Rsvp extends React.Component {
             guestParty: this.state.party,
             rsvp: true
           })
-        .then(data => {
-          console.log(data)
+        .then(() => {
+          this.setState({open: true})
         })
         break
       case 'Reject':
@@ -119,12 +130,13 @@ class Rsvp extends React.Component {
             guestParty: this.state.guestParty,
             rsvp: false
           })
-        .then(data => {
-          console.log(data)
+        .then(() => {
+          this.setState({open: true})
         })
         break
       default:
-        console.log('Error did not select radio button')
+        this.setState({error: true})
+        break
     }
   }
 
@@ -217,6 +229,16 @@ class Rsvp extends React.Component {
               Submit
             </Button>
             }
+              <Alert
+                open={this.state.open}
+                onRequestClose={this.handleRequestClose}
+                message='Thank you for RSVP!'
+              />
+              <Alert
+                open={this.state.error}
+                onRequestClose={this.handleRequestClose}
+                message='Error, you did not provide a response.'
+              />
             </CardActions>
           </div>
         </Card>
