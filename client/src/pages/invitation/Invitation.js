@@ -94,7 +94,7 @@ class Invitation extends Component {
     titleFontType: 'Arial',
     selectedDate: '',
     selectedTime: ''
-  };
+  }
 
     // mount component
   // mount component
@@ -149,21 +149,21 @@ class Invitation extends Component {
     this.setState({
       expanded: expanded ? panel : false
     })
-  };
+  }
 
     // handle specify input changes
   handleInputChange = name => event => {
     this.setState({
       [name]: event.target.value
     })
-  };
+  }
 
     // handle number input changes
   handleNumberInputChange = key => event => {
     this.setState({
       [key]: parseInt(event.target.value, 10)
     })
-  };
+  }
 
     // handle savearea div
   handleSave = () => {

@@ -77,7 +77,7 @@ class Rsvp extends React.Component {
     }
 
     this.setState({ open: false, error: false })
-  };
+  }
 
   componentDidMount () {
     let parsedURL = new URL(window.location.href)
@@ -148,7 +148,7 @@ class Rsvp extends React.Component {
 
   handleChange = (event, value) => {
     this.setState({ value })
-  };
+  }
 
   render () {
     const { classes, auth } = this.props

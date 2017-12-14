@@ -105,17 +105,17 @@ Please click on the link to let me know if you can make it!`,
 
   handleRequestClose = () => {
     this.setState({ error: false, emailsSent: false })
-  };
+  }
 
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value
     })
-  };
+  }
 
   handleCheckChange = name => (event, checked) => {
     this.setState({ [name]: checked })
-  };
+  }
 
   importOpen = () => {
     API.getGuestByEvent(this.props.currentEvent._id)

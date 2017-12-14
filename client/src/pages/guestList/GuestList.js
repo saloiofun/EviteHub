@@ -69,7 +69,7 @@ class GuestList extends Component {
     name: '-',
     party: '',
     email: ''
-  };
+  }
 
   // mount component
   componentDidMount () {
@@ -103,7 +103,7 @@ class GuestList extends Component {
         'email': res.data.guestEmail
       }, this.editDialogOpen))
       .catch(err => console.log(err))
-  };
+  }
 
   // handle delete a guest with the given id
   deleteGuest = id => {
@@ -127,14 +127,14 @@ class GuestList extends Component {
   // open edit guest modal
   editDialogOpen = () => {
     this.setState({ editDialog: true })
-  };
+  }
 
   // close edit guest modal
   editDialogClose = () => {
     this.setState({
       'editDialog': false, 'id': '', 'name': '', 'party': '', 'email': ''
     })
-  };
+  }
 
   // handle input changes
   handleInputChange = event => {
@@ -157,7 +157,7 @@ class GuestList extends Component {
     API.updateGuest(id, data)
     .then(res => this.loadGuest(), this.editDialogClose())
       .catch(err => console.log(err))
-  };
+  }
 
   // handle RSVP toggle
   rsvpToggle = (id, rsvp) => (event, checked) => {

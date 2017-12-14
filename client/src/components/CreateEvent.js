@@ -101,15 +101,15 @@ class addEvent extends React.Component {
     descriptionLimit: false,
     maxName: 20,
     maxDescription: 280
-  };
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true })
-  };
+  }
 
   handleRequestClose = () => {
     this.setState({ open: false })
-  };
+  }
 
   handleDateChange = date => {
     this.setState({

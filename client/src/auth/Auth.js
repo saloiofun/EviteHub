@@ -9,9 +9,9 @@ export default class Auth {
     audience: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/userinfo`,
     responseType: 'token id_token',
     scope: 'openid profile email'
-  });
+  })
 
-  userProfile;
+  userProfile
 
   constructor () {
     this.login = this.login.bind(this)
