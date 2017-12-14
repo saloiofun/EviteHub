@@ -171,12 +171,9 @@ Please click on the link to let me know if you can make it!`,
         url: this.state.emailURL,
         eventId: this.props.currentEvent._id
       }
-      console.log(email)
-
       API.sendEmail(email)
       .then((data) => {
         this.setState({emailsSent: true})
-        console.log('Data:', data)
       })
       .catch((err) => {
         if (err) throw err

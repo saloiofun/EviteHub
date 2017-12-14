@@ -42,8 +42,6 @@ export const fetchEvents = (userId) => {
     dispatch(fetchEventsStart())
     API.getEventByUserId(userId)
     .then(res => {
-      console.log(res)
-      console.log(res.data)
       const fetchedEvents = res.data
       const currentEvent = res.data.length !== 0 ? res.data[0] : {}
       dispatch(fetchEventsSuccess(fetchedEvents, currentEvent))

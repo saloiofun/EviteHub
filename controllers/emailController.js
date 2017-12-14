@@ -23,27 +23,24 @@ module.exports = {
     }
     smtpTransport.sendMail(mailOptions, function (error, response) {
       if (error) {
-        console.log(error)
         res.json(error)
       } else {
         db.Guest
-        .find({ eventId: req.body.eventId})
+        .find({ eventId: req.body.eventId })
         .then(result => {
-          let duplicate = false;
-          for (let i in result){
-            if (result[i].guestEmail === guest.guestEmail){
-              console.log('duplicate')
+          let duplicate = false
+          for (let i in result) {
+            if (result[i].guestEmail === guest.guestEmail) {
               duplicate = true
             }
           }
-          if (duplicate){
-            console.log(guest)
+          if (duplicate) {
             // If guest with email address exist in database we insert hash
             db.Guest
-            .findOneAndUpdate({guestEmail: guest.guestEmail, eventId: guest.eventId}, { emailHash: guest.emailHash,  emailed: true }, { upsert: true, new: true })
+            .findOneAndUpdate({guestEmail: guest.guestEmail, eventId: guest.eventId}, { emailHash: guest.emailHash, emailed: true }, { upsert: true, new: true })
             .then(dbModel => res.json(dbModel))
             .catch(upError => res.status(422).json(upError))
-          } else{
+          } else {
             db.Guest
             .create(guest)
             .then(dbModel => {
@@ -57,16 +54,13 @@ module.exports = {
               .catch(errr => res.status(422).json(errr))
             })
             .catch(err => {
-              console.log(err)
-                res.status(422).json(err)
+              res.status(422).json(err)
             })
           }
         })
         .catch(findErr => {
-          console.log('FindError: ', findErr)
-            res.status(422).json(findErr)
+          res.status(422).json(findErr)
         })
-
       }
     })
   }

@@ -166,7 +166,6 @@ class addEvent extends React.Component {
     .then(res => {
       API.getEventByUserId(userId)
       .then(result => {
-        console.log(result.data[0]._id)
         this.props.onUpdateAllEvents(result.data)
         this.props.onUpdateCurrentEvent(result.data[0], 0)
       })
@@ -177,7 +176,6 @@ class addEvent extends React.Component {
   render () {
     const { selectedDate, selectedTime } = this.state
     const { classes, auth } = this.props
-    console.log(auth)
     return (
 
       <span>

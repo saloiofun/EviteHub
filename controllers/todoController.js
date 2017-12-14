@@ -3,7 +3,6 @@ const db = require('../models')
 // Defining methods for the Controller
 module.exports = {
   createTodo: function (req, res) {
-    console.log('eventID', req.body.eventId)
     db.Todo
     .create({
       todoDesc: req.body.todoDesc

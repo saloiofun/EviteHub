@@ -78,7 +78,6 @@ class Home extends Component {
 
   render () {
     const { classes } = this.props
-    console.log(this.props)
 
     return (
       <div className={classes.root}>

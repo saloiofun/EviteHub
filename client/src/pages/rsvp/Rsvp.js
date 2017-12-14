@@ -73,13 +73,12 @@ class Rsvp extends React.Component {
     let hash = parsedURL.searchParams.get('token')
     let eventId = parsedURL.searchParams.get('id') || this.props.currentEvent._id
     this.getEventInfo(eventId)
-    this.getGuest(hash,eventId)
+    this.getGuest(hash, eventId)
   }
 
-  getGuest = (hash,eventId) => {
-    API.getGuestByHash(hash,eventId)
+  getGuest = (hash, eventId) => {
+    API.getGuestByHash(hash, eventId)
     .then((res) => {
-      console.log('Guest:', res.data)
       this.setState({ guestObject: res.data })
     })
     .catch((err) => {
@@ -90,7 +89,6 @@ class Rsvp extends React.Component {
   getEventInfo = (id) => {
     API.getEventById(id)
     .then(res => {
-      console.log('Event:', res.data)
       this.setState({
         title: res.data.eventName,
         description: res.data.description,
@@ -102,7 +100,6 @@ class Rsvp extends React.Component {
   }
 
   onSubmit = () => {
-    console.log(this.state.guestObject)
     switch (this.state.value) {
       case 'Accept':
         API.updateGuest(this.state.guestObject._id,
