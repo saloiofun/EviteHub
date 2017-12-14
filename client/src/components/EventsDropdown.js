@@ -36,11 +36,9 @@ class EventsDropdown extends Component {
     this.props.onFetchEvents(this.props.userId)
   }
 
-  button = undefined;
-
   handleClickListItem = event => {
     this.setState({ open: true, anchorEl: event.currentTarget })
-  };
+  }
 
   handleMenuItemClick = (event, index, eventId) => {
     this.setState({ open: false })
@@ -49,11 +47,11 @@ class EventsDropdown extends Component {
       this.props.onUpdateCurrentEvent(res.data, index)
     })
     .catch(err => console.log(err))
-  };
+  }
 
   handleRequestClose = () => {
     this.setState({ open: false })
-  };
+  }
 
   render () {
     const { classes, events, currentEvent, selectedIndex } = this.props

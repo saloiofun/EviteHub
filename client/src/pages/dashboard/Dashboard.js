@@ -72,18 +72,22 @@ class Dashboard extends Component {
   }
 
   componentWillMount () {
-    this.findDaysLeft()
-    this.props.onFetchGuest(this.props.currentEvent._id)
-    this.props.onFetchTodo(this.props.currentEvent._id)
+    if (this.props.currentEvent._id) {
+      this.findDaysLeft()
+      this.props.onFetchGuest(this.props.currentEvent._id)
+      this.props.onFetchTodo(this.props.currentEvent._id)
+    }
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
-      this.props.onFetchGuest(nextProps.currentEvent._id)
-      this.props.onFetchTodo(nextProps.currentEvent._id)
+    if (this.props.currentEvent._id !== 'undefined') {
+      if (nextProps.currentEvent._id !== this.props.currentEvent._id) {
+        this.props.onFetchGuest(nextProps.currentEvent._id)
+        this.props.onFetchTodo(nextProps.currentEvent._id)
 
-      let daysLeft = moment(nextProps.currentEvent.date).startOf('day').diff(moment().startOf('day'), 'days')
-      this.setState({daysLeft: daysLeft})
+        let daysLeft = moment(nextProps.currentEvent.date).startOf('day').diff(moment().startOf('day'), 'days')
+        this.setState({daysLeft: daysLeft})
+      }
     }
   }
 
