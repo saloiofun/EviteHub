@@ -139,7 +139,7 @@ class Dashboard extends Component {
               <CardMedia
                 className={classes.media}
                 image='/static/images/events/event-dashboard.jpg'
-                title='Website'
+                title='Invitation'
               />
               <CardActions>
                 <Button dense color='primary' component={Link} to='/rsvp'>

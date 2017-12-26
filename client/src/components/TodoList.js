@@ -262,7 +262,7 @@ class TodoList extends React.Component {
           </TabContainer>
         }
 
-        <Button onClick={this.openModal} color='primary' raised>Add Todo <PlaylistAdd className={classes.rightIcon} /></Button>
+        <Button onClick={this.openModal} color='primary' raised>Add To Do <PlaylistAdd className={classes.rightIcon} /></Button>
 
         <Dialog open={this.state.modal} onRequestClose={this.closeModal}>
           <DialogTitle>Add To Do</DialogTitle>
